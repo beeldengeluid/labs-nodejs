@@ -1,0 +1,125 @@
+/****************************************************************/
+/* FEED ITEMS */
+/****************************************************************/
+
+$nicegrey : #555;
+
+
+#feed_holder {
+		
+}
+
+.feed_items {
+	list-style:none;
+	margin:0px;
+	padding:0px;
+}
+
+.feed_item {
+	width:100%;
+	margin-bottom:2em;
+	padding:0.25em;
+	border-top:2px solid $nicegrey;	
+	border-bottom:1px dashed $nicegrey;
+	cursor:pointer;
+	background-color:whitesmoke;
+	
+	&:hover {
+		border-top:2px solid lightgoldenrodyellow;
+		border-bottom:1px dashed lightgoldenrodyellow;
+		@include box-shadow(0 0 5px 2px darkgray);	
+	}
+}
+
+.feed_item h3, .feed_item h6 {	
+	color: indianred;
+}
+
+.feed_item a {
+	color: steelskyblue;
+}
+
+.feed_item .source_icon {
+	text-align:center;
+	margin:0.25em;	
+}
+
+.feed_item .source_icon:hover {
+	opacity:0.5;
+}
+/****************************************************************/
+/* CONTEXT MENU */
+/****************************************************************/
+
+#context_holder {
+	
+}
+
+#context_tabs .nav {
+	margin-bottom:1em;
+}
+
+.context_header h4 {
+	margin:0px 0px 1em 0px;
+	float:left;
+	width:89%;
+}
+
+.context_menu {
+	float:right;
+	width:10%;
+}
+
+tab-heading {
+	cursor:pointer;	
+}
+
+.related_item {
+	color:#555;
+	text-align:justify;
+	background-color:whitesmoke;
+}
+
+.related_item img {
+	text-align:center;
+	margin:auto;
+}
+
+.related_item h5 {
+	color:indianred;
+}
+
+/****************************************************************/
+/* INFO POPOVER */
+/****************************************************************/
+
+.ne_type {
+	color:goldenrod;
+}
+
+.freq_word {
+	color: dodgerblue;
+}
+
+.query {
+	word-break:break-all;
+	color:dodgerblue;
+}
+
+/****************************************************************/
+/* AUDIO PLAYER */
+/****************************************************************/
+
+#audioPlayer {
+	visibility:hidden;
+}
+
+
+/****************************************************************/
+/* BOOTSTRAP OVERRIDES */
+/****************************************************************/
+
+
+.glyphicon {
+	cursor:pointer;
+}

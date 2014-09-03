@@ -1,0 +1,128 @@
+/****************************************************************/
+/* FEED ITEMS */
+/****************************************************************/
+/* line 12, scss/_fc.scss */
+.feed_items {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* line 18, scss/_fc.scss */
+.feed_item {
+  width: 100%;
+  margin-bottom: 2em;
+  padding: 0.25em;
+  border-top: 2px solid #555555;
+  border-bottom: 1px dashed #555555;
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+/* line 27, scss/_fc.scss */
+.feed_item:hover {
+  border-top: 2px solid lightgoldenrodyellow;
+  border-bottom: 1px dashed lightgoldenrodyellow;
+  -webkit-box-shadow: 0 0 5px 2px darkgrey;
+  -moz-box-shadow: 0 0 5px 2px darkgrey;
+  box-shadow: 0 0 5px 2px darkgrey;
+}
+
+/* line 34, scss/_fc.scss */
+.feed_item h3, .feed_item h6 {
+  color: indianred;
+}
+
+/* line 38, scss/_fc.scss */
+.feed_item a {
+  color: steelskyblue;
+}
+
+/* line 42, scss/_fc.scss */
+.feed_item .source_icon {
+  text-align: center;
+  margin: 0.25em;
+}
+
+/* line 47, scss/_fc.scss */
+.feed_item .source_icon:hover {
+  opacity: 0.5;
+}
+
+/****************************************************************/
+/* CONTEXT MENU */
+/****************************************************************/
+/* line 58, scss/_fc.scss */
+#context_tabs .nav {
+  margin-bottom: 1em;
+}
+
+/* line 62, scss/_fc.scss */
+.context_header h4 {
+  margin: 0px 0px 1em 0px;
+  float: left;
+  width: 89%;
+}
+
+/* line 68, scss/_fc.scss */
+.context_menu {
+  float: right;
+  width: 10%;
+}
+
+/* line 73, scss/_fc.scss */
+tab-heading {
+  cursor: pointer;
+}
+
+/* line 77, scss/_fc.scss */
+.related_item {
+  color: #555;
+  text-align: justify;
+  background-color: whitesmoke;
+}
+
+/* line 83, scss/_fc.scss */
+.related_item img {
+  text-align: center;
+  margin: auto;
+}
+
+/* line 88, scss/_fc.scss */
+.related_item h5 {
+  color: indianred;
+}
+
+/****************************************************************/
+/* INFO POPOVER */
+/****************************************************************/
+/* line 96, scss/_fc.scss */
+.ne_type {
+  color: goldenrod;
+}
+
+/* line 100, scss/_fc.scss */
+.freq_word {
+  color: dodgerblue;
+}
+
+/* line 104, scss/_fc.scss */
+.query {
+  word-break: break-all;
+  color: dodgerblue;
+}
+
+/****************************************************************/
+/* AUDIO PLAYER */
+/****************************************************************/
+/* line 113, scss/_fc.scss */
+#audioPlayer {
+  visibility: hidden;
+}
+
+/****************************************************************/
+/* BOOTSTRAP OVERRIDES */
+/****************************************************************/
+/* line 123, scss/_fc.scss */
+.glyphicon {
+  cursor: pointer;
+}

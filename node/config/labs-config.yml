@@ -1,0 +1,18 @@
+######################### LABS CONFIG ###########################################
+#
+# This file configures the labs-proxy and all of the hosts and ports the
+# different Node.js apps are running on
+#
+# READ:
+# 	https://blog.nodejitsu.com/node-http-proxy-1dot0/
+#
+#################################################################################
+
+proxy-server.port: 4000
+proxy-services: [andernieuws, woordnl-fc, woordl-rc]
+
+
+services:
+ andernieuws: 'http://localhost:3000'
+ woordnl-fc: 'http://localhost:3001'
+ woordnl-rc: 'http://localhost:3002'

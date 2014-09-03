@@ -1,0 +1,92 @@
+/**************************************************************************************
+* CONTEXT GRID
+**************************************************************************************/
+
+/*The context grid that is injected into the embed player*/
+
+#context-grid {
+    position:fixed;
+    left: 50%;
+    top: 1%;
+    width: 49%;
+    max-height:70%;
+    z-index:99;
+    -webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background-color:#e7ebf2;
+	padding:1em;
+	overflow:auto;
+}
+
+/*Each item is related to a certain timecode and can contain multiple entities*/
+
+.context-items {
+	background-color:#fff;
+	list-style:none;
+	padding:0px;
+	margin:0px;
+	width:100%;	
+	background-color:#e7ebf2;
+}
+
+.context-item {
+	background-color:#e7ebf2;	
+}
+
+.odd.context-item {	
+	border-top:1px dashed #00c9ff;
+}
+
+.even.context-item {	
+	margin-top:0.25em;			
+}
+
+
+/*the keyword cloud*/
+
+.keyword_cloud {
+	position:relative;
+}
+
+.keyword_cloud span {
+	font-weight:bold;	
+	cursor:pointer;
+}
+
+.keyword_cloud span:hover {
+	text-decoration:underline;
+}
+
+/*The entities (i.e. wikilinks)*/
+
+.item-entities {
+	margin-top:0.25em;
+}
+
+.odd.item-entity {
+	
+}
+
+.even.item-entity {
+	margin-top:0.5em;
+}
+
+.item-entity a {
+	color: #00c9ff;
+	font-size:120%;
+}
+
+.item-entity a:hover {
+	color: #50007a;
+}
+
+/*The (Anefo) photo's related to an entity*/
+
+.item-photos img {
+	text-align:center;
+	margin-top:0.5em;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}

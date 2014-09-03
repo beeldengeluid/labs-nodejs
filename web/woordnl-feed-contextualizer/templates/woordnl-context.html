@@ -1,0 +1,12 @@
+<ul class="list-group woordnl" ng-repeat="md in selectedFeedItem.related['woordnl']" title="{{selectedFeedItem.queries['woordnl']}}">
+	<li class="list-group-item related_item" title="{{md.score}}">
+		{{md.snippet}}
+		<span ng-show="md.contentURL != currentFragment.url || mediaPlaying == false" 
+		ng-click="playFragment(md.contentURL, md.start)" 
+		class="glyphicon glyphicon-volume-off"></span>
+		
+		<span ng-show="md.contentURL == currentFragment.url && mediaPlaying == true" 
+		ng-click="pauseFragment()" 
+		class="glyphicon glyphicon-volume-up"></span>
+	</li>
+</ul>

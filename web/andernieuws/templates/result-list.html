@@ -1,0 +1,38 @@
+<ul id="results">
+	<h3>{{resultTotal}}</h3>
+	
+	<div class="keywords overall">
+		<div class="keyword" ng-repeat="(keyword, freq) in overallKeywordStatistics track by $index">				
+			<span ng-show="freq > 1" class="label label-{{getKeywordClass(freq)}}">{{keyword}}&nbsp;({{freq}})</span>
+		</div>
+	</div>
+	
+	<li ng-show="resultTotal > 0" ng-repeat="(asrFile, results) in resultsPerASRFile" class="transcript">
+		<span class="badge">{{results.length}}</span>
+		<span class="link">
+			{{asrFile}}
+		</span><br>
+		<div class="keywords">
+			<div class="keyword" ng-repeat="(keyword, freq) in keywordsPerTranscript[asrFile] track by $index">				
+				<span class="label label-{{getKeywordClass(freq)}}">{{keyword}}&nbsp;({{freq}})</span>
+			</div>
+		</div>	
+		<ul class="list-group">
+			<li ng-repeat="res in results" class="list-group-item">
+				<div class="keywords">
+					<div class="keyword" ng-repeat="kw in res.keywords track by $index">
+						<span class="label label-default">{{kw}}</span>
+					</div>
+				</div>
+				<span class="badge">{{res.occurances.length}}</span>
+				<strong>{{res.id}}&nbsp;{{res.asrChunk.start}}&nbsp;{{res.asrChunk.end}}</strong>			
+				<div class="asr-chunk" >
+					<span ng-repeat="word in res.asrChunk.words.split(' ') track by $index" ng-class="{ highlight: word == s}">
+						{{word}}
+					</span>
+				</div>
+			</li>
+		</ul>		
+	</li>
+	<div class="alert alert-info" ng-show="resultTotal == 0">Helaas geen resultaten: je zult even verder moeten zoeken</div>
+</ul>

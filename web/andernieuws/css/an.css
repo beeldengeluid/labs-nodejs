@@ -1,0 +1,53 @@
+.loading {
+	display:none;
+}
+
+#audioPlayer {
+	display:none;	
+}
+
+#results {
+	margin:1em 0em;
+	padding:0px;
+	list-style:none;
+}
+
+#results li {
+	float:left;
+	font-size:140%;
+	margin:0.25em 0.25em 0 0;
+	cursor:pointer;
+}
+
+.transcript {
+	list-style:none;	
+	margin-bottom:1em;
+}
+
+.transcript > .badge {
+	float:right;
+	margin-right: 15px;
+	background-color:#428bca;
+}
+
+.transcript > .link {
+	color:dodgerblue;
+}
+
+.transcript .keywords {
+	padding-bottom:1em;
+}
+
+.asr-chunk {
+	cursor:pointer;
+}
+
+.overall.keywords {	
+	padding-bottom:0.5em;
+	margin-bottom:0.5em;
+	border-bottom:1px dashed darkgray;
+}
+
+.highlight {
+	color:goldenrod;
+}

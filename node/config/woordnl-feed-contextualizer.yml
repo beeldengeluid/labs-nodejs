@@ -1,0 +1,39 @@
+######################### SERVER CONFIG #########################################
+#
+# Supported context-sources: woordnl, immix, anefo
+#
+#################################################################################
+
+proxy-server.port: 3001
+message-server.port: 8001
+message-server-not-found-message: Not found\n 
+message-cache-size: 20
+long-poll.interval: 15000
+
+
+context-sources: [woordnl, anefo, immix]
+
+woordnl.es.host: localhost
+woordnl.es.port: 9200
+
+immix.es.host: localhost
+immix.es.port: 80
+immix.es.path: 
+immix.es.user: 
+immix.es.password: 
+
+######################### INFORMATION RETRIEVAL CHAIN ###########################
+#
+# Supported NER services: nerd, xtas, none --> TODO http://nl.dbpedia.org/spotlight/
+# Supported lemmatizers/taggers: TreeTagger, none
+# 
+#################################################################################
+
+service.ner: none
+service.lemmatizer: TreeTagger
+
+treetagger.cmd-dir: 
+
+file.stopwords: ../resources/text-analysis/stoplist_tno.tab
+file.idf: ../resources/text-analysis/top.wfreq
+
