@@ -70,7 +70,7 @@ Installing node modules
 
 **The easy way**
 
-download hugodrax.beeldengeluid.nl:/home/jblom/projects/labs/node_modules onto your own computer
+download the modules from the server (ask me)
 
 
 **The proper way**
