@@ -1,6 +1,6 @@
 <!doctype HTML>
 
-<html ng-app="fc" lang="nl">
+<html ng-app="woordnl" lang="nl">
 
 <head>
 	<meta name="description" content="">
@@ -12,7 +12,7 @@
 	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 	<meta http-equiv="pragma" content="no-cache" />
 	
-	<title>Feed Contextualizer</title>
+	<title>RadioPlus Context Browser</title>
 	
 	<!-- JQUERY -->
 	
@@ -25,12 +25,15 @@
 	
 	<!-- (BOOTSTRAP) CSS -->
 	
+	<!--
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-		
+	-->
 	<link rel="stylesheet" href="./woordnl-fc/css/style.css">
 	
 	<script src="./woordnl-fc/js/fc.js"></script>
+	<script src="./woordnl-fc/js/directives/feedList.js"></script>
+	<script src="./woordnl-fc/js/directives/radioItemList.js"></script>
 	<script src="./woordnl-fc/js/ui-bootstrap-tpls-0.10.0.min.js"></script>
 	
 	<link rel="shortcut icon" type="image/ico" href="./woordnl-fc/images/favicon.ico" />
@@ -45,54 +48,49 @@
 	<div class="container">
 	
 		<div class="page-header">
-			<h1>Contextualize your feeds <small>for real</small></h1>
+			<h1>RadioPlus Context Browser</h1>
 		</div>
 		
 		<!-- THIS SECTION CONTROLS THE FEED ITEMS AND THEIR RELATED CONTEXT LINKS-->
 		
 		<section ng-controller="feedCtrl">
 			
-			<div id="control_panel" class="col-md-12">
-				<!-- FORM TO ENTER A RSS FEED -->
-				
-				<form class="form-inline" role="form" ng-submit="processFeed()">
-					<div class="form-group">
-						<label for="feed">RSS URL</label>
+
+			<button class="btn btn-primary" ng-click="previousItems()">
+				<i class="glyphicon glyphicon-chevron-left"></i>
+			</button>
+	
+			<button class="btn btn-primary" ng-click="nextItems()">
+				<i class="glyphicon glyphicon-chevron-right"></i>
+			</button>
+
+			<div class="row">
+				<div id="control_panel" class="col-md-12">
+					<!-- FORM TO ENTER A RSS FEED -->
+					
+					<form class="form-inline" role="form" ng-submit="processFeed()">
+						<div class="form-group">
+							<label for="feed">RSS URL</label>
+						</div>
+						<div class="form-group">
+							<input id="feed" ng-model="feedURL" class="form-control" type="text" value="" size="60" placeholder="Plak een RSS url">
+						</div>				
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>						
+					</form>
+					
+					<!-- LOADING GRAPHIC -->
+								
+					<div id="loading" ng-show="loading == true">
+						<img src="./woordnl-fc/images/loading.gif" alt="Loading new feed items">
 					</div>
-					<div class="form-group">
-						<input id="feed" ng-model="feedURL" class="form-control" type="text" value="" size="60" placeholder="Plak een RSS url">
-					</div>				
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>					
-				</form>
-				
-				
-				<!-- AUDIO PLAYER (CURRENTLY ONLY USED FOR WOORD.NL SOURCES) preload="none"-->
-				
-				<audio id="audioPlayer" controls>
-					<source id="audioSource" type="audio/mpeg">
-					Your browser does not support the audio element.
-				</audio>
-				
-				<!-- LOADING GRAPHIC -->
-							
-				<div id="loading" ng-show="loading == true">
-					<img src="./woordnl-fc/images/loading.gif" alt="Loading new feed items">
 				</div>
 			</div>
 			
 			<!-- LIST OF (RSS) FEED ITEMS -->
-									
-			<div id="feed_holder" class="col-md-8">
-				<div class="feed_list" ng-include="'./woordnl-fc/templates/feed-list.html'"></div>
-			</div>	
-			
-			<!-- RELATED CONTEXT PANEL (AFFIX THIS LATER) -->
-			
-			<div id="context_holder" class="col-md-4">
-				<div class="context_panel" ng-include="'./woordnl-fc/templates/context-panel.html'"></div>				
-			</div>
+												
+			<feed-list></feed-list>
 			
 		</section>
 		

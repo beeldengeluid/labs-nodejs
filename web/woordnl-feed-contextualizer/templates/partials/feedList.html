@@ -1,0 +1,11 @@
+<div class="row">
+	<div class="col-md-4" ng-repeat="item in feedItems | slice:offset:offset+LIMIT track by $index">
+		<h3><a href="{{item.url}}" target="_new">{{item.title}}</a></h3>
+		<h6>
+			<strong>{{item.pubDate}}&nbsp;{{item.categories}}</strong>
+			<img ng-src="{{getSourceIconUrl(source)}}" class="source_icon" ng-repeat="source in item.sourceOrder" title="{{source}}"></img>
+		</h6>
+
+		<radio-item-list index="{{$index}}"></radio-item-list>
+	</div>	
+</div>
