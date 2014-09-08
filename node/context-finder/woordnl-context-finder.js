@@ -1,6 +1,6 @@
 var ElasticSearchClient = require('elasticsearchclient'),
 	queryAnalyzer = require('../tools/query-analyzer');
-
+// let's get started!
 module.exports = {
 	
 	_esClient : null,
