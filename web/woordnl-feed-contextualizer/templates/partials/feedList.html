@@ -1,11 +1,16 @@
 <div class="row">
+	<button id="button_back" class="btn btn-custom " ng-click="previousItems()">
+		<i class="glyphicon glyphicon-chevron-left"></i>
+	</button>
 	<div class="col-md-4" ng-repeat="item in feedItems | slice:offset:offset+LIMIT track by $index">
-		<h3><a href="{{item.url}}" target="_new">{{item.title}}</a></h3>
-		<h6>
+		<h3><a href="{{item.url}}" target="_new" title="{{item.summary}}">{{item.title}}</a></h3>
+		<h6>			
 			<strong>{{item.pubDate}}&nbsp;{{item.categories}}</strong>
-			<img ng-src="{{getSourceIconUrl(source)}}" class="source_icon" ng-repeat="source in item.sourceOrder" title="{{source}}"></img>
 		</h6>
 
 		<radio-item-list index="{{$index}}"></radio-item-list>
-	</div>	
+	</div>
+	<button id="button_forward" class="btn btn-custom" ng-click="nextItems()">
+		<i class="glyphicon glyphicon-chevron-right"></i>
+	</button>
 </div>

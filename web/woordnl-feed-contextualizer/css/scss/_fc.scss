@@ -1,3 +1,25 @@
+* {
+	box-sizing:border-box;
+}
+
+@mixin fontSettings() {
+	font-family: "chevin", "Helvetica", "Arial", sans-serif;
+	-webkit-font-smoothing:antialiased;
+}
+
+body {
+	background-color:black;
+}
+
+h1, h2, h3, h4, a {
+	@include fontSettings();
+	color:$woordnlBlue;
+}
+
+h5, h6 {
+	@include fontSettings();
+}
+
 a {
 	color:$woordnlBlue;
 	&:hover {
@@ -5,6 +27,41 @@ a {
 	}
 }
 
+.container {
+	@include border-radius(20px);
+	background-color:white;
+	margin:20px auto 0px auto;
+}
+
 .glyphicon {
 	cursor:pointer;
+}
+
+.btn-custom {
+	color: white;
+	background-color: $woordnlBlue;
+	border: 1px solid black;
+
+	&:hover {
+		color:$woordnlPurple;
+	}
+}
+
+#button_back {
+	position:fixed;
+	left:2em;
+}
+
+#button_forward {
+	position:fixed;
+	right:2em;
+}
+
+.balloon-graphic {
+	background: url("../images/woordnl-nav-sprite.png") no-repeat;
+	background-position: 0 -728px;
+	width: 230px;
+	height: 44px;
+	float:right;
+	margin-right:8px;
 }

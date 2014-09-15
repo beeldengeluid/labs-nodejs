@@ -115,3 +115,18 @@ Techinical references used for making this prototype
 
 TODO
 
+
+
+
+[woordnl-feed-contextualizer bower]
+
+Before being able to run the client side code. Please install bower and install the following packages from:
+
+/web/woordnl-feed-contextualizer
+
+	bower install jquery
+	bower install angular#1.2.24
+	bower install bootstrap
+	bower install bootstrap-sass-official
+	bower install chieffancypants/angular-hotkeys --save
+

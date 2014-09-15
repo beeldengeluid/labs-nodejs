@@ -1,11 +1,4 @@
-/**
- * TODO highlight matches
- * - glyphs fatsoenlijk maken
- * - sowieso de resultaten netjes opmaken
- * 
- */
-
-var fc = angular.module('woordnl', ['ui.bootstrap']);
+var fc = angular.module('woordnl', ['cfp.hotkeys']);
 
 //TODO create a client config
 var WOORDNL_MP3_BASE_URL = 'http://os-immix-w/woord-nl-mp3/';
@@ -18,7 +11,7 @@ fc.filter('slice', function() {
 
 
 /* Main controller */
-fc.controller('feedCtrl', function ($scope, $sce) {
+fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	
 	/****************************************************************************/
 	/* SCOPE VARIABLES */
@@ -33,6 +26,22 @@ fc.controller('feedCtrl', function ($scope, $sce) {
 	$scope.offset = 0;
 	$scope.LIMIT = 3;
 	
+	hotkeys.add({
+	    combo: 'left',
+	    description: 'Go back in time',
+	    callback: function() {
+			$scope.previousItems();
+		}
+	});
+
+	hotkeys.add({
+	    combo: 'right',
+	    description: 'Go forward in time',
+	    callback: function() {
+			$scope.nextItems();
+		}
+	});	
+
 	/****************************************************************************/
 	/* AJAX FUNCTIONS */
 	/****************************************************************************/
@@ -121,7 +130,7 @@ fc.controller('feedCtrl', function ($scope, $sce) {
 			console.debug(relatedData);
 			for(source in relatedData) {
 				var rd = relatedData[source].data;
-				if(rd) {
+				if(rd) { //more types of resources can be retrieved from the server
 					if (source == 'woordnl' && rd.hits && rd.hits.total > 0) { 					
 						md[source] = [];
 						for(i in rd.hits.hits) {
@@ -169,7 +178,9 @@ fc.controller('feedCtrl', function ($scope, $sce) {
 	}
 
 	$scope.nextItems = function() {
-		$scope.offset += $scope.LIMIT;	
+		if($scope.offset + $scope.LIMIT < $scope.feedItems.length) {
+			$scope.offset += $scope.LIMIT;
+		}
 	}
 	
 	/****************************************************************************/
@@ -205,14 +216,6 @@ fc.controller('feedCtrl', function ($scope, $sce) {
 			}
 		}
 		return html.join(' ');
-	}
-	
-	$scope.getTemplateUrl = function(source) {
-		return './woordnl-fc/templates/'+source+'-context.html';
-	}
-	
-	$scope.getSourceIconUrl = function(source) {
-		return './woordnl-fc/images/'+source+'.ico';
 	}
 	
 	
