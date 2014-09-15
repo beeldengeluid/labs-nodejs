@@ -20,8 +20,9 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	$scope.feedItems = [];
 	$scope.selectedFeedItem = null;
 	$scope.selectedSource = null;
-	$scope.lastMessage = 0;
-	$scope.loading = false;
+	$scope.lastMessage = 0;	
+	$scope.searched = false;
+	$scope.fetchButtonText = 'Analyseer';
 
 	$scope.offset = 0;
 	$scope.LIMIT = 3;
@@ -58,7 +59,6 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 				},
 				success: function (json) {
 					$scope.$apply($scope.storeFeedItems(json));
-					$scope.loading = false;
 					$scope.longPoll_feed();
 				}
 			});
@@ -67,6 +67,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	//submits the feed to the server
 	$scope.processFeed = function() {
 		$scope.loading = true;
+		$scope.fetchButtonText = 'Loading...';
 		$.ajax({
 			cache: false,
 			dataType: 'json',
@@ -74,10 +75,15 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			url: "/woordnl-fc/add_rss_feed?url=" + $scope.feedURL,			
 			error: function () {
 				console.debug('error');
-				$scope.loading = false;
+				$scope.$apply(function() {					
+					$scope.searched = true;
+				});
 			},
 			success: function (json) {
 				console.debug('success');
+				$scope.$apply(function() {					
+					$scope.searched = true;
+				});
 			}
 		});
 	}
@@ -88,7 +94,9 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 
 	//stores retrieved feed items in the client
 	$scope.storeFeedItems = function(json) {
+		console.debug(json);
 		$scope.safeApply(function() {
+			$scope.offset = 0;
 			//Loop door alle (RSS) feed items
 			for(var i=0;i<json.length;i++) {
 				var d = json[i].timestamp ? new Date(json[i].timestamp) : null;
@@ -110,9 +118,10 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 					$scope.lastMessage = json[i].timestamp;
 				}
 			}
-		});
-		console.debug($scope.feedItems);
-	}
+			$scope.searched = true;
+			$scope.fetchButtonText = 'Analyseer';
+		});				
+	}	
 	
 	$scope.getContextQueries = function(relatedData) {
 		var qs = {};
@@ -127,7 +136,6 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	$scope.getFormattedRelatedMetadata = function(relatedData) {
 		var md = {};
 		if(relatedData) {
-			console.debug(relatedData);
 			for(source in relatedData) {
 				var rd = relatedData[source].data;
 				if(rd) { //more types of resources can be retrieved from the server

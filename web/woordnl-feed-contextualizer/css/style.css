@@ -8044,28 +8044,33 @@ body {
 }
 
 /* line 14, scss/_fc.scss */
+header {
+  margin-top: 10px;
+}
+
+/* line 18, scss/_fc.scss */
 h1, h2, h3, h4, a {
   font-family: "chevin", "Helvetica", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #00c9ff;
 }
 
-/* line 19, scss/_fc.scss */
-h5, h6 {
+/* line 23, scss/_fc.scss */
+h5, h6, p {
   font-family: "chevin", "Helvetica", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* line 23, scss/_fc.scss */
+/* line 27, scss/_fc.scss */
 a {
   color: #00c9ff;
 }
-/* line 25, scss/_fc.scss */
+/* line 29, scss/_fc.scss */
 a:hover {
   color: #9b00db;
 }
 
-/* line 30, scss/_fc.scss */
+/* line 34, scss/_fc.scss */
 .container {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -8074,37 +8079,50 @@ a:hover {
   border-radius: 20px;
   background-color: white;
   margin: 20px auto 0px auto;
+  min-height: 280px;
 }
 
-/* line 36, scss/_fc.scss */
+/* line 41, scss/_fc.scss */
 .glyphicon {
   cursor: pointer;
 }
 
-/* line 40, scss/_fc.scss */
+/* line 45, scss/_fc.scss */
 .btn-custom {
   color: white;
   background-color: #00c9ff;
-  border: 1px solid black;
+  border: 1px solid transparant;
 }
-/* line 45, scss/_fc.scss */
+/* line 50, scss/_fc.scss */
 .btn-custom:hover {
   color: #9b00db;
 }
+/* line 53, scss/_fc.scss */
+.btn-custom:visited {
+  color: #9b00db;
+}
 
-/* line 50, scss/_fc.scss */
+/* line 58, scss/_fc.scss */
 #button_back {
   position: fixed;
   left: 2em;
 }
 
-/* line 55, scss/_fc.scss */
+/* line 63, scss/_fc.scss */
 #button_forward {
   position: fixed;
   right: 2em;
 }
 
-/* line 60, scss/_fc.scss */
+/* line 68, scss/_fc.scss */
+.logo {
+  background: url("../images/woordnl-nav-sprite.png") no-repeat;
+  background-position: 0 -336px;
+  height: 96px;
+  width: 463px;
+}
+
+/* line 75, scss/_fc.scss */
 .balloon-graphic {
   background: url("../images/woordnl-nav-sprite.png") no-repeat;
   background-position: 0 -728px;
@@ -8112,4 +8130,34 @@ a:hover {
   height: 44px;
   float: right;
   margin-right: 8px;
+}
+
+/* line 84, scss/_fc.scss */
+.woordnl-link:after {
+  position: absolute;
+  content: '';
+  width: 32px;
+  height: 32px;
+  right: 20px;
+  bottom: 22px;
+  background: url("../images/woordnl-see-sprite.png") no-repeat;
+  background-position: 0 -3640px;
+}
+
+/* line 95, scss/_fc.scss */
+.introduction {
+  display: block;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #00c9ff;
+  border-radius: 0px !important;
+}
+
+/* line 103, scss/_fc.scss */
+.alert-custom {
+  display: block;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #00c9ff;
+  border-radius: 0px !important;
 }

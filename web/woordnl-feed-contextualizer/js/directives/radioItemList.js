@@ -6,7 +6,7 @@ angular.module('woordnl').directive('radioItemList', function() {
 		replace : true,
 
 		link: function ($scope, $element, $attributes) {
-			$scope.index = $scope.$eval($attributes.index);
+			$scope.itemId = $attributes.itemId;
         },
 
 		templateUrl : './woordnl-fc/templates/partials/radioItemList.html'	

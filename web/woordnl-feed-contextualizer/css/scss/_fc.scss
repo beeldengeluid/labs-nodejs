@@ -8,7 +8,11 @@
 }
 
 body {
-	background-color:black;
+	background-color:black;	
+}
+
+header {
+	margin-top:$defaultMargin;
 }
 
 h1, h2, h3, h4, a {
@@ -16,7 +20,7 @@ h1, h2, h3, h4, a {
 	color:$woordnlBlue;
 }
 
-h5, h6 {
+h5, h6, p {
 	@include fontSettings();
 }
 
@@ -28,9 +32,10 @@ a {
 }
 
 .container {
-	@include border-radius(20px);
+	@include border-radius($defaultMargin * 2);
 	background-color:white;
 	margin:20px auto 0px auto;
+	min-height:280px;
 }
 
 .glyphicon {
@@ -40,9 +45,12 @@ a {
 .btn-custom {
 	color: white;
 	background-color: $woordnlBlue;
-	border: 1px solid black;
+	border: 1px solid transparant;
 
 	&:hover {
+		color:$woordnlPurple;
+	}
+	&:visited {
 		color:$woordnlPurple;
 	}
 }
@@ -57,6 +65,13 @@ a {
 	right:2em;
 }
 
+.logo {
+	background: url("../images/woordnl-nav-sprite.png") no-repeat;
+	background-position: 0 -336px;
+	height: 96px;
+	width: 463px;
+}
+
 .balloon-graphic {
 	background: url("../images/woordnl-nav-sprite.png") no-repeat;
 	background-position: 0 -728px;
@@ -64,4 +79,31 @@ a {
 	height: 44px;
 	float:right;
 	margin-right:8px;
+}
+
+.woordnl-link:after {
+	position:absolute;
+	content:'';
+	width: 32px;
+	height: 32px;
+	right:20px;
+	bottom:	22px;
+	background: url("../images/woordnl-see-sprite.png") no-repeat;
+	background-position: 0 -3640px;
+}
+
+.introduction {
+	display:block;
+	padding:$defaultMargin * 2;
+	margin-top:$defaultMargin * 2;
+	background-color:$woordnlBlue;
+	border-radius:0px !important;
+}
+
+.alert-custom {
+	display:block;
+	padding:$defaultMargin * 2;
+	margin-top:$defaultMargin * 2;
+	background-color:$woordnlBlue;
+	border-radius:0px !important;
 }

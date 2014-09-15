@@ -36,9 +36,10 @@
 
 	<div class="container">
 
-		<div class="page-header">
-			<h1>RadioPlus Context Browser</h1>
-		</div>
+		<header>
+			<div class="logo"></div>
+			<h3>RadioPlus Context Browser</h3>
+		</header>
 
 		<!-- THIS SECTION CONTROLS THE FEED ITEMS AND THEIR RELATED CONTEXT LINKS-->
 
@@ -46,8 +47,6 @@
 
 			<div class="row">				
 				<div id="control_panel" class="col-md-12">
-					<!-- FORM TO ENTER A RSS FEED -->
-
 					<form class="form-inline" role="form" ng-submit="processFeed()">
 						<div class="form-group">
 							<label for="feed">RSS URL</label>
@@ -56,20 +55,20 @@
 							<input id="feed" ng-model="feedURL" class="form-control" type="text" value="" size="60" placeholder="Plak een RSS url">
 						</div>				
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</div>				
-					</form>
-
-					<!-- LOADING GRAPHIC -->
-
-					<div id="loading" ng-show="loading == true">
-						<img src="./woordnl-fc/images/loading.gif" alt="Loading new feed items">
-					</div>
+							<button id="btn_submit" type="submit" class="btn btn-custom">{{fetchButtonText}}</button>
+						</div>
+					</form>										
 				</div>
 				
 			</div>
 
+			<p class="introduction" ng-if="feedItems.length == 0 && !searched">
+				Gebruik het bovenstaande formulier om een RSS URL te analyseren op gerelateerde content in Woord.nl
+			</p>
 
+			<p ng-if="feedItems.length == 0 && searched">
+				<span class="alert alert-custom">Geen resultaten gevonden, probeert u het a.u.b. met een andere RSS feed</span>
+			</p>
 			<!-- LIST OF (RSS) FEED ITEMS -->
 
 			<feed-list></feed-list>
