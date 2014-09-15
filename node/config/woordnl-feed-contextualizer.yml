@@ -35,5 +35,5 @@ service.lemmatizer: TreeTagger
 treetagger.cmd-dir: 
 
 file.stopwords: ../resources/text-analysis/stoplist_tno.tab
-file.idf: ../resources/text-analysis/top.wfreq
+file.idf: ../resources/text-analysis/top.wfreq.idf
 
