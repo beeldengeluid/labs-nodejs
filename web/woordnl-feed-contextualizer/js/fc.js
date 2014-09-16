@@ -46,11 +46,13 @@ fc.controller('feedCtrl', function ($scope, $sce) {
 	
 	$scope.processFeed = function() {
 		$scope.loading = true;
+		var myUrl = "/woordnl-fc/add_rss_feed?url=" + encodeURIComponent($scope.feedURL);
+		alert( myUrl);
 		$.ajax({
 			cache: false,
 			dataType: 'json',
 			type: "GET",
-			url: "/woordnl-fc/add_rss_feed?url=" + $scope.feedURL,			
+			url: "/woordnl-fc/add_rss_feed?url=" + encodeURIComponent($scope.feedURL),
 			error: function () {
 				console.debug('error');
 				$scope.loading = false;
@@ -68,7 +70,7 @@ fc.controller('feedCtrl', function ($scope, $sce) {
 			dataType: 'text',
 			type: "POST",
 			data: json,
-			url: "/woordnl-fc/add_feed_item?since=" + $scope.lastMessage,			
+			url: "/woordnl-fc/add_feed_item?since=" + $scope.lastMessage,
 			error: function () {
 				console.debug('error');
 			},
@@ -195,7 +197,7 @@ fc.controller('feedCtrl', function ($scope, $sce) {
 	
 	$scope.selectFeedItem = function(index) {
 		$scope.selectedFeedItem = $scope.feedItems[index];
-				
+		
 		if($scope.selectedFeedItem.related) {
 			$scope.selectedSource = $scope.selectedFeedItem.sourceOrder[0];
 		}
