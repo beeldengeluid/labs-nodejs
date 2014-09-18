@@ -196,7 +196,7 @@ var feed = new function () {
 	var callbacks = [];
 	var analysis_requests = [];
 
-	this.appendRSSFeed = function(feedURL) {
+	this.appendRSSFeed = function(feedURL) {		
 		parser.parseURL(feedURL, {}, function(err, out) {
 			if(out) {
 				//Add the feed items to the list of messages
