@@ -1,11 +1,14 @@
 fs = require('fs');
 sanitizeHtml = require('sanitize-html');
 
+wmo = require('./woordnl-mapping-object');
+
 module.exports = {
-		
+	
 	wordsGrandTotal : -1,
-		
+
 	readStopWordsFile : function(stopWordsFile) {
+
 		if (!stopWordsFile) {
 			return null;
 		}       		
@@ -54,7 +57,7 @@ module.exports = {
 		return idf;
 	},
 				
-	getMostImportantWords : function(text, stopWords, IDFScores, isCleanText, minwordlength, simpleList) {		
+	getMostImportantWords : function(text, stopWords, IDFScores, isCleanText, minwordlength, simpleList) {
 	    if(text == null || text == '') {
 	        return null;        
 	    }
@@ -63,63 +66,73 @@ module.exports = {
 	    var results_sorted = null;
 	    var allwords = {};
 	    var results = [];
-	    var totalWordCount = 0;
-	    
+
+	    console.log('=============== GetMostImportantWords');
 	    //delete all punctuation marks from the text
 	    if(!isCleanText) {
 	    	text = this.cleanupText(text);
 	    }
-	    
+
 	    //split up the text in separate words and calculate the frequency of each word (+ the total number of words)
-	    var word_arr = text.split(' ');	    
-	    
-		/*
-	    //for tf-idf calculations
-	    if(this.wordsGrandTotal == -1) {
-	    	for(key in IDFScores) {
-	    		this.wordsGrandTotal += IDFScores[key];
-	    	}
-	    }
-		*/
-		
-	    var thisDocGrandTotal = word_arr.length;
-	    for(key in word_arr) {
+	    var textWords = text.split(/[ ,]+/);
+		for (i=0;i<textWords.length;i++) {
+			word = textWords[i].toLowerCase();
 	        //collect overall word statistics
-	        if (!allwords[key]) {
-	            allwords[key] = 1
+	        if (!allwords[word]) {
+	            allwords[word] = 1
 	        } else {
-	            allwords[key] += 1
+	            allwords[word] += 1
 	        }
 	    }
-	    
+		/*
+		for(key in allwords) {
+			console.log(key + ':'+allwords[key]);
+		}
+		*/
+
 	    //if there are IDF scores available use these, otherwise simply use the term frequencies of this document
 	    IDFScores = IDFScores ? IDFScores : allwords;
 	    
 	    //determine the final relevancy score for each word
-	    for (key in allwords) { // key = a word
+	    for (word in allwords) {
 	        //Check for stopwords and wordlength.
-	        if(stopWords && stopWords[key.toLowerCase()]) {
+	        if(stopWords && stopWords[word]) {
 	            continue;
 	        }
-	        if(key.length < minwordlength) {
+	        if(word.length < minwordlength) {
 	            continue;
 	        }
 	        
 	        //term frequency-inverse document frequency.
-	        var key_freq = allwords[key];
-            var tf = parseFloat(key_freq) / thisDocGrandTotal;
-            var idf = IDFScores[key]
-			var tfidf = tf*idf
+	        var wordFreq = allwords[word];
+            var tf = parseFloat(wordFreq) / textWords.length;
 			
-			// [wm] var lengthRelevancy = (minwordlength - parseFloat(key.length)/minwordlength )) / minwordlength
+			var idf = IDFScores[word];
+			if (IDFScores[word] === undefined) {
+				console.log('No IDF for '+word);
+				idf = 1;	// how to handle words that have no idf? must be important words...
+			}
 			
-            var largedecision = tfidf * key.length;
-            results.push([key, largedecision, key_freq]);        
+			var tfidf = tf*idf;
+			
+			// [wm] var lengthRelevancy = (minwordlength - parseFloat(word.length)/minwordlength )) / minwordlength
+			
+            var largedecision = tfidf * word.length;
+            results.push([word, largedecision, wordFreq]);
 	    }
+		//print results
+		for (i in results) {
+			console.log(results[i]);
+		}
 
-	    //sort the list by highest score
-	    results_sorted = results.sort(function(a, b){return b-a});
-
+			//sort the list by highest score
+	    results_sorted = results.sort(function(a, b){return b[1]-a[1]});
+		// print results sorted
+		/*
+		for (result in results_sorted) {
+			console.log(result);
+		}*/
+		
 		/*
 	    //sort the list by highest score
 	    results_sorted = results.sort(function(a, b) {
@@ -148,7 +161,7 @@ module.exports = {
 			allowedTags: [],
 			allowedAttributes: {}
 		});
-	    clean = clean.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`'~()]/g,"");
+	    clean = clean.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`'~()\"]/g,"");
 		return clean;
 	}
   
