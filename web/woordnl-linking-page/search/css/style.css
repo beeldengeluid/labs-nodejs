@@ -169,7 +169,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 ============================================================ */
 input.cmn-toggle-yes-no + label {
   padding: 2px;
-  width: 120px;
+  width: 140px;
   height: 60px;
 }
 input.cmn-toggle-yes-no + label:before, input.cmn-toggle-yes-no + label:after {
@@ -182,11 +182,13 @@ input.cmn-toggle-yes-no + label:before, input.cmn-toggle-yes-no + label:after {
   color: #fff;
   font-family: "Roboto Slab", serif;
   font-size: 20px;
+  font-weight: bold;
   text-align: center;
   line-height: 60px;
 }
 input.cmn-toggle-yes-no + label:before {
-  background-color: #dddddd;
+  background-color: #8ce196;
+  /* background-color: #dddddd; */
   content: attr(data-off);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transition: -moz-transform 0.5s;

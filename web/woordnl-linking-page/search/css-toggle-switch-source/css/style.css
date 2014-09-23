@@ -169,7 +169,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 ============================================================ */
 input.cmn-toggle-yes-no + label {
   padding: 2px;
-  width: 120px;
+  width: 200px;
   height: 60px;
 }
 input.cmn-toggle-yes-no + label:before, input.cmn-toggle-yes-no + label:after {
@@ -186,7 +186,7 @@ input.cmn-toggle-yes-no + label:before, input.cmn-toggle-yes-no + label:after {
   line-height: 60px;
 }
 input.cmn-toggle-yes-no + label:before {
-  background-color: #dddddd;
+  background-color: #8ce196;
   content: attr(data-off);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transition: -moz-transform 0.5s;

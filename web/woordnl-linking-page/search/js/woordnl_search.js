@@ -23,9 +23,9 @@ function searchIN ()
 			function(data){
 				jsonStr=data;
 				count=jsonStr.ThemData.hits.total;
-				count="<b>"+count+"</b>"
+				count="<h1>"+count+" resultaaten</h1>"
 				//console.log("count!");
-				//console.log(count);
+				console.log(data);
 				$("#resultq").html(count);
 				$("#Themresults").html("");
 				
@@ -43,7 +43,8 @@ function searchIN ()
 					publish=mapping[file].publishStart;
 					broadcast=mapping[file].broadcasters;
 					duration=mapping[file].duration;
-			
+					//console.log(mapping[file].tags);
+					//<span class="highlight"> Test <em class="hlt1">Highlight</em></span> 
 					html='  \
 						<a href="http://rdlabs.beeldengeluid.nl/woordnl-rc/index_embed.html?urn='+urn+'">\
 						<div class="result program" data-urn="'+urn+'"> \
@@ -51,10 +52,9 @@ function searchIN ()
 						<div class="visualisation">\
 						</div><span class="title">'+title+'\
 						<span class="publishDate">'+publish+'</span>\
-						</span><span class="subTitle">'+subtitle+'</span>\
-						<div class="highlights"><span class="highlight"> Test <em class="hlt1">Highlight</em></span> \
+						</span><span class="subTitle">'+subtitle+'</span> <div class="highlights">\
 						</div>\
-						<div class="meta"><span class="duration">'+duration+'</span><span class="genres">Test Genre</span>\
+						<div class="meta"><span class="duration">'+duration+'</span><span class="genres">Interview</span>\
 						<span class="broadcasters"> \
 						<span class="broadcaster">'+broadcast+'</span></span> </div></div></a> ';
 					if (gg)
@@ -63,7 +63,8 @@ function searchIN ()
 							{
 						files.push(asrs[1]);
 						$("#Themresults").append(html);
-						$("#resultq").html(files.length);
+						count="<h1>"+files.length+" resultaaten</h1>"
+						$("#resultq").html(count);
 							}
 					}
 					else	{
