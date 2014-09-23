@@ -41,7 +41,7 @@ function testModule() {
 		break;
 	}
 };
-testModule();
+// testModule();
 
 function getTitle(key, type) {
 	var type = type ? type : "MAIN";
