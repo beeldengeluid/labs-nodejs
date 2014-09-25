@@ -62,6 +62,11 @@ var proxy = httpProxy.createProxyServer({});
 var express = require('express');
 var app = express();
 
+proxy.on('error', function(err) {
+	console.log('Proxy error:');
+	console.log(err);
+});
+
 /* Is called in order to add an entire RSS feed to the list of items */
 app.get('/add_rss_feed', function(req, res) {
 	proxy.web(req, res, { target: MESSAGE_SERVER });
@@ -94,7 +99,7 @@ app.listen(CONFIG['proxy-server.port'], function(err) {
 	    //Set our server's uid to that user
 		if (uid) {
 			process.setuid(uid);
-		}	
+		}
 		console.log('Server\'s UID is now ' + process.getuid());
 	}
 });
@@ -191,7 +196,7 @@ var feed = new function () {
 	var callbacks = [];
 	var analysis_requests = [];
 
-	this.appendRSSFeed = function(feedURL) {
+	this.appendRSSFeed = function(feedURL) {		
 		parser.parseURL(feedURL, {}, function(err, out) {
 			if(err) {
 				console.log(err)
