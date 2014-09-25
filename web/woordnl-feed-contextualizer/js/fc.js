@@ -257,7 +257,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		html.push('</span>');
 		html.push('<br>');
 		for (key in item.entities) {
-			html.push('<span class="ne_type">' + key + '</span>:&nbsp;');			
+			html.push('<span class="ne_type">' + key + '</span>:&nbsp;');
 			for(var i=0;i<item.entities[key].length;i++) {
 				html.push(item.entities[key][i] + ' ');
 			}

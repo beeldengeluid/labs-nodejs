@@ -153,7 +153,8 @@ wnl.controller('playerCtrl', function ($scope) {
 				});
 				
 				//play the file
-				$scope.playFragment(WOORDNL_MP3_BASE_URL + '/' + id.split('.')[1] + '.mp3', 0);
+				var mp3 = $scope.mp3 ? $scope.mp3 : WOORDNL_MP3_BASE_URL + '/' + id.split('.')[1] + '.mp3'
+				$scope.playFragment(mp3, 0);
 			}
 		});
 	}	
@@ -421,13 +422,25 @@ wnl.controller('playerCtrl', function ($scope) {
 	 * INITIALIZATION
 	 *******************************************************************/
 	
-	$scope.checkLoading = function() {
+	$scope.checkLoading = function() {		
 		if (!$('.player-canvas').exists()) {
 			setTimeout($scope.checkLoading, 300);
 		} else {
 			$scope.audioElementId = $('.player-canvas').attr('id');
+			
 			//get this from the url
+			var urlParams = $scope.getParamsFromUrl();
+			var urn = urlParams.urn.replace(/%3A/g, ':');
+			$scope.mp3 = urnMapping[urn];
+			var pomsID = $scope.mp3.substring('http://download.omroep.nl/vpro/'.length, $scope.mp3.indexOf('.mp3'));
+			console.debug(pomsID);
 			$scope.transcript = '230.39847574.asr1.semanticized.hyp';
+			//$scope.transcript = woordnlMapping[pomsId].
+
+			console.debug('URN: ' + urn);
+			console.debug('Found a mp3: ' + $scope.mp3);
+			
+			
 			
 			//alert('Going to load some pretty nifty stuff');
 			$scope.initPopcorn();
@@ -435,6 +448,27 @@ wnl.controller('playerCtrl', function ($scope) {
 			$scope.setTranscript();
 			//231.41137297.asr1.semanticized.hyp
 		}
+	}
+
+	$scope.getParamsFromUrl = function () {  
+		var params = {};
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0;i<vars.length;i++) {
+			var pair = vars[i].split("=");
+			// If first entry with this name
+			if (typeof params[pair[0]] === "undefined") {
+      			params[pair[0]] = pair[1];
+				// If second entry with this name
+    		} else if (typeof params[pair[0]] === "string") {
+      			var arr = [ params[pair[0]], pair[1] ];
+      			params[pair[0]] = arr;
+    			// If third or later entry with this name
+    		} else {
+      			params[pair[0]].push(pair[1]);
+    		}
+  		}  		
+    	return params;
 	}
 
 	$scope.checkLoading();	
