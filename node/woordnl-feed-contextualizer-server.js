@@ -62,6 +62,11 @@ var proxy = httpProxy.createProxyServer({});
 var express = require('express');
 var app = express();
 
+proxy.on('error', function(err) {
+	console.log('Proxy error:');
+	console.log(err);
+});
+
 /* Is called in order to add an entire RSS feed to the list of items */
 app.get('/add_rss_feed', function(req, res) {
 	proxy.web(req, res, { target: MESSAGE_SERVER });
@@ -94,7 +99,7 @@ app.listen(CONFIG['proxy-server.port'], function(err) {
 	    //Set our server's uid to that user
 		if (uid) {
 			process.setuid(uid);
-		}	
+		}
 		console.log('Server\'s UID is now ' + process.getuid());
 	}
 });
@@ -191,9 +196,12 @@ var feed = new function () {
 	var callbacks = [];
 	var analysis_requests = [];
 
-	this.appendRSSFeed = function(feedURL) {
+	this.appendRSSFeed = function(feedURL) {		
 		parser.parseURL(feedURL, {}, function(err, out) {
-			if(out) {
+			if(err) {
+				console.log(err)
+			} 
+			else if(out) {
 				//Add the feed items to the list of messages
 				for (var i=0;i<out['items'].length;i++) {
 					this.addProcessedMessage(out['items'][i]);
@@ -212,8 +220,10 @@ var feed = new function () {
 	this.addProcessedMessage = function(msg) {
 		//Set the uuid of each message
 		msg.id = uuid.v4();
+		//Get the most notable words ordered by 'importance' (for details, see text-analyzer.js)
+		console.log(msg.title+'\n');
+		console.log(msg.summary+'\n');
 		
-		//Get the most notable words ordered by 'importance' (for details, see tex-tanalyzer.js)
 		var cleanText = textAnalyzer.cleanupText(msg.title + ' ' + msg.summary);
 		msg.wordFreqs = textAnalyzer.getMostImportantWords(cleanText, STOP_WORDS, IDF_SCORES, true);
 		
@@ -228,16 +238,17 @@ var feed = new function () {
 		} else {
 			this.messageAnalyzed(msg, {'entities' : {}, 'sourceText' : ''});
 		}
-		
 	}
 	
-	this.messageAnalyzed = function(msg, analysis) {		
-		var query = {};		
+	this.messageAnalyzed = function(msg, analysis) {
+		var query = {};
 		msg.entities = analysis ? analysis.entities : {};
 		
 		//construct the query object
-		query = {'entities' : msg.entities, 'wordFreqs' : msg.wordFreqs};				
-		
+		query = {'entities' : msg.entities, 'wordFreqs' : msg.wordFreqs};
+		for (key in msg.wordFreqs) {
+			console.log(msg.wordFreqs[key]);
+		}
 		var sources = [];
 		sources.push.apply(sources, CONFIG['context-sources']);
 		
@@ -304,7 +315,7 @@ var feed = new function () {
 		// close out requests older than 15 seconds
 		var expiration = new Date().getTime() - CONFIG['long-poll.interval'];
 		for (var i = callbacks.length - 1; i >= 0; i--) {
-			if (callbacks[i].timestamp < expiration) {				
+			if (callbacks[i].timestamp < expiration) {
 				callbacks[i].callback("");
 				callbacks.splice(i, 1);
 			}

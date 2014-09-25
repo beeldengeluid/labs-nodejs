@@ -1,0 +1,32 @@
+<div class="row">
+	<button ng-show="feedItems.length > 0" id="button_back" class="btn btn-custom " ng-click="previousItems()">
+		<i class="glyphicon glyphicon-chevron-left"></i>
+	</button>
+	<div class="col-md-4" ng-repeat="item in feedItems | slice:offset:offset+LIMIT track by $index">
+		<h3><a href="{{item.url}}" target="_new" title="{{item.summary}}">{{item.title}}</a></h3>
+		<h6>			
+			<strong>{{item.pubDate}}&nbsp;{{item.categories}}</strong>
+		</h6>
+
+		<div class="row">
+
+	
+			<div class="col-md-12" ng-repeat="md in item.related['woordnl']">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<!--<img src="./woordnl-fc/images/woordnl.ico">-->
+						{{md.contentURL}}
+					</div>
+					<div class="panel-body woordnl-link">
+						{{md.snippet}} 				
+					</div>
+				</div>
+				
+			</div>
+
+		</div>
+	</div>
+	<button ng-show="feedItems.length > 0" id="button_forward" class="btn btn-custom" ng-click="nextItems()">
+		<i class="glyphicon glyphicon-chevron-right"></i>
+	</button>
+</div>

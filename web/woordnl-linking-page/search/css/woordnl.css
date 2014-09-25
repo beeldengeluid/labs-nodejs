@@ -1,0 +1,58 @@
+/* woord.nl CSS */
+
+#entities {
+ margin:1em 0em;
+}
+
+#results {
+	margin:1em 0em;
+	padding:0px;
+	width:50%;
+}
+
+.asr-file {
+	list-style:none;	
+}
+
+.asr-file > .badge {
+	float:right;
+	margin-right: 15px;
+	background-color:#428bca;
+}
+
+.asr-file > .link {
+	margin-left: 15px;
+}
+
+.asr-chunk {
+	cursor:pointer;
+}
+
+#asr_transcript {
+	margin-top:1em;
+}
+
+.link:hover {
+	text-decoration:underline;
+	cursor:pointer;	
+}
+
+.highlight {
+	font-weight:bold;
+}
+
+.entity {
+	background-color:crimson;
+	color:white;
+}
+
+.tag.entity {
+	display:inline;
+	background-color:white;
+	color:black;
+	margin:0px 5px 5px 0px;
+}
+
+.dbpedia, .link {
+	color:dodgerblue;
+}
