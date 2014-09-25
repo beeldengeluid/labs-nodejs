@@ -12,14 +12,12 @@
 		</div>
 
 		<div class="row divider">
-			&nbsp;{{item.queries}}
+			&nbsp;
 		</div>
 
 		<div class="row woordnl-items">
-	
 			<div class="col-md-12" ng-repeat="md in item.related['woordnl']">
 				<div class="panel panel-default">
-					{{md.snippet}}
 					<div class="panel-heading">
 						<span class="title" ng-repeat="t in md.mapping.titles">
 							{{t.value}}
