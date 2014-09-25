@@ -156,12 +156,15 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 						var mapping = null;
 						var added = {};
 						var id = null;
-						for(i in rd.hits.hits) {
+						var asrId = null;
+						for(i in rd.hits.hits) {							
 							id = rd.hits.hits[i]._source.asr_file;
+							asrId = id.split('.')[1];
 							if(!added[id]) {
-								mapping = $scope.getWoordnlMapping(id);
+								mapping = $scope.getWoordnlMapping(asrId);
 								md[source].push({
-									id : rd.hits.hits[i]._source.asr_file,
+									id : id,
+									asrId : asrId,
 									mapping : mapping,
 									contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
 									snippet : rd.hits.hits[i]._source.words,
@@ -178,17 +181,17 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		return md;
 	}
 
-	$scope.getWoordnlMapping = function(id) {		
-		var pomsId = id.split('.')[1];
-		mapping = woordnlMapping[pomsId];
+	$scope.getWoordnlMapping = function(asrId) {
+		mapping = woordnlMapping[asrId];
 		if(mapping) {
 			mapping.sortDate = mapping.sortDate.split('T')[0].replace(/-/g, '/');
 		} else {
-			var date = pomsId.indexOf('-') == -1 ? 'Geen uitzenddatum' : pomsId.substring(0, pomsId.indexOf('-'));
+			var date = asrId.indexOf('-') == -1 ? 'Geen uitzenddatum' : asrId.substring(0, asrId.indexOf('-'));
 			date = date.substring(0,4) + '/' + date.substring(4, 6) + '/' + date.substring(6, 8);
 			mapping = {			
-				titles : [{value : pomsId}],
-				sortDate : date
+				titles : [{value : asrId}],
+				sortDate : date,
+				pomsId : null//no pomsId for there items
 			};
 		}
 		

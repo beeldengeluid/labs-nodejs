@@ -8199,3 +8199,11 @@ a:hover {
 .woordnl-items .title:first-child {
   font-weight: bold;
 }
+/* line 29, scss/_feedItems.scss */
+.woordnl-items .panel {
+  cursor: pointer;
+}
+/* line 32, scss/_feedItems.scss */
+.woordnl-items a {
+  color: black;
+}
