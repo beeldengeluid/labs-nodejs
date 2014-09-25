@@ -58,7 +58,9 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 					setTimeout($scope.longPoll_feed, 10*1000);
 				},
 				success: function (json) {
-					$scope.$apply($scope.storeFeedItems(json));
+					if(json != '') {
+						$scope.$apply($scope.storeFeedItems(json));
+					}
 					$scope.longPoll_feed();
 				}
 			});
@@ -67,8 +69,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	//submits the feed to the server
 	$scope.processFeed = function() {
 		$scope.loading = true;
-		$scope.fetchButtonText = 'Loading...';
-		alert($scope.feedURL);
+		$scope.fetchButtonText = 'Loading...';		
 		$.ajax({
 			cache: false,
 			dataType: 'json',
@@ -76,7 +77,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			url: "/woordnl-fc/add_rss_feed?url=" + encodeURIComponent($scope.feedURL),
 			error: function () {
 				console.debug('error');
-				$scope.$apply(function() {					
+				$scope.$apply(function() {
 					$scope.searched = true;
 				});
 			},
@@ -102,19 +103,21 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			for(var i=0;i<json.length;i++) {
 				var d = json[i].timestamp ? new Date(json[i].timestamp) : null;
 				var md = $scope.getFormattedRelatedMetadata(json[i].related);
-				$scope.feedItems.unshift({
-					id : json[i].id,
-					title: typeof json[i].title == 'string' ? $sce.trustAsHtml(json[i].title) : 'Geen titel',
-					summary : typeof json[i].summary == 'string' ? $sce.trustAsHtml(json[i].summary) : 'Geen omschrijving',
-					pubDate : d ? d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() : '',
-					url : json[i].url,
-					categories : typeof json[i].categories == 'string' ? json[i].categories : '',
-					wordFreqs : json[i].wordFreqs,
-					entities : json[i].entities,
-					related : md,
-					sourceOrder : $scope.getSourceOrder(md),
-					queries : $scope.getContextQueries(json[i].related)
-				});
+				if(md) {
+					$scope.feedItems.unshift({
+						id : json[i].id,
+						title: typeof json[i].title == 'string' ? $sce.trustAsHtml(json[i].title) : 'Geen titel',
+						summary : typeof json[i].summary == 'string' ? $sce.trustAsHtml(json[i].summary) : 'Geen omschrijving',
+						pubDate : d ? d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() : '',
+						url : json[i].url,
+						categories : typeof json[i].categories == 'string' ? json[i].categories : '',
+						wordFreqs : json[i].wordFreqs,
+						entities : json[i].entities,
+						related : md,
+						sourceOrder : $scope.getSourceOrder(md),
+						queries : $scope.getContextQueries(json[i].related)
+					});
+				}
 				if($scope.lastMessage < json[i].timestamp) {
 					$scope.lastMessage = json[i].timestamp;
 				}
@@ -135,20 +138,31 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	}
 	
 	$scope.getFormattedRelatedMetadata = function(relatedData) {
-		var md = {};
+		var md = null;
 		if(relatedData) {
 			for(source in relatedData) {
 				var rd = relatedData[source].data;
 				if(rd) { //more types of resources can be retrieved from the server
-					if (source == 'woordnl' && rd.hits && rd.hits.total > 0) { 					
+					if (source == 'woordnl' && rd.hits && rd.hits.total > 0) {
+						md = {};
 						md[source] = [];
+						var mapping = null;
+						var added = {};
+						var id = null;
 						for(i in rd.hits.hits) {
-							md[source].push({
-								contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
-								snippet : rd.hits.hits[i]._source.words,
-								start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
-								score : rd.hits.hits[i]._score
-							});
+							id = rd.hits.hits[i]._source.asr_file;
+							if(!added[id]) {
+								mapping = $scope.getWoordnlMapping(id);
+								md[source].push({
+									id : rd.hits.hits[i]._source.asr_file,
+									mapping : mapping,
+									contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
+									snippet : rd.hits.hits[i]._source.words,
+									start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
+									score : rd.hits.hits[i]._score
+								});
+								added[id] = true;
+							}
 						}
 					} 
 				}
@@ -156,6 +170,23 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		}
 		return md;
 	}
+
+	$scope.getWoordnlMapping = function(id) {		
+		var pomsId = id.split('.')[1];
+		mapping = woordnlMapping[pomsId];
+		if(mapping) {
+			mapping.sortDate = mapping.sortDate.split('T')[0].replace(/-/g, '/');
+		} else {
+			var date = pomsId.indexOf('-') == -1 ? 'Geen uitzenddatum' : pomsId.substring(0, pomsId.indexOf('-'));
+			date = date.substring(0,4) + '/' + date.substring(4, 6) + '/' + date.substring(6, 8);
+			mapping = {			
+				titles : [{value : pomsId}],
+				sortDate : date
+			};
+		}
+		
+		return mapping;
+	};
 	
 	$scope.getSourceOrder = function(sources) {
 		var ordered = [];

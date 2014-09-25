@@ -36,6 +36,7 @@ a {
 	background-color:white;
 	margin:20px auto 0px auto;
 	min-height:280px;
+	padding:$defaultMargin * 3;
 }
 
 .glyphicon {
@@ -57,12 +58,12 @@ a {
 
 #button_back {
 	position:fixed;
-	left:2em;
+	left:30px;
 }
 
 #button_forward {
 	position:fixed;
-	right:2em;
+	right:30px;	
 }
 
 .logo {

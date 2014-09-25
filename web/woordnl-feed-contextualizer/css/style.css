@@ -8080,41 +8080,42 @@ a:hover {
   background-color: white;
   margin: 20px auto 0px auto;
   min-height: 280px;
+  padding: 30px;
 }
 
-/* line 41, scss/_fc.scss */
+/* line 42, scss/_fc.scss */
 .glyphicon {
   cursor: pointer;
 }
 
-/* line 45, scss/_fc.scss */
+/* line 46, scss/_fc.scss */
 .btn-custom {
   color: white;
   background-color: #00c9ff;
   border: 1px solid transparant;
 }
-/* line 50, scss/_fc.scss */
+/* line 51, scss/_fc.scss */
 .btn-custom:hover {
   color: #9b00db;
 }
-/* line 53, scss/_fc.scss */
+/* line 54, scss/_fc.scss */
 .btn-custom:visited {
   color: #9b00db;
 }
 
-/* line 58, scss/_fc.scss */
+/* line 59, scss/_fc.scss */
 #button_back {
   position: fixed;
-  left: 2em;
+  left: 30px;
 }
 
-/* line 63, scss/_fc.scss */
+/* line 64, scss/_fc.scss */
 #button_forward {
   position: fixed;
-  right: 2em;
+  right: 30px;
 }
 
-/* line 68, scss/_fc.scss */
+/* line 69, scss/_fc.scss */
 .logo {
   background: url("../images/woordnl-nav-sprite.png") no-repeat;
   background-position: 0 -336px;
@@ -8122,7 +8123,7 @@ a:hover {
   width: 463px;
 }
 
-/* line 75, scss/_fc.scss */
+/* line 76, scss/_fc.scss */
 .balloon-graphic {
   background: url("../images/woordnl-nav-sprite.png") no-repeat;
   background-position: 0 -728px;
@@ -8132,7 +8133,7 @@ a:hover {
   margin-right: 8px;
 }
 
-/* line 84, scss/_fc.scss */
+/* line 85, scss/_fc.scss */
 .woordnl-link:after {
   position: absolute;
   content: '';
@@ -8144,7 +8145,7 @@ a:hover {
   background-position: 0 -3640px;
 }
 
-/* line 95, scss/_fc.scss */
+/* line 96, scss/_fc.scss */
 .introduction {
   display: block;
   padding: 20px;
@@ -8153,11 +8154,33 @@ a:hover {
   border-radius: 0px !important;
 }
 
-/* line 103, scss/_fc.scss */
+/* line 104, scss/_fc.scss */
 .alert-custom {
   display: block;
   padding: 20px;
   margin-top: 20px;
   background-color: #00c9ff;
   border-radius: 0px !important;
+}
+
+/* line 1, scss/_feedItems.scss */
+.feed-items {
+  height: 140px;
+}
+
+/* line 5, scss/_feedItems.scss */
+.divider {
+  background-color: #ced6e6;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e3e3e3));
+  background-image: -webkit-linear-gradient(#ffffff, #e3e3e3);
+  background-image: -moz-linear-gradient(#ffffff, #e3e3e3);
+  background-image: -o-linear-gradient(#ffffff, #e3e3e3);
+  background-image: linear-gradient(#ffffff, #e3e3e3);
+  height: 100px;
+  margin-bottom: 40px;
+}
+
+/* line 14, scss/_feedItems.scss */
+.woordnl-items .title:first-child {
+  font-weight: bold;
 }
