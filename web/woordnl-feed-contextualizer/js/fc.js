@@ -68,6 +68,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	$scope.processFeed = function() {
 		$scope.loading = true;
 		$scope.fetchButtonText = 'Loading...';
+		alert($scope.feedURL);
 		$.ajax({
 			cache: false,
 			dataType: 'json',
