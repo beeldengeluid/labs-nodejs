@@ -20,6 +20,7 @@
 
 <link rel="stylesheet" href="./woordnl-fc/css/style.css">
 
+<script src="./woordnl-fc/js/mapping-woordnl.js"></script>
 <script src="./woordnl-fc/js/fc.js"></script>
 <script src="./woordnl-fc/js/directives/feedList.js"></script>
 <script src="./woordnl-fc/js/directives/radioItemList.js"></script>
@@ -46,14 +47,14 @@
 		<section ng-controller="feedCtrl">
 
 			<div class="row">				
-				<div id="control_panel" class="col-md-12">
+				<div class="rss-input">
 					<form class="form-inline" role="form" ng-submit="processFeed()">
 						<div class="form-group">
 							<label for="feed">RSS URL</label>
 						</div>
 						<div class="form-group">
-							<input id="feed" ng-model="feedURL" class="form-control" type="text" value="" size="60" placeholder="Plak een RSS url">
-						</div>				
+							<input id="feed" ng-model="feedURL" class="form-control" type="text" value="" size="70" placeholder="Voeg een RSS URL in en zoek naar gerelateerde Woord.nl uitzendingen">
+						</div>
 						<div class="form-group">
 							<button id="btn_submit" type="submit" class="btn btn-custom">{{fetchButtonText}}</button>
 						</div>
