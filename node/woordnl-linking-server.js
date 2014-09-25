@@ -64,14 +64,11 @@ app.get('/get_kw_times', function(req, res) {
 });
 
 //@deprecated
-app.get('/get_asr_tags', function(req, res) {
+app.get('/get_search_results', function(req, res) {
 	proxy.web(req, res, { target: LABS_SERVER });
 });
 
-//@deprecated
-app.get('/get_file_list', function(req, res) {
-	proxy.web(req, res, { target: LABS_SERVER });
-});
+
 
 app.listen(STATIC_PORT);
 
@@ -98,26 +95,28 @@ var urlMap = {
 		// fetch the query string from the request
 		var id = qs.parse(url.parse(req.url).query).id;
 		var kw = qs.parse(url.parse(req.url).query).kw;
+		console.log("THEMOS");
 		//Now fetch all of the times the selected keyword occurs in the transcript 
 		getKeywordTimes(id, kw, function(data) {
 			res.simpleJSON(200, data);
 		});
 	},
 	
-	//@deprecated
-	'/get_asr_tags' : function (req, res) {
+	//Themis
+	'/get_search_results' : function (req, res) {
+		// fetch the query string from the request
 		var id = qs.parse(url.parse(req.url).query).id;
-		getTranscriptTags(id, function(data){
+		var term = qs.parse(url.parse(req.url).query).term;
+		//var kw = qs.parse(url.parse(req.url).query).kw;
+		//Now fetch all of the times the selected keyword occurs in the transcript
+		//console.log('your term is'+term);
+		getSeachResults(id,term, function(data) {
 			res.simpleJSON(200, data);
 		});
+		
+		
 	}
-	
-	//@deprecated
-	,'/get_file_list' : function (req, res) {
-		getFileList(function(data){
-			res.simpleJSON(200, data);
-		});
-	} 	
+		
 	
 }
 
@@ -245,3 +244,21 @@ function getContextComplete(responseData) {
 	//call back the client
 	responseData.msg.clientCallback(responseData.data);
 }
+/***********************************************************************************************************************
+ * GET search Results from ES, based on a search term ---> THEMIS
+ ************************************************************************************************************************/
+function getSeachResults(id, term, clientCallback) {
+	//call the ASR index to fetch the transcript	
+	asrIndexAPI.getSearchResults(
+		id, //asr file name
+		term, //keyword to be found
+		{'id' : uuid.v4(), 'clientCallback' : clientCallback},//msg object to track who requested the data
+		getSeachResultsComplete //callback after the data has returned
+	);
+}
+
+function getSeachResultsComplete(responseData) {
+	//call back the client
+	responseData.msg.clientCallback(responseData.data);
+}
+

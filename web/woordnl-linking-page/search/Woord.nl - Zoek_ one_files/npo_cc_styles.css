@@ -1,0 +1,271 @@
+/*npo css v. 1.0.9 */
+body {-webkit-text-size-adjust: none;}
+@font-face
+{
+    font-family:'OmroepBold';
+    src:url(//assets.www.uitzendinggemist.nl/assets/fonts/omroepbold.eot);
+    src:local("Omroep Rounded Bold"),local("OmroepRoundedBold"),url(//assets.www.uitzendinggemist.nl/assets/fonts/OmroepBold.otf) format("opentype"),url(//assets.www.uitzendinggemist.nl/assets/fonts/omroepbold.svg#webfont) format("svg")
+}
+
+#npo_cc_notification 
+{
+    position: absolute !important;
+    z-index: 99999998 !important;
+	width: 100%;
+}
+
+#npo_cc_notification_wrapper
+{
+    background: url("//cookiesv2.publiekeomroep.nl/static/images/bg_gradient.gif") repeat-x scroll 0 0 #ffffff;
+    border-bottom: 1px solid #7a7a7a;
+    padding: 40px;
+    min-width: 240px;
+}
+
+#npo_cc_notification_wrapper.npo_cc_minimal { padding: 20px; }
+
+.npo_cc_regular #npo_cc_content_minimal { display: none; }
+
+#npo_cc_notification_content
+{
+    padding: 0 255px 0 112px;
+    position: relative;
+}
+.npo_cc_minimal #npo_cc_notification_content { padding: 0px; }
+
+.npo_cc_minimal #npo_cc_content_regular_extended { display: none; }
+
+#npo_cc_col_left
+{
+    width: 112px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#npo_cc_notification .npo_cc_logo
+{
+    display: block;
+    width: 71px;
+    height: 72px;
+    background: url("//cookiesv2.publiekeomroep.nl/static/images/sprite2.png") no-repeat;
+    text-indent: -9999px;
+}
+
+#npo_cc_notification .npo_cc_h3
+{
+    font-family: "OmroepBold", "Arial Rounded MT Bold", Helvetica, Arial, sans-serif;
+    color: #333333;
+    padding: 0px;
+    font-size: 18px;
+    line-height: 24px;
+    text-shadow: 0px 1px 2px #ffffff;
+    margin: 0px 0 8px 0;
+    font-weight: normal;
+}
+
+#npo_cc_notification .npo_cc_p
+{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px !important;
+    line-height: 22px;
+    color: #666666;
+    /*margin-bottom: 25px;*/
+	margin: 0px;
+	padding: 5px 0 25px 0;
+}
+#npo_cc_notification .npo_cc_minimal .npo_cc_p { margin: 0px; }
+
+#npo_cc_notification .npo_cc_a,
+#npo_cc_notification a {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #ff6d00 !important;
+    font-size: 13px;
+    line-height: 22px;
+}
+
+#npo_cc_notification .npo_cc_a
+{
+    font-weight: bold;
+}
+#npo_cc_notification a:hover,
+.npo_cc_a:hover { text-decoration: underline; }
+
+#npo_cc_notification .npo_cc_btn
+{
+    background-color: #68b624;
+    background-image: -webkit-linear-gradient(top, #a1d23b, #68b624);
+    background-image: -moz-linear-gradient(top, #a1d23b, #68b624);
+    background-image: -o-linear-gradient(top, #a1d23b, #68b624);
+    background-image: -ms-linear-gradient(top, #a1d23b, #68b624);
+    background-image: linear-gradient(top, #a1d23b, #68b624);
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    border: 1px solid #8dad62;
+
+    -webkit-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.3), inset 0px 1px 1px 0 rgba(255, 255, 255, 0.6);
+    -moz-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.3), inset 0px 1px 1px 0 rgba(255, 255, 255, 0.6);
+    box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.3), inset 0px 1px 1px 0 rgba(255, 255, 255, 0.6);
+
+    font-size: 13px;
+    line-height: 15px;
+    font-weight: bold;
+    color: #ffffff !important;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.3);
+
+    display: block;
+    padding: 15px 0;
+    text-align: center;
+    margin: 0 0 16px 0;
+	
+	text-decoration: none !important;
+}
+#npo_cc_notification .npo_cc_btn:hover
+{
+    background-color: #77c42f;
+    background-image: -webkit-linear-gradient(top, #acdb4c, #77c42f);
+    background-image: -moz-linear-gradient(top, #acdb4c, #77c42f);
+    background-image: -o-linear-gradient(top, #acdb4c, #77c42f);
+    background-image: -ms-linear-gradient(top, #acdb4c, #77c42f);
+    background-image: linear-gradient(top, #acdb4c, #77c42f);
+}
+
+#npo_cc_notification .npo_cc_btn_grey
+{
+    background-color: #424242;
+    background-image: -webkit-linear-gradient(top, #6c6c6c, #424242);
+    background-image: -moz-linear-gradient(top, #6c6c6c, #424242);
+    background-image: -o-linear-gradient(top, #6c6c6c, #424242);
+    background-image: -ms-linear-gradient(top, #6c6c6c, #424242);
+    background-image: linear-gradient(top, #6c6c6c, #424242);
+    border: 1px solid #7a7a7a;
+}
+#npo_cc_notification .npo_cc_btn_grey:hover
+{
+    background-color: #4a4a4a;
+    background-image: -webkit-linear-gradient(top, #787878, #4a4a4a);
+    background-image: -moz-linear-gradient(top, #787878, #4a4a4a);
+    background-image: -o-linear-gradient(top, #787878, #4a4a4a);
+    background-image: -ms-linear-gradient(top, #787878, #4a4a4a);
+    background-image: linear-gradient(top, #787878, #4a4a4a);
+}
+
+#npo_cc_content_minimal { text-align: center; }
+
+#npo_cc_content_minimal .npo_cc_p,
+#npo_cc_col_content_regular .npo_cc_p { padding-bottom: 0px; }
+
+#npo_cc_content_minimal .npo_cc_btn
+{
+    width: 114px;
+    margin: 0 0 0 20px;
+    padding: 10px 0;
+    display: inline-block;
+}
+
+#npo_cc_notification i.npo_cc_tick
+{
+    display: inline-block;
+    margin: 0 8px 0 0;
+    top: 1px;
+    position: relative;
+    width: 13px;
+    height: 11px;
+    background: url('//cookiesv2.publiekeomroep.nl/static/images/sprite2.png') -91px 0px no-repeat;
+    margin: 0 9px 0 0;
+}
+#npo_cc_notification i.npo_cc_arrow
+{
+    display: inline-block;
+    margin: 0 8px 0 0;
+    top: -1px;
+    position: relative;
+    width: 6px;
+    height: 6px;
+    background: url('//cookiesv2.publiekeomroep.nl/static/images/sprite2.png') -91px -31px no-repeat;
+}
+
+#npo_cc_col_content_regular { min-height: 160px; }
+
+#npo_cc_col_content_extended { display: none; }
+
+#npo_cc_col_content_extended .npo_cc_h3:first-child { padding-top: 25px; }
+
+#npo_cc_col_content_extended .npo_cc_btn { width: 253px; float: left; }
+#npo_cc_col_content_extended .npo_cc_btn_grey { margin-right: 18px; }
+
+
+#npo_cc_col_right
+{
+    width: 215px;
+    padding: 0 0 0 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    list-style: none;
+    margin: 0px;
+}
+
+#npo_cc_col_right li {
+    list-style: none;
+}
+
+#npo_cc_notification .npo_cc_clear { clear: both; }
+
+/*  Portrait tablet to standard (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 979px)
+{
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_notification_content { padding-right: 0px; }
+
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_col_right
+    {
+        position: relative;
+        width: 100%;
+        padding: 0px;
+        margin-top: 25px;
+    }
+
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_col_content_extended .npo_cc_btn { width: 48%; float: right; }
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_col_content_extended .npo_cc_btn_grey { margin-right: 0px; float: left; }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px)
+{
+    #npo_cc_notification_wrapper.npo_cc_responsive { padding: 20px; }
+
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_notification_content { padding-left: 0px; padding-right: 0px; }
+
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_col_left
+    {
+        position: relative;
+        float: left;
+        width: 80px;
+        height: 80px;
+    }
+
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_col_content_extended .npo_cc_btn { width: 100%; float: none; margin: 0px; }
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_col_content_extended .npo_cc_btn_grey { margin: 0 0 18px 0; }
+
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_col_right
+    {
+        position: relative;
+        width: 100%;
+        padding: 0px;
+        margin-top: 25px;
+    }
+
+
+}
+
+@media only screen and (max-width: 650px)
+{
+    #npo_cc_notification_wrapper.npo_cc_responsive #npo_cc_content_minimal .npo_cc_btn
+    {
+        display: block;
+        margin: 16px auto 0 auto;
+    }
+}

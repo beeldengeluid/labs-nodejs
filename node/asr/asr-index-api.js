@@ -77,6 +77,46 @@ module.exports = {
 		})
 		.exec();
 		
+	},
+	
+	getSearchResults: function(id, term, callerObj, callback) {
+		console.log('Looking for term: '+term+ 'in the ASR index...');
+		query = {"query":{"bool":{
+			"must":[
+			        //{"query_string":{"default_field":"asr_chunk.words","query":"\"230.39847574.asr1.hyp\""}},
+			        {"query_string":{"default_field":"asr_chunk.words","query":"\""+term+"\""}}
+			],
+			"must_not":[],
+			"should":[]}},
+			"from":0,"size":100,"sort":[],"facets":{}
+		}
+		this._esClient.search(this._searchIndex, this._searchType, query)
+		.on('data', function(data) {
+			kwData = JSON.parse(data);
+			scores = [];
+			var kws = null;
+			for (hit in kwData.hits.hits) {
+				//kws = kwData.hits.hits[hit]._source.keywords;
+				kws = kwData.hits.hits[hit]._score;
+				//for (k in kws) {
+				//	if(kws[k].word == kw) {						
+						scores = scores.concat(kws);						
+				//	}
+				//}
+				//console.log(kwData);
+			}			
+			callback({'msg' : callerObj, 'data' : {'ThemData' : kwData}});
+		})
+		.on('done', function() {
+			//always returns 0 right now
+		})
+		.on('error', function(error) {
+			console.log('While connecting to: ' + this._contextIndex);
+			console.log(error);
+			callback({'msg' : callerObj, 'data' : JSON.parse('{"error" : "Error while fetching context from ES"}')});
+		})
+		.exec();
+		
 	}
 	
 	//TODO get the transcript from the ASR search index
