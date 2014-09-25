@@ -110,6 +110,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 						summary : typeof json[i].summary == 'string' ? $sce.trustAsHtml(json[i].summary) : 'Geen omschrijving',
 						pubDate : d ? d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() : '',
 						url : json[i].url,
+						domain : $scope.getLocation(json[i].url).hostname,
 						categories : typeof json[i].categories == 'string' ? json[i].categories : '',
 						wordFreqs : json[i].wordFreqs,
 						entities : json[i].entities,
@@ -125,7 +126,13 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			$scope.searched = true;
 			$scope.fetchButtonText = 'Analyseer';
 		});				
-	}	
+	}
+
+	$scope.getLocation = function(href) {
+    	var l = document.createElement("a");
+    	l.href = href;
+    	return l;
+	};
 	
 	$scope.getContextQueries = function(relatedData) {
 		var qs = {};

@@ -4,8 +4,9 @@
 	</button>
 	<div class="col-md-4" ng-repeat="item in feedItems | slice:offset:offset+LIMIT track by $index">
 		<div class="feed-items">
+			<h6>Bron: {{item.domain}}</h6>
 			<h3><a href="{{item.url}}" target="_new" title="{{item.summary}}">{{item.title}}</a></h3>
-			<h6>			
+			<h6>
 				<strong>{{item.pubDate}}&nbsp;{{item.categories}}</strong>
 			</h6>
 		</div>

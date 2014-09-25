@@ -8104,18 +8104,23 @@ a:hover {
 }
 
 /* line 59, scss/_fc.scss */
+.rss-input {
+  text-align: center;
+}
+
+/* line 63, scss/_fc.scss */
 #button_back {
   position: fixed;
   left: 30px;
 }
 
-/* line 64, scss/_fc.scss */
+/* line 68, scss/_fc.scss */
 #button_forward {
   position: fixed;
   right: 30px;
 }
 
-/* line 69, scss/_fc.scss */
+/* line 73, scss/_fc.scss */
 .logo {
   background: url("../images/woordnl-nav-sprite.png") no-repeat;
   background-position: 0 -336px;
@@ -8123,7 +8128,7 @@ a:hover {
   width: 463px;
 }
 
-/* line 76, scss/_fc.scss */
+/* line 80, scss/_fc.scss */
 .balloon-graphic {
   background: url("../images/woordnl-nav-sprite.png") no-repeat;
   background-position: 0 -728px;
@@ -8133,7 +8138,7 @@ a:hover {
   margin-right: 8px;
 }
 
-/* line 85, scss/_fc.scss */
+/* line 89, scss/_fc.scss */
 .woordnl-link:after {
   position: absolute;
   content: '';
@@ -8145,7 +8150,7 @@ a:hover {
   background-position: 0 -3640px;
 }
 
-/* line 96, scss/_fc.scss */
+/* line 100, scss/_fc.scss */
 .introduction {
   display: block;
   padding: 20px;
@@ -8154,7 +8159,7 @@ a:hover {
   border-radius: 0px !important;
 }
 
-/* line 104, scss/_fc.scss */
+/* line 108, scss/_fc.scss */
 .alert-custom {
   display: block;
   padding: 20px;
@@ -8165,10 +8170,20 @@ a:hover {
 
 /* line 1, scss/_feedItems.scss */
 .feed-items {
+  padding-top: 20px;
   height: 140px;
 }
+/* line 4, scss/_feedItems.scss */
+.feed-items h6 {
+  margin: 10px 0px 0px 0px;
+}
+/* line 7, scss/_feedItems.scss */
+.feed-items h3 {
+  padding: 0px;
+  margin: 10px 0px;
+}
 
-/* line 5, scss/_feedItems.scss */
+/* line 13, scss/_feedItems.scss */
 .divider {
   background-color: #ced6e6;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e3e3e3));
@@ -8180,7 +8195,7 @@ a:hover {
   margin-bottom: 40px;
 }
 
-/* line 14, scss/_feedItems.scss */
+/* line 22, scss/_feedItems.scss */
 .woordnl-items .title:first-child {
   font-weight: bold;
 }
