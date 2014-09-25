@@ -108,7 +108,7 @@ wnl.controller('playerCtrl', function ($scope) {
 	
 	$scope.userSeek = function(x) {
 		if($scope.audioPlayer) {
-			var w = $('.player-scrubber').width();		
+			var w = $('.player-scrubber').width();
 			var pc = x / (w / 100);
 			var dur = toMillis($scope.audioPlayer.duration);
 			$scope.seek((dur / 100) * pc);
@@ -434,9 +434,9 @@ wnl.controller('playerCtrl', function ($scope) {
 			$scope.mp3 = urnMapping[urn];
 			var pomsID = $scope.mp3.substring('http://download.omroep.nl/vpro/'.length, $scope.mp3.indexOf('.mp3'));
 			console.debug(pomsID);
-			$scope.transcript = '230.39847574.asr1.semanticized.hyp';
-			//$scope.transcript = woordnlMapping[pomsId].
+			$scope.transcript = woordnlMapping[pomsID].asrFile || '230.39847574.asr1.semanticized.hyp';
 
+			console.debug('Found a transcript: ' + $scope.transcript);
 			console.debug('URN: ' + urn);
 			console.debug('Found a mp3: ' + $scope.mp3);
 			
