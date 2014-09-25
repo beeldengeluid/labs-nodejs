@@ -73,7 +73,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			cache: false,
 			dataType: 'json',
 			type: "GET",
-			url: "/woordnl-fc/add_rss_feed?url=" + $scope.feedURL,			
+			url: "/woordnl-fc/add_rss_feed?url=" + encodeURIComponent($scope.feedURL),
 			error: function () {
 				console.debug('error');
 				$scope.$apply(function() {					
