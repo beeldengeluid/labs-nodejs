@@ -36,6 +36,10 @@
 							<strong ng-if="md.mapping.tags">Tags:</strong>
 							<span class="tag" ng-repeat="tag in md.mapping.tags">
 								<em>{{tag}}</em>
+							</span><br>							
+							<strong ng-if="md.keywords">More tags:</strong>
+							<span class="tag" ng-repeat="kw in md.keywords">
+								<em>{{kw.word}}</em>
 							</span>
 						</div>
 					</div>

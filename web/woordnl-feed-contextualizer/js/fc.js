@@ -159,17 +159,18 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 						var asrId = null;
 						var found = false;
 						for(i in rd.hits.hits) {							
-							id = rd.hits.hits[i]._source.asr_file;
+							id = rd.hits.hits[i]._source.asr_file;							
 							asrId = id.split('.')[1];
 							if(!added[id]) {
 								mapping = $scope.getWoordnlMapping(asrId);
-								if(mapping) {
+								if(mapping) {									
 									md[source].push({
 										id : id,
 										asrId : asrId,
 										mapping : mapping,
-										contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
+										//contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
 										snippet : rd.hits.hits[i]._source.words,
+										keywords : rd.hits.hits[i]._source.keywords,
 										start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
 										score : rd.hits.hits[i]._score
 									});
