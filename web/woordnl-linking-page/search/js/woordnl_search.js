@@ -41,6 +41,15 @@ function searchIN ()
 					subtitle=mapping[file].titles[1].value;
 					urn = mapping[file].urn;
 					publish=mapping[file].publishStart;
+					var date=publish.split("T");
+					
+					var month=date[0].split("\-");
+					var monthNames = [ "jan", "feb", "maa", "apr", "mei", "jun",
+    "jul", "aug", "sep", "oct", "nov", "dec" ];
+					
+					var monthN=monthNames[month[1]-1];
+					
+					date=month[2]+" "+monthN+" "+month[0];
 					broadcast=mapping[file].broadcasters;
 					duration=mapping[file].duration;
 					//console.log(mapping[file].tags);
@@ -51,14 +60,14 @@ function searchIN ()
 						 \
 						<div class="visualisation">\
 						</div><span class="title">'+title+'\
-						<span class="publishDate">'+publish+'</span>\
+						<span class="publishDate">'+date+'</span>\
 						</span><span class="subTitle">'+subtitle+'</span> <div class="highlights">\
 						</div>\
 						<div class="meta"><span class="duration">'+duration+'</span><span class="genres">Interview</span>\
 						<span class="broadcasters"> \
 						<span class="broadcaster">'+broadcast+'</span></span> </div></div></a> ';
 					if (gg)
-					{
+					{	console.log("gg is :"+gg);
 						if ($.inArray(asrs[1], files)==-1)
 							{
 						files.push(asrs[1]);
@@ -68,7 +77,7 @@ function searchIN ()
 							}
 					}
 					else	{
-						console.log("ggis OFFFF:"+gg);
+						console.log("gg is :"+gg);
 						$("#Themresults").append(html);
 						}
 					
