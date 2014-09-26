@@ -1,6 +1,6 @@
 var ElasticSearchClient = require('elasticsearchclient'),
 	queryAnalyzer = require('../tools/query-analyzer');
-
+// let's get started!
 module.exports = {
 	
 	_esClient : null,
@@ -23,7 +23,7 @@ module.exports = {
 			},
 			"from":0,"size":10,"sort":[],"facets":{}
 		}		
-		this._esClient.search('woordnl', 'asr_chunk', esQuery)
+		this._esClient.search('woordnl_asr', 'asr_chunk', esQuery)
 			.on('data', function(data) {
 				//console.log(data);
 				callback(callerObj, JSON.stringify(esQuery), JSON.parse(data), 'woordnl');

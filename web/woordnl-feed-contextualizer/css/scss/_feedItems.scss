@@ -1,0 +1,36 @@
+.feed-items {
+	padding-top:20px;
+	height:140px;
+	h6 {		
+		margin:10px 0px 0px 0px;
+	}
+	h3 {
+		padding:0px;
+		margin:10px 0px;
+	}
+}
+
+.divider {	
+	background-color:$woordnlGrey;
+	@include background-image(linear-gradient(white, #e3e3e3));
+	height:100px;
+	margin-bottom:4*$defaultMargin;
+}
+
+.woordnl-items {	
+	.title {
+		&:first-child {
+			font-weight:bold;
+		}
+	}
+	.tag {
+
+	}
+	.panel {
+		cursor:pointer;		
+	}
+	a {
+		color:black;
+	}
+}
+

@@ -58,7 +58,9 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 					setTimeout($scope.longPoll_feed, 10*1000);
 				},
 				success: function (json) {
-					$scope.$apply($scope.storeFeedItems(json));
+					if(json != '') {
+						$scope.$apply($scope.storeFeedItems(json));
+					}
 					$scope.longPoll_feed();
 				}
 			});
@@ -67,15 +69,15 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	//submits the feed to the server
 	$scope.processFeed = function() {
 		$scope.loading = true;
-		$scope.fetchButtonText = 'Loading...';
+		$scope.fetchButtonText = 'Loading...';		
 		$.ajax({
 			cache: false,
 			dataType: 'json',
 			type: "GET",
-			url: "/woordnl-fc/add_rss_feed?url=" + $scope.feedURL,			
+			url: "/woordnl-fc/add_rss_feed?url=" + encodeURIComponent($scope.feedURL),
 			error: function () {
 				console.debug('error');
-				$scope.$apply(function() {					
+				$scope.$apply(function() {
 					$scope.searched = true;
 				});
 			},
@@ -101,19 +103,22 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			for(var i=0;i<json.length;i++) {
 				var d = json[i].timestamp ? new Date(json[i].timestamp) : null;
 				var md = $scope.getFormattedRelatedMetadata(json[i].related);
-				$scope.feedItems.unshift({
-					id : json[i].id,
-					title: typeof json[i].title == 'string' ? $sce.trustAsHtml(json[i].title) : 'Geen titel',
-					summary : typeof json[i].summary == 'string' ? $sce.trustAsHtml(json[i].summary) : 'Geen omschrijving',
-					pubDate : d ? d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() : '',
-					url : json[i].url,
-					categories : typeof json[i].categories == 'string' ? json[i].categories : '',
-					wordFreqs : json[i].wordFreqs,
-					entities : json[i].entities,
-					related : md,
-					sourceOrder : $scope.getSourceOrder(md),
-					queries : $scope.getContextQueries(json[i].related)
-				});
+				if(md) {
+					$scope.feedItems.unshift({
+						id : json[i].id,
+						title: typeof json[i].title == 'string' ? $sce.trustAsHtml(json[i].title) : 'Geen titel',
+						summary : typeof json[i].summary == 'string' ? $sce.trustAsHtml(json[i].summary) : 'Geen omschrijving',
+						pubDate : d ? d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() : '',
+						url : json[i].url,
+						domain : $scope.getLocation(json[i].url).hostname,
+						categories : typeof json[i].categories == 'string' ? json[i].categories : '',
+						wordFreqs : json[i].wordFreqs,
+						entities : json[i].entities,
+						related : md,
+						sourceOrder : $scope.getSourceOrder(md),
+						queries : $scope.getContextQueries(json[i].related)
+					});
+				}
 				if($scope.lastMessage < json[i].timestamp) {
 					$scope.lastMessage = json[i].timestamp;
 				}
@@ -121,7 +126,13 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			$scope.searched = true;
 			$scope.fetchButtonText = 'Analyseer';
 		});				
-	}	
+	}
+
+	$scope.getLocation = function(href) {
+    	var l = document.createElement("a");
+    	l.href = href;
+    	return l;
+	};
 	
 	$scope.getContextQueries = function(relatedData) {
 		var qs = {};
@@ -134,20 +145,42 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 	}
 	
 	$scope.getFormattedRelatedMetadata = function(relatedData) {
-		var md = {};
+		var md = null;
 		if(relatedData) {
 			for(source in relatedData) {
 				var rd = relatedData[source].data;
 				if(rd) { //more types of resources can be retrieved from the server
-					if (source == 'woordnl' && rd.hits && rd.hits.total > 0) { 					
+					if (source == 'woordnl' && rd.hits && rd.hits.total > 0) {
+						md = {};
 						md[source] = [];
-						for(i in rd.hits.hits) {
-							md[source].push({
-								contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
-								snippet : rd.hits.hits[i]._source.words,
-								start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
-								score : rd.hits.hits[i]._score
-							});
+						var mapping = null;
+						var added = {};
+						var id = null;
+						var asrId = null;
+						var found = false;
+						for(i in rd.hits.hits) {							
+							id = rd.hits.hits[i]._source.asr_file;							
+							asrId = id.split('.')[1];
+							if(!added[id]) {
+								mapping = $scope.getWoordnlMapping(asrId);
+								if(mapping) {									
+									md[source].push({
+										id : id,
+										asrId : asrId,
+										mapping : mapping,
+										//contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
+										snippet : rd.hits.hits[i]._source.words,
+										keywords : rd.hits.hits[i]._source.keywords,
+										start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
+										score : rd.hits.hits[i]._score
+									});
+									found = true;
+									added[id] = true;
+								}
+							}
+						}
+						if (!found) {
+							return null;
 						}
 					} 
 				}
@@ -155,6 +188,24 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		}
 		return md;
 	}
+
+	$scope.getWoordnlMapping = function(asrId) {
+		mapping = woordnlMapping[asrId];
+		if(mapping) {
+			mapping.sortDate = mapping.sortDate.split('T')[0].replace(/-/g, '/');
+		} else {
+			return null;
+			// var date = asrId.indexOf('-') == -1 ? 'Geen uitzenddatum' : asrId.substring(0, asrId.indexOf('-'));
+			// date = date.substring(0,4) + '/' + date.substring(4, 6) + '/' + date.substring(6, 8);
+			// mapping = {			
+			// 	titles : [{value : asrId}],
+			// 	sortDate : date,
+			// 	pomsId : null//no pomsId for there items
+			// };
+		}
+		
+		return mapping;
+	};
 	
 	$scope.getSourceOrder = function(sources) {
 		var ordered = [];
@@ -218,7 +269,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		html.push('</span>');
 		html.push('<br>');
 		for (key in item.entities) {
-			html.push('<span class="ne_type">' + key + '</span>:&nbsp;');			
+			html.push('<span class="ne_type">' + key + '</span>:&nbsp;');
 			for(var i=0;i<item.entities[key].length;i++) {
 				html.push(item.entities[key][i] + ' ');
 			}

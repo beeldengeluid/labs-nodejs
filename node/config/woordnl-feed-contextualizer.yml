@@ -11,7 +11,7 @@ message-cache-size: 20
 long-poll.interval: 15000
 
 
-context-sources: [woordnl, anefo, immix]
+context-sources: [woordnl]
 
 woordnl.es.host: localhost
 woordnl.es.port: 9200
@@ -35,5 +35,5 @@ service.lemmatizer: TreeTagger
 treetagger.cmd-dir: 
 
 file.stopwords: ../resources/text-analysis/stoplist_tno.tab
-file.idf: ../resources/text-analysis/top.wfreq
+file.idf: ../resources/text-analysis/top.wfreq.idf
 

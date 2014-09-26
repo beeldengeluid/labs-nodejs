@@ -3,22 +3,45 @@
 		<i class="glyphicon glyphicon-chevron-left"></i>
 	</button>
 	<div class="col-md-4" ng-repeat="item in feedItems | slice:offset:offset+LIMIT track by $index">
-		<h3><a href="{{item.url}}" target="_new" title="{{item.summary}}">{{item.title}}</a></h3>
-		<h6>			
-			<strong>{{item.pubDate}}&nbsp;{{item.categories}}</strong>
-		</h6>
+		<div class="feed-items">
+			<h6>Bron: {{item.domain}}</h6>
+			<h3><a href="{{item.url}}" target="_new" title="{{item.summary}}">{{item.title}}</a></h3>
+			<h6>
+				<strong>{{item.pubDate}}&nbsp;{{item.categories}}</strong>
+			</h6>
+		</div>
 
-		<div class="row">
+		<div class="row divider">
+			&nbsp;
+		</div>
 
-	
+		<div class="row woordnl-items">
 			<div class="col-md-12" ng-repeat="md in item.related['woordnl']">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<!--<img src="./woordnl-fc/images/woordnl.ico">-->
-						{{md.contentURL}}
+						<a ng-if="md.mapping.pomsID" href="http://www.woord.nl/luister.program.{{md.mapping.pomsID}}.html" target="_woordnl">
+							<span class="title" ng-repeat="t in md.mapping.titles">
+								{{t.value}}
+							</span>
+						</a>
+						<span ng-if="!md.mapping.pomsID" class="title" ng-repeat="t in md.mapping.titles">
+							{{t.value}}
+						</span>
 					</div>
 					<div class="panel-body woordnl-link">
-						{{md.snippet}} 				
+						<div ng-if="md.mapping">							
+							<span ng-if="md.mapping">
+								<strong>Uitgezonden op</strong>: {{md.mapping.sortDate}}
+							</span><br><br>
+							<strong ng-if="md.mapping.tags">Tags:</strong>
+							<span class="tag" ng-repeat="tag in md.mapping.tags">
+								<em>{{tag}}</em>
+							</span><br>							
+							<strong ng-if="md.keywords">More tags:</strong>
+							<span class="tag" ng-repeat="kw in md.keywords">
+								<em>{{kw.word}}</em>
+							</span>
+						</div>
 					</div>
 				</div>
 				
