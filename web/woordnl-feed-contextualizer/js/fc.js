@@ -157,22 +157,29 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 						var added = {};
 						var id = null;
 						var asrId = null;
+						var found = false;
 						for(i in rd.hits.hits) {							
 							id = rd.hits.hits[i]._source.asr_file;
 							asrId = id.split('.')[1];
 							if(!added[id]) {
 								mapping = $scope.getWoordnlMapping(asrId);
-								md[source].push({
-									id : id,
-									asrId : asrId,
-									mapping : mapping,
-									contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
-									snippet : rd.hits.hits[i]._source.words,
-									start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
-									score : rd.hits.hits[i]._score
-								});
-								added[id] = true;
+								if(mapping) {
+									md[source].push({
+										id : id,
+										asrId : asrId,
+										mapping : mapping,
+										contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
+										snippet : rd.hits.hits[i]._source.words,
+										start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
+										score : rd.hits.hits[i]._score
+									});
+									found = true;
+									added[id] = true;
+								}
 							}
+						}
+						if (!found) {
+							return null;
 						}
 					} 
 				}
@@ -186,13 +193,14 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		if(mapping) {
 			mapping.sortDate = mapping.sortDate.split('T')[0].replace(/-/g, '/');
 		} else {
-			var date = asrId.indexOf('-') == -1 ? 'Geen uitzenddatum' : asrId.substring(0, asrId.indexOf('-'));
-			date = date.substring(0,4) + '/' + date.substring(4, 6) + '/' + date.substring(6, 8);
-			mapping = {			
-				titles : [{value : asrId}],
-				sortDate : date,
-				pomsId : null//no pomsId for there items
-			};
+			return null;
+			// var date = asrId.indexOf('-') == -1 ? 'Geen uitzenddatum' : asrId.substring(0, asrId.indexOf('-'));
+			// date = date.substring(0,4) + '/' + date.substring(4, 6) + '/' + date.substring(6, 8);
+			// mapping = {			
+			// 	titles : [{value : asrId}],
+			// 	sortDate : date,
+			// 	pomsId : null//no pomsId for there items
+			// };
 		}
 		
 		return mapping;
