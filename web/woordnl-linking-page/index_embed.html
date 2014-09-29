@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="http://files.vpro.nl/fontface/chevin/font.css" />
 
     <script src="/woordnl-rc/js/configuration.js" ></script>
+    <script src="/woordnl-rc/js/urnMapping.js" ></script>
+    <script src="/woordnl-rc/js/mapping-woordnl-asr.js" ></script>
     <script>
         (function() {
             window.vpro.configuration.imageServer = "http://images.poms.omroep.nl/image/";
@@ -78,7 +80,9 @@
 					</a>
 					<a ng-show="e.ANEFOData.length > 4" href="{{e.ANEFOData[4].url}}" target="_anefo">
 						<img style="display:inline-block;" ng-src="{{e.ANEFOData[4].img1}}" title="{{e.ANEFOData[4].description}}">
-					</a>				
+					</a>
+					<img id="FSimage">
+					<button onclick="fullImager('{{e.ANEFOData[0].img1}}','{{e.ANEFOData[2].img1}}','{{e.ANEFOData[4].img1}}');">FullScreen</button>
 				</div>
 			</li>
 		</ul>
@@ -93,7 +97,7 @@
             </div>
         </div>        
     </div>    
-
+    <script src="slider2.js"></script>
     <script src="//js.vpro.nl/ext/require/1.0.0/require.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>
@@ -158,5 +162,14 @@
    	<!-- INJECT R&D CODE HERE AND MAINLY MAKE SURE TO SELECT FETCH THE AUDIO ID-->
    	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>	
    	<script src="/woordnl-rc/js/woordnl_embed.js"></script>
+	<!-- Code fo Fullscreen Images-->
+   	
+   	<script src="/woordnl-rc/js/FullScreen.js"></script>
+	<script>
+	document.addEventListener("fullscreenchange", changePicture());
+	document.addEventListener("webkitfullscreenchange", changePicture());
+	document.addEventListener("mozfullscreenchange", changePicture());
+	document.addEventListener("MSFullscreenChange", changePicture());
+	</script>
 </body>
 </html>

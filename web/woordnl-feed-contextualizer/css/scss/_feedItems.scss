@@ -1,9 +1,6 @@
-.feed-items {
-	padding-top:20px;
-	height:140px;
-	h6 {		
-		margin:10px 0px 0px 0px;
-	}
+
+.feed-item {
+	height:200px;	
 	h3 {
 		padding:0px;
 		margin:10px 0px;
@@ -11,10 +8,16 @@
 }
 
 .divider {	
-	background-color:$woordnlGrey;
+	margin-bottom:2*$defaultMargin;	
 	@include background-image(linear-gradient(white, #e3e3e3));
-	height:100px;
-	margin-bottom:4*$defaultMargin;
+	@media all and (min-width:992px) {
+		height:8*$defaultMargin;
+	}
+	@media all and (max-width:991px) {
+		height:4*$defaultMargin;
+		margin:2*$defaultMargin 0px;
+	}
+
 }
 
 .woordnl-items {	
@@ -25,6 +28,14 @@
 	}
 	.tag {
 
+	}
+	.panel {
+		background-color:$woordnlLightGrey;
+		cursor:pointer;
+		padding-bottom:2*$defaultMargin;
+	}
+	a {
+		color:black;
 	}
 }
 

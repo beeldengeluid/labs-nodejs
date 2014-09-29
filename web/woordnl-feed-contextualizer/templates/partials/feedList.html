@@ -1,14 +1,19 @@
-<div class="row">
-	<button ng-show="feedItems.length > 0" id="button_back" class="btn btn-custom " ng-click="previousItems()">
-		<i class="glyphicon glyphicon-chevron-left"></i>
-	</button>
+<div class="row">				
 	<div class="col-md-4" ng-repeat="item in feedItems | slice:offset:offset+LIMIT track by $index">
-		<div class="feed-items">
-			<h6>Bron: {{item.domain}}</h6>
-			<h3><a href="{{item.url}}" target="_new" title="{{item.summary}}">{{item.title}}</a></h3>
-			<h6>
-				<strong>{{item.pubDate}}&nbsp;{{item.categories}}</strong>
-			</h6>
+		<div class="panel panel-default feed-item">
+
+
+			<div class="panel-heading">
+				<h6><strong>Bron</strong>: {{item.domain}} <strong>Datum</strong>: {{item.pubDate}}</h6>
+			</div>
+
+			<div class="panel-body">
+				<h3><a href="{{item.url}}" target="_new" title="{{item.summary}}">{{item.title}}</a></h3>
+				<h6>
+					<strong>{{item.categories}}</strong>
+				</h6>
+			</div>
+
 		</div>
 
 		<div class="row divider">
@@ -16,11 +21,15 @@
 		</div>
 
 		<div class="row woordnl-items">
-	
 			<div class="col-md-12" ng-repeat="md in item.related['woordnl']">
-				<div class="panel panel-default">
+				<div class="panel panel-default" ng-click="gotoWoordnl(md.mapping.pomsID)">
 					<div class="panel-heading">
-						<span class="title" ng-repeat="t in md.mapping.titles">
+						<a ng-if="md.mapping.pomsID" target="_woordnl">
+							<span class="title" ng-repeat="t in md.mapping.titles">
+								{{t.value}}
+							</span>
+						</a>
+						<span ng-if="!md.mapping.pomsID" class="title" ng-repeat="t in md.mapping.titles">
 							{{t.value}}
 						</span>
 					</div>
@@ -32,6 +41,10 @@
 							<strong ng-if="md.mapping.tags">Tags:</strong>
 							<span class="tag" ng-repeat="tag in md.mapping.tags">
 								<em>{{tag}}</em>
+							</span><br>							
+							<strong ng-if="md.keywords">More tags:</strong>
+							<span class="tag" ng-repeat="kw in md.keywords">
+								<em>{{kw.word}}</em>
 							</span>
 						</div>
 					</div>
@@ -41,7 +54,4 @@
 
 		</div>
 	</div>
-	<button ng-show="feedItems.length > 0" id="button_forward" class="btn btn-custom" ng-click="nextItems()">
-		<i class="glyphicon glyphicon-chevron-right"></i>
-	</button>
 </div>

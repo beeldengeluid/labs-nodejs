@@ -58,16 +58,18 @@ a {
 
 .rss-input {
 	text-align:center;
+	padding-bottom:2*$defaultMargin;
+	border-bottom:1px dashed $woordnlBlue;
 }
 
-#button_back {
-	position:fixed;
-	left:30px;
-}
-
-#button_forward {
-	position:fixed;
-	right:30px;	
+.feed-nav {
+	padding:$defaultMargin 0px;
+	.feed-nav-button:first-child {
+		float:left;
+	}
+	.feed-nav-button:last-child {
+		float:right;
+	}
 }
 
 .logo {

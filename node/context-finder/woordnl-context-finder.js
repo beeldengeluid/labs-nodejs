@@ -23,8 +23,10 @@ module.exports = {
 			},
 			"from":0,"size":10,"sort":[],"facets":{}
 		}		
+
 		console.log(JSON.stringify(esQuery));
-		this._esClient.search('woordnl', 'asr_chunk', esQuery)
+		this._esClient.search('woordnl_asr', 'asr_chunk', esQuery)
+
 			.on('data', function(data) {
 				//console.log(data);
 				callback(callerObj, JSON.stringify(esQuery), JSON.parse(data), 'woordnl');

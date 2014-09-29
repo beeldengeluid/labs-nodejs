@@ -156,20 +156,31 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 						var mapping = null;
 						var added = {};
 						var id = null;
-						for(i in rd.hits.hits) {
-							id = rd.hits.hits[i]._source.asr_file;
+						var asrId = null;
+						var found = false;
+						for(i in rd.hits.hits) {							
+							id = rd.hits.hits[i]._source.asr_file;							
+							asrId = id.split('.')[1];
 							if(!added[id]) {
-								mapping = $scope.getWoordnlMapping(id);
-								md[source].push({
-									id : rd.hits.hits[i]._source.asr_file,
-									mapping : mapping,
-									contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
-									snippet : rd.hits.hits[i]._source.words,
-									start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
-									score : rd.hits.hits[i]._score
-								});
-								added[id] = true;
+								mapping = $scope.getWoordnlMapping(asrId);
+								if(mapping) {									
+									md[source].push({
+										id : id,
+										asrId : asrId,
+										mapping : mapping,
+										//contentURL : $sce.trustAsResourceUrl(WOORDNL_MP3_BASE_URL + rd.hits.hits[i]._source.asr_file.split('.')[1] + '.mp3'),
+										snippet : rd.hits.hits[i]._source.words,
+										keywords : rd.hits.hits[i]._source.keywords,
+										start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
+										score : rd.hits.hits[i]._score
+									});
+									found = true;
+									added[id] = true;
+								}
 							}
+						}
+						if (!found) {
+							return null;
 						}
 					} 
 				}
@@ -178,22 +189,27 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		return md;
 	}
 
-	$scope.getWoordnlMapping = function(id) {		
-		var pomsId = id.split('.')[1];
-		mapping = woordnlMapping[pomsId];
+	$scope.getWoordnlMapping = function(asrId) {
+		mapping = woordnlMapping[asrId];
 		if(mapping) {
 			mapping.sortDate = mapping.sortDate.split('T')[0].replace(/-/g, '/');
 		} else {
-			var date = pomsId.indexOf('-') == -1 ? 'Geen uitzenddatum' : pomsId.substring(0, pomsId.indexOf('-'));
-			date = date.substring(0,4) + '/' + date.substring(4, 6) + '/' + date.substring(6, 8);
-			mapping = {			
-				titles : [{value : pomsId}],
-				sortDate : date
-			};
+			return null;
+			// var date = asrId.indexOf('-') == -1 ? 'Geen uitzenddatum' : asrId.substring(0, asrId.indexOf('-'));
+			// date = date.substring(0,4) + '/' + date.substring(4, 6) + '/' + date.substring(6, 8);
+			// mapping = {			
+			// 	titles : [{value : asrId}],
+			// 	sortDate : date,
+			// 	pomsId : null//no pomsId for there items
+			// };
 		}
 		
 		return mapping;
 	};
+
+	$scope.gotoWoordnl = function(pomsId) {
+		window.open('http://www.woord.nl/luister.program.'+pomsId+'.html');
+	}
 	
 	$scope.getSourceOrder = function(sources) {
 		var ordered = [];
@@ -257,7 +273,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		html.push('</span>');
 		html.push('<br>');
 		for (key in item.entities) {
-			html.push('<span class="ne_type">' + key + '</span>:&nbsp;');			
+			html.push('<span class="ne_type">' + key + '</span>:&nbsp;');
 			for(var i=0;i<item.entities[key].length;i++) {
 				html.push(item.entities[key][i] + ' ');
 			}

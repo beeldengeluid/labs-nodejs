@@ -27,7 +27,7 @@ module.exports = {
 			callback(callerObj, JSON.stringify({error: 'No ES host specified!'}), null);
 		}
 		this._esClient.get(this._contextIndex, this._contextType, id)
-		.on('data', function(data) {			
+		.on('data', function(data) {
 			callback({'msg' : callerObj, 'data' : JSON.parse(data)});
 		})
 		.on('done', function() {			

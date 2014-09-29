@@ -1,0 +1,12 @@
+{
+	"asr_transcript": {
+		"properties": {
+			"words": {
+				"index" : "analyzed",				
+				"analyzer": "text_nl_stemmed",
+				"type": "string"
+			}
+		},
+		"dynamic_date_formats" : [ "dd-MM-yyyy", "date_hour_minute_second", "date_time" ]
+	}
+}
