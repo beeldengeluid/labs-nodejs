@@ -32,61 +32,71 @@
 
 <body>
 
-
-	<!-- MAIN CONTAINER -->
-
-	<div class="container">
+	<div class="container" ng-controller="feedCtrl">
 
 		<header>
 			<div class="logo"></div>
 			<h3>RadioPlus Context Browser</h3>
 		</header>
 
-		<!-- THIS SECTION CONTROLS THE FEED ITEMS AND THEIR RELATED CONTEXT LINKS-->
-
-		<section ng-controller="feedCtrl">
-
-			<div class="row">				
-				<div class="rss-input">
-					<form class="form-inline" role="form" ng-submit="processFeed()">
-						<div class="form-group">
-							<label for="feed">RSS URL</label>
-						</div>
-						<div class="form-group">
-							<input id="feed" ng-model="feedURL" class="form-control" type="text" value="" size="70" placeholder="Voeg een RSS URL in en zoek naar gerelateerde Woord.nl uitzendingen">
-						</div>
-						<div class="form-group">
-							<button id="btn_submit" type="submit" class="btn btn-custom">{{fetchButtonText}}</button>
-						</div>
-					</form>										
-				</div>
-				
+		<!-- INPUT FORM -->
+		<div class="row">				
+			<div class="rss-input">
+				<form class="form-inline" role="form" ng-submit="processFeed()">
+					<div class="form-group">
+						<label for="feed">RSS URL</label>
+					</div>
+					<div class="form-group">
+						<input id="feed" ng-model="feedURL" class="form-control" type="text" value="" size="70" placeholder="Voeg een RSS URL in en zoek naar gerelateerde Woord.nl uitzendingen">
+					</div>
+					<div class="form-group">
+						<button id="btn_submit" type="submit" class="btn btn-custom">{{fetchButtonText}}</button>
+					</div>
+				</form>
 			</div>
+			
+		</div>
 
-			<p class="introduction" ng-if="feedItems.length == 0 && !searched">
-				Gebruik het bovenstaande formulier om een RSS URL te analyseren op gerelateerde content in Woord.nl
-			</p>
+		<!-- SYSTEM MESSAGES-->
+		<p class="introduction" ng-if="feedItems.length == 0 && !searched">
+			Gebruik het bovenstaande formulier om een RSS URL te analyseren op gerelateerde content in Woord.nl
+		</p>
 
-			<p ng-if="feedItems.length == 0 && searched">
-				<span class="alert alert-custom">Geen resultaten gevonden, probeert u het a.u.b. met een andere RSS feed</span>
-			</p>
-			<!-- LIST OF (RSS) FEED ITEMS -->
+		<p ng-if="feedItems.length == 0 && searched">
+			<span class="alert alert-custom">Geen resultaten gevonden, probeert u het a.u.b. met een andere RSS feed</span>
+		</p>
+		
+		<!-- NAVIGATION FOR FEED ITEMS -->
+		<div class="row">
+			<div class="col-md-12 feed-nav">
+				<div class="feed-nav-button" ng-show="offset != 0">
+					<button ng-show="feedItems.length > 0" class="btn btn-custom " ng-click="previousItems()">
+						<i class="glyphicon glyphicon-chevron-left"></i>
+					</button>
+					<label>Nieuwer</label>
+				</div>
+				<div class="feed-nav-button" ng-show="offset + LIMIT <= feedItems.length">
+					<label>Ouder</label>
+					<button ng-show="feedItems.length > 0" class="btn btn-custom" ng-click="nextItems()">
+						<i class="glyphicon glyphicon-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		</div>
 
-
-			<feed-list></feed-list>
-
-		</section>
+		<!-- LIST OF (RSS) FEED ITEMS -->
+		<feed-list></feed-list>
 
 	</div>
 
+	<!-- BOTTOM BALLOON GRAPHIC -->
 	<div class="balloon-graphic">
 
 	</div>
 
 </body>
 
-<!-- GET THE BOOTSTRAP JS AT THE END -->
-
+<!-- GET THE BOOTSTRAP & JQUERY JS AT THE END -->
 <script src="./woordnl-fc/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="./woordnl-fc/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>	
 

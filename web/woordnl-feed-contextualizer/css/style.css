@@ -6543,7 +6543,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   margin-bottom: 20px;
   background-color: white;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 0px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
@@ -6566,8 +6566,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel-heading {
   padding: 5px 10px;
   border-bottom: 1px solid transparent;
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
+  border-top-right-radius: -1px;
+  border-top-left-radius: -1px;
 }
 /* line 27, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel-heading > .dropdown .dropdown-toggle {
@@ -6591,8 +6591,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   padding: 5px 10px;
   background-color: whitesmoke;
   border-top: 1px solid #dddddd;
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: -1px;
+  border-bottom-left-radius: -1px;
 }
 
 /* line 59, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
@@ -6607,14 +6607,14 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 /* line 69, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .list-group:first-child .list-group-item:first-child {
   border-top: 0;
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
+  border-top-right-radius: -1px;
+  border-top-left-radius: -1px;
 }
 /* line 76, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .list-group:last-child .list-group-item:last-child {
   border-bottom: 0;
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: -1px;
+  border-bottom-left-radius: -1px;
 }
 
 /* line 85, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
@@ -6636,8 +6636,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 /* line 106, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:first-child,
 .panel > .table-responsive:first-child > .table:first-child {
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
+  border-top-right-radius: -1px;
+  border-top-left-radius: -1px;
 }
 /* line 113, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:first-child > thead:first-child > tr:first-child td:first-child,
@@ -6648,7 +6648,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
-  border-top-left-radius: 7px;
+  border-top-left-radius: -1px;
 }
 /* line 117, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:first-child > thead:first-child > tr:first-child td:last-child,
@@ -6659,13 +6659,13 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
-  border-top-right-radius: 7px;
+  border-top-right-radius: -1px;
 }
 /* line 125, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:last-child,
 .panel > .table-responsive:last-child > .table:last-child {
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: -1px;
+  border-bottom-left-radius: -1px;
 }
 /* line 132, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:last-child > tbody:last-child > tr:last-child td:first-child,
@@ -6676,7 +6676,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
-  border-bottom-left-radius: 7px;
+  border-bottom-left-radius: -1px;
 }
 /* line 136, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:last-child > tbody:last-child > tr:last-child td:last-child,
@@ -6687,7 +6687,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
-  border-bottom-right-radius: 7px;
+  border-bottom-right-radius: -1px;
 }
 /* line 143, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .panel-body + .table,
@@ -6769,7 +6769,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 /* line 202, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel-group .panel {
   margin-bottom: 0;
-  border-radius: 8px;
+  border-radius: 0px;
 }
 /* line 205, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel-group .panel + .panel {
@@ -8106,21 +8106,24 @@ a:hover {
 /* line 59, scss/_fc.scss */
 .rss-input {
   text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #00c9ff;
 }
 
-/* line 63, scss/_fc.scss */
-#button_back {
-  position: fixed;
-  left: 30px;
+/* line 65, scss/_fc.scss */
+.feed-nav {
+  padding: 10px 0px;
+}
+/* line 67, scss/_fc.scss */
+.feed-nav .feed-nav-button:first-child {
+  float: left;
+}
+/* line 70, scss/_fc.scss */
+.feed-nav .feed-nav-button:last-child {
+  float: right;
 }
 
-/* line 68, scss/_fc.scss */
-#button_forward {
-  position: fixed;
-  right: 30px;
-}
-
-/* line 73, scss/_fc.scss */
+/* line 75, scss/_fc.scss */
 .logo {
   background: url("../images/woordnl-nav-sprite.png") no-repeat;
   background-position: 0 -336px;
@@ -8128,7 +8131,7 @@ a:hover {
   width: 463px;
 }
 
-/* line 80, scss/_fc.scss */
+/* line 82, scss/_fc.scss */
 .balloon-graphic {
   background: url("../images/woordnl-nav-sprite.png") no-repeat;
   background-position: 0 -728px;
@@ -8138,7 +8141,7 @@ a:hover {
   margin-right: 8px;
 }
 
-/* line 89, scss/_fc.scss */
+/* line 91, scss/_fc.scss */
 .woordnl-link:after {
   position: absolute;
   content: '';
@@ -8150,7 +8153,7 @@ a:hover {
   background-position: 0 -3640px;
 }
 
-/* line 100, scss/_fc.scss */
+/* line 102, scss/_fc.scss */
 .introduction {
   display: block;
   padding: 20px;
@@ -8159,7 +8162,7 @@ a:hover {
   border-radius: 0px !important;
 }
 
-/* line 108, scss/_fc.scss */
+/* line 110, scss/_fc.scss */
 .alert-custom {
   display: block;
   padding: 20px;
@@ -8168,42 +8171,50 @@ a:hover {
   border-radius: 0px !important;
 }
 
-/* line 1, scss/_feedItems.scss */
-.feed-items {
-  padding-top: 20px;
-  height: 140px;
+/* line 2, scss/_feedItems.scss */
+.feed-item {
+  height: 200px;
 }
 /* line 4, scss/_feedItems.scss */
-.feed-items h6 {
-  margin: 10px 0px 0px 0px;
-}
-/* line 7, scss/_feedItems.scss */
-.feed-items h3 {
+.feed-item h3 {
   padding: 0px;
   margin: 10px 0px;
 }
 
-/* line 13, scss/_feedItems.scss */
+/* line 10, scss/_feedItems.scss */
 .divider {
-  background-color: #ced6e6;
+  margin-bottom: 20px;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e3e3e3));
   background-image: -webkit-linear-gradient(#ffffff, #e3e3e3);
   background-image: -moz-linear-gradient(#ffffff, #e3e3e3);
   background-image: -o-linear-gradient(#ffffff, #e3e3e3);
   background-image: linear-gradient(#ffffff, #e3e3e3);
-  height: 100px;
-  margin-bottom: 40px;
+}
+@media all and (min-width: 992px) {
+  /* line 10, scss/_feedItems.scss */
+  .divider {
+    height: 80px;
+  }
+}
+@media all and (max-width: 991px) {
+  /* line 10, scss/_feedItems.scss */
+  .divider {
+    height: 40px;
+    margin: 20px 0px;
+  }
 }
 
-/* line 22, scss/_feedItems.scss */
+/* line 25, scss/_feedItems.scss */
 .woordnl-items .title:first-child {
   font-weight: bold;
 }
-/* line 29, scss/_feedItems.scss */
-.woordnl-items .panel {
-  cursor: pointer;
-}
 /* line 32, scss/_feedItems.scss */
+.woordnl-items .panel {
+  background-color: #e7ebf2;
+  cursor: pointer;
+  padding-bottom: 20px;
+}
+/* line 37, scss/_feedItems.scss */
 .woordnl-items a {
   color: black;
 }

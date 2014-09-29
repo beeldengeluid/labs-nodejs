@@ -206,6 +206,10 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		
 		return mapping;
 	};
+
+	$scope.gotoWoordnl = function(pomsId) {
+		window.open('http://www.woord.nl/luister.program.'+pomsId+'.html');
+	}
 	
 	$scope.getSourceOrder = function(sources) {
 		var ordered = [];
