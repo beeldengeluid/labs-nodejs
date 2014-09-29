@@ -221,8 +221,8 @@ var feed = new function () {
 		//Set the uuid of each message
 		msg.id = uuid.v4();
 		//Get the most notable words ordered by 'importance' (for details, see text-analyzer.js)
-		console.log(msg.title+'\n');
-		console.log(msg.summary+'\n');
+		// console.log(msg.title+'\n');
+		// console.log(msg.summary+'\n');
 		
 		var cleanText = textAnalyzer.cleanupText(msg.title + ' ' + msg.summary);
 		msg.wordFreqs = textAnalyzer.getMostImportantWords(cleanText, STOP_WORDS, IDF_SCORES, true);
@@ -246,9 +246,7 @@ var feed = new function () {
 		
 		//construct the query object
 		query = {'entities' : msg.entities, 'wordFreqs' : msg.wordFreqs};
-		for (key in msg.wordFreqs) {
-			console.log(msg.wordFreqs[key]);
-		}
+
 		var sources = [];
 		sources.push.apply(sources, CONFIG['context-sources']);
 		
