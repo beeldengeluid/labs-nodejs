@@ -130,3 +130,37 @@ Before being able to run the client side code. Please install bower and install 
 	bower install bootstrap-sass-official
 	bower install chieffancypants/angular-hotkeys --save
 
+
+
+Indexing
+=================================
+http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/analysis-hunspell-tokenfilter.html
+http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-common-terms-query.html
+
+woordnl_asr index (the referred files are in ./resource/mapping-woordnl)
+
+	curl -XPUT 'http://localhost:9200/woordnl_asr' -d @settings.json
+	curl -XPUT 'http://localhost:9200/woordnl_asr/asr_chunk/_mapping' -d @mapping.json
+	curl -XPUT 'http://localhost:9200/woordnl_asr/asr_transcript/_mapping' -d @mapping-transcript.json
+
+woordnl_context index
+
+	curl -XPUT 'http://localhost:9200/woordnl_context' -d @settings.json
+
+
+
+
+
+Example queries (common term query)
+==================================
+
+{
+  "query": {
+    "common": {
+      "words": {
+        "query": "amsterdam bombardement indrukwekkend heel",
+        "cutoff_frequency": 0.001
+      }
+    }
+  }
+}

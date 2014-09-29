@@ -26,11 +26,17 @@
                 "filter": [
                     "asciifolding",
                     "lowercase",
-                    "custom_word_delimiter"                    
+                    "custom_word_delimiter",
+                    "hunspell_nl"
                 ]
             }
         },
-        "filter" : {           
+        "filter" : {
+            "hunspell_nl" : {
+                "type" : "hunspell",
+                "locale" : "nl_NL",
+                "dedup" : true
+            },
             "custom_word_delimiter": {
                 "type": "word_delimiter",
                 "generate_word_parts": true,
