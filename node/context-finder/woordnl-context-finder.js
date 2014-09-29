@@ -14,15 +14,16 @@ module.exports = {
 			});
 		}
 	
-		var str = this.getQueryString(query.wordFreqs);
+		var str = this.getQueryString(query.wordFreqs,10,true,false);
 		var esQuery = {"query":
 			{"bool": {
-				"must":[{"query_string":{"default_field":"_all","query":str}}],
+				"must":[{"query_string":{"default_field":"words","query":str}}],
 				"must_not":[],
 				"should":[]}
 			},
 			"from":0,"size":10,"sort":[],"facets":{}
 		}		
+		console.log(JSON.stringify(esQuery));
 		this._esClient.search('woordnl', 'asr_chunk', esQuery)
 			.on('data', function(data) {
 				//console.log(data);
@@ -39,14 +40,25 @@ module.exports = {
 			.exec();
 	},
 	
-	getQueryString : function (wordList) {
+	getQueryString : function (wordList, maxWords, boost, power) {
+		var maxWords = maxWords ? maxWords: 10;
+		var boost = boost ? boost : true;
+		var power = power ? power : false;
 		if(wordList) {
-			if(wordList.length >= 5) {
-				return wordList.slice(0,5).join(' ');
-			} else {
-				return wordList.join(' ');
+			if(wordList.length >= maxWords) {
+				wordList = wordList.slice(0,maxWords);
+			}
+			for (i=0;i<wordList.length;i++) {
+				// http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_boosting
+				if (boost == true) {
+					var boostFactor = wordList.length-i;
+					if (power == true) {
+						boostFactor = Math.pow(boostFactor, 2);
+					}
+					wordList[i] = wordList[i]+"^"+boostFactor.toString();
+				}
 			}
 		}
+		return wordList.join(" ");
 	}
-
 }

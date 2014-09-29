@@ -121,6 +121,7 @@ module.exports = {
 		dirty = dirty.replace(/<\/h1>/g," </h1>");
 		dirty = dirty.replace(/<\/h2>/g," </h2>");
 		dirty = dirty.replace(/<\/h3>/g," </h3>");
+		dirty = dirty.replace(/<\/em>/g," </em>");
 		var clean = sanitizeHtml(dirty, {
 			allowedTags: [],
 			allowedAttributes: {}
