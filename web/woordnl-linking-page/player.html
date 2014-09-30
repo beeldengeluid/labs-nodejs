@@ -82,8 +82,12 @@
 					<a ng-show="e.ANEFOData.length > 4" href="{{e.ANEFOData[4].url}}" target="_anefo">
 						<img style="display:inline-block;" ng-src="{{e.ANEFOData[4].img1}}" title="{{e.ANEFOData[4].description}}">
 					</a>
-					<img id="FSimage">
+					<a><img id="FSimage"></a>
 					<button onclick="fullImager('{{e.ANEFOData[0].img1}}','{{e.ANEFOData[2].img1}}','{{e.ANEFOData[4].img1}}');">FullScreen</button>
+					<!--
+					<button onclick="replaceContentInContainer('media-metadata-description',
+										   '<a ng-show="e.ANEFOData.length > 0" href="{{e.ANEFOData[0].url}}" target="_anefo"><img style="display:inline-block;" ng-src="{{e.ANEFOData[0].img1}}" title="{{e.ANEFOData[0].description}}"></a><a ng-show="e.ANEFOData.length > 2" href="{{e.ANEFOData[2].url}}" target="_anefo"><img style="display:inline-block;" ng-src="{{e.ANEFOData[2].img1}}" title="{{e.ANEFOData[2].description}}"></a><a ng-show="e.ANEFOData.length > 4" href="{{e.ANEFOData[4].url}}" target="_anefo"><img style="display:inline-block;" ng-src="{{e.ANEFOData[4].img1}}" title="{{e.ANEFOData[4].description}}"></a>');")>TestMeta</button>
+					-->
 				</div>
 			</li>
 		</ul>
