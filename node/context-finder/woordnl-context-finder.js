@@ -17,7 +17,7 @@ module.exports = {
 		var str = this.getQueryString(query.wordFreqs,10,true,false);
 		console.log(query.wordFreqs);
 		console.log(str);
-		var esQuery = {"query":
+		var esQuery = {"query":  
 			{"bool": {
 				"must":[{"query_string":{"default_field":"words","query":str}}],
 				"must_not":[],
