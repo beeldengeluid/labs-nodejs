@@ -1,145 +1,644 @@
-<!doctype HTML>
-
-<html ng-app="woordnl_lab2" lang="nl">
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="no-js ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html style="" class="  js no-touch hashchange history csstransforms csstransforms3d csstransitions localstorage no-overflowscrolling overflow-scroll viewvariant-full" lang="en">
+<!--<![endif]-->
 
 <head>
-	<meta name="description" content="">
-	<meta name="author" content="Jaap Blom">
-	
-	<meta http-equiv="cache-control" content="max-age=0" />
-	<meta http-equiv="cache-control" content="no-cache" />
-	<meta http-equiv="expires" content="0" />
-	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-	<meta http-equiv="pragma" content="no-cache" />
-	
-	<title>Woord.nl</title>
-	
-	<!-- JQUERY -->
-	
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	
-	<!-- ANGULAR -->	
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>	
-	<script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
-	<!-- BOOTSTRAP CSS -->
-	
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="./woordnl-rc/css/woordnl_lab2.css">
-	
-	<!-- WOORD.NL JS-->
-	
-	<script src="./woordnl-rc/js/popcorn-js/plugins/popcorn.contextitem.js"></script>
-	<script src="./woordnl-rc/js/popcorn-js/plugins/popcorn.semantictag.js"></script>
-	<script src="./woordnl-rc/js/popcorn-js/plugins/popcorn.wikipedia.js"></script>
-	<script src="./woordnl-rc/js/woordnl_lab2.js"></script>	
-	
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="js/mapping-woordnl.js"></script>
+    <script src="js/woordnl_search.js" async="" type="text/javascript"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="css/font-awesome/font-awesome.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!--                 /)         /)
+    _   _ ________  _(/    __   //
+    (_(/ (_)(_)/ (_(_(_ o  / (_(/_
+
+    (C) VPRO Digitaal, the Netherlands / http://www.vpro.nl/digitaal -->
+
+    <link rel="apple-touch-icon" href="">
+
+    <meta name="viewport" content="width=device-width,
+                   initial-scale=1,
+                   maximum-scale=1,
+                   user-scalable=no,
+                   minimal-ui">
+
+
+    <meta charset="utf-8">
+
+    <meta name="keywords" content="Zoek">
+    <meta name="description" content="">
+    <meta name="robots" content="all">
+
+    <meta name="Generator" content="Microsoft FrontPage 97 (version 2)">
+
+
+
+
+    <meta name="couchdburl" content="http://couchdb.vpro.nl">
+
+    <meta name="playerpageurl" content="/luister.html">
+
+    <meta name="imageserverurl" content="http://images.poms.omroep.nl/image/">
+
+    <meta name="siteroot" content="/">
+
+    <meta id="meta-sitename" name="sitename" content="woord">
+
+    <meta id="meta-jsremotehost" name="jsremotehost" content="http://js.vpro.nl">
+    <meta id="meta-jsversion" name="jsversion" content="1.43">
+    <meta id="meta-jsmgnldevelop" name="jsmgnldevelop" content="false">
+
+    <script src="Woord.nl%20-%20Zoek_%20one_files/zzHEauPow8ZvSF45VMQFA.js" async="" type="text/javascript"></script>    
+
+
+                <title>Woord.nl - Zoek</title>
+
+                <link rel="shortcut icon" type="image/ico" href="http://www.woord.nl/dms/vpro/favicons/vpro/favicon.ico">
+
+                <script src="Woord.nl%20-%20Zoek_%20one_files/modernizr.js"></script>
+
+                <link rel="stylesheet" href="Woord.nl%20-%20Zoek_%20one_files/font.css">
+                <link rel="stylesheet" href="Woord.nl%20-%20Zoek_%20one_files/app.css">
+                <link rel="stylesheet" href="Woord.nl%20-%20Zoek_%20one_files/npo_cc_styles.css">
+
+                <script src="Woord.nl%20-%20Zoek_%20one_files/shims.js"></script>
+                <script src="Woord.nl%20-%20Zoek_%20one_files/purno.js"></script>
+
+                <script src="Woord.nl%20-%20Zoek_%20one_files/csr-bootstrap.js"></script>
+                <style media="screen" type="text/css">
+                    .uv-icon {
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        box-sizing: border-box;
+                        display: inline-block;
+                        cursor: pointer;
+                        position: relative;
+                        -webkit-transition: all 300ms;
+                        -moz-transition: all 300ms;
+                        -o-transition: all 300ms;
+                        transition: all 300ms;
+                        width: 39px;
+                        height: 39px;
+                        position: fixed;
+                        z-index: 100002;
+                        opacity: 0.8;
+                        -webkit-transition: opacity 100ms;
+                        -moz-transition: opacity 100ms;
+                        -o-transition: opacity 100ms;
+                        transition: opacity 100ms
+                    }
+                    .uv-icon.uv-bottom-right {
+                        bottom: 10px;
+                        right: 12px
+                    }
+                    .uv-icon.uv-top-right {
+                        top: 10px;
+                        right: 12px
+                    }
+                    .uv-icon.uv-bottom-left {
+                        bottom: 10px;
+                        left: 12px
+                    }
+                    .uv-icon.uv-top-left {
+                        top: 10px;
+                        left: 12px
+                    }
+                    .uv-icon.uv-is-selected {
+                        opacity: 1
+                    }
+                    .uv-icon svg {
+                        width: 39px;
+                        height: 39px
+                    }
+                    .uv-popover {
+                        font-family: sans-serif;
+                        font-weight: 100;
+                        font-size: 13px;
+                        color: black;
+                        position: fixed;
+                        z-index: 100001
+                    }
+                    .uv-popover-content {
+                        -webkit-border-radius: 5px;
+                        -moz-border-radius: 5px;
+                        -ms-border-radius: 5px;
+                        -o-border-radius: 5px;
+                        border-radius: 5px;
+                        background: white;
+                        position: relative;
+                        width: 325px;
+                        height: 325px;
+                        -webkit-transition: background 200ms;
+                        -moz-transition: background 200ms;
+                        -o-transition: background 200ms;
+                        transition: background 200ms
+                    }
+                    .uv-bottom .uv-popover-content {
+                        -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 -10px 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 -10px 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        box-shadow: rgba(0, 0, 0, 0.3) 0 -10px 60px, rgba(0, 0, 0, 0.1) 0 0 20px
+                    }
+                    .uv-top .uv-popover-content {
+                        -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 10px 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 10px 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        box-shadow: rgba(0, 0, 0, 0.3) 0 10px 60px, rgba(0, 0, 0, 0.1) 0 0 20px
+                    }
+                    .uv-left .uv-popover-content {
+                        -webkit-box-shadow: rgba(0, 0, 0, 0.3) 10px 0 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        -moz-box-shadow: rgba(0, 0, 0, 0.3) 10px 0 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        box-shadow: rgba(0, 0, 0, 0.3) 10px 0 60px, rgba(0, 0, 0, 0.1) 0 0 20px
+                    }
+                    .uv-right .uv-popover-content {
+                        -webkit-box-shadow: rgba(0, 0, 0, 0.3) -10px 0 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        -moz-box-shadow: rgba(0, 0, 0, 0.3) -10px 0 60px, rgba(0, 0, 0, 0.1) 0 0 20px;
+                        box-shadow: rgba(0, 0, 0, 0.3) -10px 0 60px, rgba(0, 0, 0, 0.1) 0 0 20px
+                    }
+                    .uv-ie8 .uv-popover-content {
+                        position: relative
+                    }
+                    .uv-ie8 .uv-popover-content .uv-popover-content-shadow {
+                        display: block;
+                        background: black;
+                        content: '';
+                        position: absolute;
+                        left: -15px;
+                        top: -15px;
+                        width: 100%;
+                        height: 100%;
+                        filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius=15, MakeShadow=true, ShadowOpacity=0.30);
+                        z-index: -1
+                    }
+                    .uv-popover-tail {
+                        border: 9px solid transparent;
+                        width: 0;
+                        z-index: 10;
+                        position: absolute;
+                        -webkit-transition: border-top-color 200ms;
+                        -moz-transition: border-top-color 200ms;
+                        -o-transition: border-top-color 200ms;
+                        transition: border-top-color 200ms
+                    }
+                    .uv-top .uv-popover-tail {
+                        bottom: -20px;
+                        border-top: 11px solid white
+                    }
+                    .uv-bottom .uv-popover-tail {
+                        top: -20px;
+                        border-bottom: 11px solid white
+                    }
+                    .uv-left .uv-popover-tail {
+                        right: -20px;
+                        border-left: 11px solid white
+                    }
+                    .uv-right .uv-popover-tail {
+                        left: -20px;
+                        border-right: 11px solid white
+                    }
+                    .uv-popover-loading {
+                        background: white;
+                        -webkit-border-radius: 5px;
+                        -moz-border-radius: 5px;
+                        -ms-border-radius: 5px;
+                        -o-border-radius: 5px;
+                        border-radius: 5px;
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        left: 0;
+                        top: 0
+                    }
+                    .uv-popover-loading-text {
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -0.5em;
+                        width: 100%;
+                        text-align: center
+                    }
+                    .uv-popover-iframe-container {
+                        height: 100%
+                    }
+                    .uv-popover-iframe {
+                        -webkit-border-radius: 5px;
+                        -moz-border-radius: 5px;
+                        -ms-border-radius: 5px;
+                        -o-border-radius: 5px;
+                        border-radius: 5px;
+                        overflow: hidden
+                    }
+                    .uv-is-hidden {
+                        display: none
+                    }
+                    .uv-is-invisible {
+                        display: block !important;
+                        visibility: hidden !important
+                    }
+                    .uv-is-transitioning {
+                        display: block !important
+                    }
+                    .uv-no-transition {
+                        -moz-transition: none !important;
+                        -webkit-transition: none !important;
+                        -o-transition: color 0 ease-in !important;
+                        transition: none !important
+                    }
+                    .uv-fade {
+                        opacity: 1;
+                        -webkit-transition: opacity 200ms ease-out;
+                        -moz-transition: opacity 200ms ease-out;
+                        -o-transition: opacity 200ms ease-out;
+                        transition: opacity 200ms ease-out
+                    }
+                    .uv-fade.uv-is-hidden {
+                        opacity: 0
+                    }
+                    .uv-scale-top,
+                    .uv-scale-top-left,
+                    .uv-scale-top-right,
+                    .uv-scale-bottom,
+                    .uv-scale-bottom-left,
+                    .uv-scale-bottom-right,
+                    .uv-scale-right,
+                    .uv-scale-right-top,
+                    .uv-scale-right-bottom,
+                    .uv-scale-left,
+                    .uv-scale-left-top,
+                    .uv-scale-left-bottom,
+                    .uv-slide-top,
+                    .uv-slide-bottom,
+                    .uv-slide-left,
+                    .uv-slide-right {
+                        opacity: 1;
+                        -webkit-transition: all 80ms ease-out;
+                        -moz-transition: all 80ms ease-out;
+                        -o-transition: all 80ms ease-out;
+                        transition: all 80ms ease-out
+                    }
+                    .uv-scale-top.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateY(-15%);
+                        -moz-transform: scale(0.8) translateY(-15%);
+                        -ms-transform: scale(0.8) translateY(-15%);
+                        -o-transform: scale(0.8) translateY(-15%);
+                        transform: scale(0.8) translateY(-15%)
+                    }
+                    .uv-scale-top-left.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateY(-15%) translateX(-10%);
+                        -moz-transform: scale(0.8) translateY(-15%) translateX(-10%);
+                        -ms-transform: scale(0.8) translateY(-15%) translateX(-10%);
+                        -o-transform: scale(0.8) translateY(-15%) translateX(-10%);
+                        transform: scale(0.8) translateY(-15%) translateX(-10%)
+                    }
+                    .uv-scale-top-right.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateY(-15%) translateX(10%);
+                        -moz-transform: scale(0.8) translateY(-15%) translateX(10%);
+                        -ms-transform: scale(0.8) translateY(-15%) translateX(10%);
+                        -o-transform: scale(0.8) translateY(-15%) translateX(10%);
+                        transform: scale(0.8) translateY(-15%) translateX(10%)
+                    }
+                    .uv-scale-bottom.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateY(15%);
+                        -moz-transform: scale(0.8) translateY(15%);
+                        -ms-transform: scale(0.8) translateY(15%);
+                        -o-transform: scale(0.8) translateY(15%);
+                        transform: scale(0.8) translateY(15%)
+                    }
+                    .uv-scale-bottom-left.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateY(15%) translateX(-10%);
+                        -moz-transform: scale(0.8) translateY(15%) translateX(-10%);
+                        -ms-transform: scale(0.8) translateY(15%) translateX(-10%);
+                        -o-transform: scale(0.8) translateY(15%) translateX(-10%);
+                        transform: scale(0.8) translateY(15%) translateX(-10%)
+                    }
+                    .uv-scale-bottom-right.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateY(15%) translateX(10%);
+                        -moz-transform: scale(0.8) translateY(15%) translateX(10%);
+                        -ms-transform: scale(0.8) translateY(15%) translateX(10%);
+                        -o-transform: scale(0.8) translateY(15%) translateX(10%);
+                        transform: scale(0.8) translateY(15%) translateX(10%)
+                    }
+                    .uv-scale-right.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateX(15%);
+                        -moz-transform: scale(0.8) translateX(15%);
+                        -ms-transform: scale(0.8) translateX(15%);
+                        -o-transform: scale(0.8) translateX(15%);
+                        transform: scale(0.8) translateX(15%)
+                    }
+                    .uv-scale-right-top.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateX(15%) translateY(-10%);
+                        -moz-transform: scale(0.8) translateX(15%) translateY(-10%);
+                        -ms-transform: scale(0.8) translateX(15%) translateY(-10%);
+                        -o-transform: scale(0.8) translateX(15%) translateY(-10%);
+                        transform: scale(0.8) translateX(15%) translateY(-10%)
+                    }
+                    .uv-scale-right-bottom.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateX(15%) translateY(10%);
+                        -moz-transform: scale(0.8) translateX(15%) translateY(10%);
+                        -ms-transform: scale(0.8) translateX(15%) translateY(10%);
+                        -o-transform: scale(0.8) translateX(15%) translateY(10%);
+                        transform: scale(0.8) translateX(15%) translateY(10%)
+                    }
+                    .uv-scale-left.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateX(-15%);
+                        -moz-transform: scale(0.8) translateX(-15%);
+                        -ms-transform: scale(0.8) translateX(-15%);
+                        -o-transform: scale(0.8) translateX(-15%);
+                        transform: scale(0.8) translateX(-15%)
+                    }
+                    .uv-scale-left-top.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateX(-15%) translateY(-10%);
+                        -moz-transform: scale(0.8) translateX(-15%) translateY(-10%);
+                        -ms-transform: scale(0.8) translateX(-15%) translateY(-10%);
+                        -o-transform: scale(0.8) translateX(-15%) translateY(-10%);
+                        transform: scale(0.8) translateX(-15%) translateY(-10%)
+                    }
+                    .uv-scale-left-bottom.uv-is-hidden {
+                        opacity: 0;
+                        -webkit-transform: scale(0.8) translateX(-15%) translateY(10%);
+                        -moz-transform: scale(0.8) translateX(-15%) translateY(10%);
+                        -ms-transform: scale(0.8) translateX(-15%) translateY(10%);
+                        -o-transform: scale(0.8) translateX(-15%) translateY(10%);
+                        transform: scale(0.8) translateX(-15%) translateY(10%)
+                    }
+                    .uv-slide-top.uv-is-hidden {
+                        -webkit-transform: translateY(-100%);
+                        -moz-transform: translateY(-100%);
+                        -ms-transform: translateY(-100%);
+                        -o-transform: translateY(-100%);
+                        transform: translateY(-100%)
+                    }
+                    .uv-slide-bottom.uv-is-hidden {
+                        -webkit-transform: translateY(100%);
+                        -moz-transform: translateY(100%);
+                        -ms-transform: translateY(100%);
+                        -o-transform: translateY(100%);
+                        transform: translateY(100%)
+                    }
+                    .uv-slide-left.uv-is-hidden {
+                        -webkit-transform: translateX(-100%);
+                        -moz-transform: translateX(-100%);
+                        -ms-transform: translateX(-100%);
+                        -o-transform: translateX(-100%);
+                        transform: translateX(-100%)
+                    }
+                    .uv-slide-right.uv-is-hidden {
+                        -webkit-transform: translateX(100%);
+                        -moz-transform: translateX(100%);
+                        -ms-transform: translateX(100%);
+                        -o-transform: translateX(100%);
+                        transform: translateX(100%)
+                    }
+                </style>
+                <style media="print" type="text/css">
+                    #uvTab,
+                    .uv-tray,
+                    .uv-icon,
+                    .uv-popover,
+                    .uv-bubble {
+                        display: none!important
+                    }
+                </style>
 </head>
 
-<body>
-	<div ng-controller="playerCtrl">	
-		
-		<h1>Woordnl: Marthoninterviews verrijkt met Wikipedia links</h1>
-		
-		<!-- HIDDEN POPCORN PLAYER -->
-		
-		<div id="popcorn-player"></div>
-		
-		<!-- INVISIBLE AUDIO PLAYER  -->
-		
-		<audio id="audioPlayer" controls>
-			<source id="audioSource" type="audio/mpeg">
-			Your browser does not support the audio element.
-		</audio>
-		
-		
-		<!-- SELECT DROPDOWN  -->	
-		
-		<div class="transcript_select">
-			<form class="form-inline" role="form">
-	  			<div class="form-group">
-	    			<label for="transcript_select">Select transcript</label>    			
-			    	<select id="transcript_select" class="form-control" ng-model="transcript" ng-change="setTranscript()" placeholder="Select transcript">
-						<option id="{{tf}}" ng-repeat="tf in transcriptFiles">{{tf}}</option>
-					</select>
-		  		</div>
-			  </form>			
-		</div>
-		
-		<div id="test_div"></div>
-		
-		<!-- LOADING GRAPHIC -->
-								
-		<div id="loading" ng-show="loading == true">
-			<img src="./woordnl-rc/images/loading.gif" alt="Loading new feed items">
-		</div>
-		
-		
-		<!-- THE PLAYER -->
-		
-		<div id="player" ng-show="currentFragment"></div>
-		
-		
-		<!-- SCRUBBER + PLAY AND PAUSE BUTTONS -->
-		
-		<div id="player-controls" ng-show="currentFragment">
-			<div class="player-scrubber" ng-click="goSeek($event)">
-	            <div class="player-scrubber-head">
-	            	<div class="player-scrubber-head-visual"></div>
-	            </div>
-	            <div class="player-scrubber-elapsed"></div>
-	            <div class="player-scrubber-progress"></div>
-	        </div>
-	        <div class="btn-group">
-				<button type="button" class="btn btn-primary" ng-click="audioPlayer.play()">Play</button>
-				<button type="button" class="btn btn-primary" ng-click="audioPlayer.pause()">Stop</button>
-			</div>
-		</div>
-		
-		
-		<!-- DISPLAYS THE TIME -->
-		<div id="time"></div>
-		
-		<div>Number of tags found for this transcript: {{transcriptTags.length}}</div>	
-		
-		
-		<!-- THE SEARCH FORM -->
-		
-		<form id="search_form" class="form-inline" role="form" ng-submit="getContext()" style="display:none;">
-			<div class="form-group">
-				<label for="feed">Context query</label>
-			</div>
-			<div class="form-group">
-				<input id="feed" ng-model="contextQuery" class="form-control" type="text" value="" size="60" placeholder="b.v. roken, olie, oorlog">
-			</div>				
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Get context</button>
-			</div>
-		</form>	
-			
-		
-		<div id="context-grid">
-			<ul class="context-items" ng-repeat="tag in foundTags">
-				<li class="context-item" ng-repeat="e in tag.entities">
-					<h5 title="{{e.label}}">
-						<a href="{{e.url}}" target="_wiki">{{e.label}}</a>
-						&nbsp;
-						<span class="label label-success">Link</span>
-					</h5>
-				</li>
-			</ul>
-		</div>
-	
-	</div>	
-	
+<body data-homepage-teasergroup="urn:vpro:media:group:14173308">
+    <div class="uv-tab uv-slide-right " id="uvTab" style="background: url(&quot;http://widget.uservoice.com/pkg/clients/widget2/tab-right-dark-da2413549ce324fc421ae86a0e5881ee.png&quot;) no-repeat scroll 50% 0px rgb(0, 200, 255); border-width: 1px medium 1px 1px; border-style: solid none solid solid; border-color: rgb(255, 255, 255) -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; border-radius: 4px 0px 0px 4px; box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.25) inset, 0px 1px 2px rgba(0, 0, 0, 0.5); font: bold 14px/1em Arial,sans-serif; position: fixed; right: 0px; top: 50%; z-index: 9999; margin-top: -64px;">
+        <a id="uvTabLabel" style="background-color: transparent; display:block;padding:39px 5px 10px 5px;text-decoration:none;" href="javascript:return%20false;">
+            <img src="Woord.nl%20-%20Zoek_%20one_files/feedback-tab.png" alt="Feedback" style="border:0; background-color: transparent; padding:0; margin:0;">
+        </a>
+    </div>
+
+    <div style="display:none;">
+        <div id="mgnlcontent" data-uuid="d6ddc655-6945-42f7-b459-343731737ce4">
+
+            <div id="main" role="main">
+
+
+
+
+
+                <div class="teaser latest search" id="teaser-1">
+
+                    <div class="form-wrapper new-search">
+                        <form action="">
+                            <fieldset>
+                                <h2>Nieuwe zoekopdracht!!!!!!!!!!!!!!!!!!!!!!!!!!!!</h2>
+                                <div>
+                                    <label for="search">
+                                        <span>Zoek naar</span>
+                                        <input id="search" name="queryStr" type="text">
+                                    </label>
+                                    <input class="button" value="Zoek" type="submit">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <ol>
+                    </ol>
+                </div>
+
+                <div class="bottomPager">
+                </div>
+            </div>
+            <!-- end main -->
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="app">
+            <div class="spinner"></div>
+
+            <div class="slides">
+
+                <div id="home" class="slide slide-1">
+
+                    <div class="slide-inner">
+                        <div class="slide-contentwrapper">
+                            <div class="content">
+                                <div class="start container"></div>
+                                <div class="article container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="search" class="slide slide-2 open active">
+                    <div class="hotspot"></div>
+                    <div class="slide-inner">
+                        <div class="slide-contentwrapper">
+                            <div class="content">
+                                <div class="searchForm">
+                                    <div class="query">
+                                        <div class="favorites-wrapper">
+
+                                            <div class="icon"></div><span>Woord.nl - Zoek</span>
+                                        </div>
+                                        <div class="queryfield">
+                                            <div class="autocomplete">
+                                                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+
+                                                <input id="q" name="q" value="" autocomplete="off" autocorrect="off" autocapitalize="off" type="text" onkeydown="if (event.keyCode == 13) searchIN();">
+                                                                                                
+                                                <label for="q" class="inactive-label"></label>
+                                                <label for="q" class="active-label"></label>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="query-info">
+                                        <!--<span class="found">fragmenten?</span> -->
+                                         <div class="switch">
+                                            <input id="results-toggle" class="cmn-toggle cmn-toggle-yes-no" type="checkbox" onclick="searchIN();">
+                                            <label for="results-toggle" data-on="Uitzendingen  " data-off="Fragmenten" ></label>
+                                        </div>
+                                         <br>
+                                            
+                                        <div class="query-info-inner"><span class="result-count"><span id="resultq"></span></span><span class="query-description"> </span>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="loader-wrapper">
+                                        <div class="loader"></div>
+                                    </div>
+                                    <div class="results" id="Themresults">
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="play" class="slide slide-3 disabled">
+                    <div class="hotspot"></div>
+                    <div class="slide-inner">
+                        <div class="slide-contentwrapper">
+                            <div class="content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yes, this is an awful hack -->
+            <div class="corners">
+                <div class="sprite-nav-balloon-corner-lefttop"></div>
+                <div class="sprite-nav-balloon-corner-righttop"></div>
+                <div class="sprite-nav-balloon-corner-leftbottom"></div>
+                <div class="sprite-nav-balloon-corner-rightbottom"></div>
+            </div>
+        </div>
+
+        <div id="bar">
+
+            <nav class="navigation">
+                <a data-state="home" class="nav-item home" href="two.html">
+                    <span class="icon sprite-nav-homeoutline-white-32">home</span>
+                </a>
+
+                <a data-state="search" class="nav-item search active" href="two.html">
+                    <span class="icon sprite-nav-searchoutline-white-32">zoek</span>
+                </a>
+
+                <a data-state="play" class="nav-item mobileplay hidden" id="playermobile">
+                    <span class="icon sprite-nav-infooutline-white-32">speler</span>
+                </a>
+
+                <a class="nav-item play paused hidden" data-state="play" id="playertime">
+                    <span class="icon sprite-nav-playoutline-white-32">speel</span>
+                    <span class="status hidden">
+                    <span class="player-time-elapsed">0.00</span>
+                    <span>/</span>
+                    <span class="player-time-duration">0.00</span>
+                    </span>
+                </a>
+            </nav>
+
+            <button class="woord" type="button">woord.nl</button>
+        </div>
+    </div>
+    
+
+    <script src="Woord.nl%20-%20Zoek_%20one_files/jquery.js"></script>
+
+    <!-- Begin Sitestat4 code -->
+    <div id="npo_cc_area_1" class="analytics_div"></div>
+
+    <noscript>
+        <img src="http://nl.sitestat.com/klo/vpro/s?woord.zoek&amp;category=woord&amp;ns_channel=internet_mobiele_services&amp;ns_webdir=woord&amp;po_sitetype=plus&amp;po_source=fixed&amp;mgnl_uuid=d6ddc655-6945-42f7-b459-343731737ce4&amp;po_merk=audio.radio1" width="1" height="1" alt="" />
+    </noscript>
+    <!-- End Sitestat4 code -->
+    <script type="text/plain" class="npo_cc_analytics npo_cc_processed">window.NREUM||(NREUM={});NREUM.info={"applicationID":"993597","applicationTime":39,"beacon":"beacon-1.newrelic.com","queueTime":0,"licenseKey":"5e05b18e2a","transactionName":"bgZVZEYHWBBVWxZRWldMcVlYElMRG1UDX1tWD15Rcg9aF1FKIVBUUA0=","agent":"js-agent.newrelic.com\/nr-411.min.js","errorBeacon":"bam.nr-data.net"}</script>
+
+
+    <div class="player" id="playerpixel"></div>
+    <div class="abstractoverlay medialist-overlay favorite-overlay abstractoverlay-style-0" id="medialist-overlay">
+        <div class="topbar">
+            <div class="close">
+                <div>sluit</div>
+                <div class="icon sprite-close-white-24"></div>
+            </div>
+        </div>
+
+        <div class="content">
+
+        </div>
+    </div>
+    <div class="abstractoverlay media collection-overlay medialist-overlay abstractoverlay-style-0" id="media collection-overlay">
+        <div class="topbar">
+            <div class="close">
+                <div>sluit</div>
+                <div class="icon sprite-close-white-24"></div>
+            </div>
+        </div>
+
+        <div class="content">
+
+        </div>
+    </div>
+    <div class="abstractoverlay embed-overlay abstractoverlay-style-0" id="embed-overlay">
+        <div class="topbar">
+            <div class="close">
+                <div>sluit</div>
+                <div class="icon sprite-close-white-24"></div>
+            </div>
+        </div>
+
+        <div class="content">
+
+        </div>
+    </div>
+    <div class="abstractoverlay error-overlay" id="error-overlay">
+        <div class="topbar">
+            <div class="close">
+                <div>sluit</div>
+                <div class="icon sprite-close-white-24"></div>
+            </div>
+        </div>
+
+        <div class="content">
+
+        </div>
+    </div>
 </body>
-
-<!-- GET THE BOOTSTRAP JS AT THE END -->
-
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>	
 
 </html>

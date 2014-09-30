@@ -12,6 +12,7 @@ httpProxy = require("http-proxy"),
 yaml = require('js-yaml'),
 uuid = require('node-uuid'),
 express = require('express'),
+textAnalyzer = require('./tools/text-analyzer'),
 
 //custom imports
 contextAggregator = require('./context-finder/context-aggregator'),
@@ -63,11 +64,9 @@ app.get('/get_kw_times', function(req, res) {
 	proxy.web(req, res, { target: LABS_SERVER });
 });
 
-//@deprecated
 app.get('/get_search_results', function(req, res) {
 	proxy.web(req, res, { target: LABS_SERVER });
 });
-
 
 
 app.listen(STATIC_PORT);
@@ -82,7 +81,7 @@ console.log('Static content served at http://127.0.0.1:' + STATIC_PORT);
 var urlMap = {
 		
 	'/get_context' : function (req, res) {
-		// fetch the query string from the request
+		//fetch the asr file name (used as id) from the request
 		var id = qs.parse(url.parse(req.url).query).id;
 		
 		//Use it to query the desired context sources
@@ -113,8 +112,6 @@ var urlMap = {
 		getSeachResults(id,term, function(data) {
 			res.simpleJSON(200, data);
 		});
-		
-		
 	}
 		
 	
@@ -156,6 +153,15 @@ http.createServer(function (req, res) {
 	}
 }).listen(LABS_PORT);
 
+/***********************************************************************************************************************
+ * LOAD THE STOPWORDS/IDF SCORES FOR THE TAG CLOUD
+ ************************************************************************************************************************/
+
+//load the stopwords into memory
+var STOP_WORDS = textAnalyzer.readStopWordsFile(CONFIG['file.stopwords']);
+
+//load the corpus term frequencies into memory
+var IDF_SCORES = textAnalyzer.readIDFFile(CONFIG['file.idf']);
 
 /***********************************************************************************************************************
  * LOAD THE ENRICHED TRANSCRIPT FROM ES
@@ -170,9 +176,43 @@ function getEnrichedTranscript(id, clientCallback) {
 	);
 }
 
-function getEnrichedTranscriptComplete(responseData) {
-	//call back the client
+function getEnrichedTranscriptComplete(responseData) {	
+	//uncomment this if you want to use the keywords from the index, rather than calculate it on the fly
 	responseData.msg.clientCallback(responseData.data);
+
+	//fetches the transcript from the index. Following that it will use the transcript to calculate the tag cloud
+	//getTranscript(responseData)
+}
+
+function getTranscript(contextData) {	
+	//254.41136104.asr1.semanticized.hyp ==> 254.41136104.asr1.hyp	
+	var id = contextData.data._id;
+	if(id.indexOf('.semanticized') == -1) {
+		console.log('Returning the tag cloud from the index');
+		contextData.msg.clientCallback(responseData.data);
+	} else {
+		id = id.replace('.semanticized', '');
+		console.log('Fetching the tag cloud from the transcript');
+		//call the ASR index to fetch the transcript
+		contextData.msg.contextData = contextData.data;
+		asrIndexAPI.getTranscript(
+			id, //asr file name
+			contextData.msg,//msg object to track who requested the data
+			getTranscriptComplete //callback after the data has returned
+		);
+	}
+}
+
+function getTranscriptComplete(responseData) {
+	//this function finally calculates the tag cloud using the text analyzer on the transcript text
+	var cleanText = null;
+	if(responseData.data && responseData.data._source.words) {
+		cleanText = responseData.data._source.words;
+		//fetch the cloud data passing the words obtained from the transcript
+		var cloudData = textAnalyzer.getMostImportantWords(cleanText, STOP_WORDS, IDF_SCORES, false, 5 , false);
+		responseData.msg.contextData._source.keywords = cloudData;//replace the indexed keywords with the fetched keywords		
+		responseData.msg.clientCallback(responseData.msg.contextData);//finally send the response back to the client
+	}
 }
 
 /***********************************************************************************************************************
@@ -180,7 +220,7 @@ function getEnrichedTranscriptComplete(responseData) {
  ************************************************************************************************************************/
 
 function getKeywordTimes(id, kw, clientCallback) {
-	//call the ASR index to fetch the transcript	
+	//call the ASR index to fetch the transcript
 	asrIndexAPI.getKeywordTimes(
 		id, //asr file name
 		kw, //keyword to be found
@@ -195,60 +235,11 @@ function getKeywordTimesComplete(responseData) {
 }
 
 /***********************************************************************************************************************
- * LOAD THE SEMANTIC TAGS FOR A SPECIFIC TRANSCRIPT @deprecated
- ************************************************************************************************************************/
-
-function getTranscriptTags(id, clientCallback) {
-	//call the ASR index to fetch the transcript	
-	asrFileAPI.getTranscriptTags(
-		id, //asr file name
-		{'id' : uuid.v4(), 'clientCallback' : clientCallback},//msg object to track who requested the data
-		getTranscriptTagsComplete //callback after the data has returned
-	);
-}
-
-function getTranscriptTagsComplete(responseData) {
-	//call back the client
-	responseData.msg.clientCallback(responseData.data);
-}
-
-/***********************************************************************************************************************
- * GET ALL OF THE POSSIBLE TRANSCRIPTS @deprecated
- ************************************************************************************************************************/
-
-function getFileList(clientCallback) {
-	//TODO test only: get the directory listing
-	asrFileAPI.getFileList({'id' : uuid.v4(), 'clientCallback' : clientCallback},//msg object to track who requested the data
-		getFileListComplete //callback after the data has returned
-	);
-}
-
-function getFileListComplete(responseData) {
-	//call back the client
-	responseData.msg.clientCallback(responseData);
-}
-
-/***********************************************************************************************************************
- * GET CONTEXT BASED ON A QUERY @depreacted
- ************************************************************************************************************************/
-function getContext(query, clientCallback) {
-	contextAggregator.queryContexts(
-		{'entities' : [], 'wordFreqs' : query.split(' ')}, //query
-		{'id' : uuid.v4(), 'clientCallback' : clientCallback}, //msg (for queueing)
-		['anefo'], //which context sources to query
-		getContextComplete //callback after all context has been fetched and aggregated
-	);
-}
-
-function getContextComplete(responseData) {
-	//call back the client
-	responseData.msg.clientCallback(responseData.data);
-}
-/***********************************************************************************************************************
  * GET search Results from ES, based on a search term ---> THEMIS
  ************************************************************************************************************************/
+
 function getSeachResults(id, term, clientCallback) {
-	//call the ASR index to fetch the transcript	
+	//call the ASR index to fetch the transcript
 	asrIndexAPI.getSearchResults(
 		id, //asr file name
 		term, //keyword to be found
@@ -261,4 +252,3 @@ function getSeachResultsComplete(responseData) {
 	//call back the client
 	responseData.msg.clientCallback(responseData.data);
 }
-

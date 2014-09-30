@@ -52,12 +52,12 @@ li {
 }
 /* line 938, sprite/*.png */
 .sprite-sprite, .sprite-arrowdown-mariana-32, .sprite-arrowdownoutline-corfu-24, .sprite-arrowdownoutline-thistle-16, .sprite-arrowdownoutline-thistle-24, .sprite-arrowdownoutline-thistle-32, .sprite-arrowleftoutline-corfu-32, .sprite-arrowleftoutline-thistle-32, .sprite-arrowright-corfu-24, .sprite-arrowright-shark-32, .sprite-arrowright-thistle-16, .sprite-arrowright-thistle-24, .sprite-arrowrightoutline-corfu-32, .sprite-arrowrightoutline-shark-16, .sprite-arrowrightoutline-thistle-32, .sprite-arrowup-thistle-24, .sprite-arrowup-thistle-32, .sprite-arrowup-white-24, .sprite-arrowupoutline-shark-24, .sprite-arrowupoutline-shark-32, .sprite-arrowupoutline-thistle-32, .sprite-arrowupoutline-white-24, .sprite-arrowupoutline-white-32, .sprite-close-thistle-16, .sprite-close-white-16, .sprite-close-white-24, .sprite-embedsize-large, .sprite-embedsize-medium, .sprite-embedsize-mini, .sprite-embedsize-small, .sprite-fullscreenoutline-shark-32, .sprite-header-search-corfu, .sprite-header-search-thistle, .sprite-nextoutline-corfu-32, .sprite-nextoutline-shark-32, .sprite-nextoutline-thistle-32, .sprite-omroep-avro-75, .sprite-omroep-bnn-75, .sprite-omroep-bos-75, .sprite-omroep-eo-75, .sprite-omroep-human-75, .sprite-omroep-ikon-75, .sprite-omroep-joodseomroep-75, .sprite-omroep-kro-75, .sprite-omroep-max-75, .sprite-omroep-ncrv-75, .sprite-omroep-none-75, .sprite-omroep-nos-75, .sprite-omroep-ntr-75, .sprite-omroep-ohm-75, .sprite-omroep-powned-75, .sprite-omroep-rkk-75, .sprite-omroep-tros-75, .sprite-omroep-vara-75, .sprite-omroep-vpro-75, .sprite-omroep-wnl-75, .sprite-omroep-zvk-75, .sprite-pauseoutline-shark-32, .sprite-play-corfu-16, .sprite-play-corfu-24, .sprite-play-corfu-32, .sprite-play-corfu-48, .sprite-play-corfu-64, .sprite-play-shark-16, .sprite-play-thistle-16, .sprite-play-thistle-24, .sprite-play-thistle-32, .sprite-play-thistle-48, .sprite-play-thistle-64, .sprite-playdown-shark-16, .sprite-playoutline-corfu-32, .sprite-playoutline-corfu-64, .sprite-playoutline-shark-24, .sprite-playoutline-shark-32, .sprite-playoutline-thistle-32, .sprite-playoutline-thistle-64, .sprite-playoutline-white-32, .sprite-playoutline-white-48, .sprite-playright-shark-16, .sprite-searchresults-movingbars-dolphin, .sprite-searchresults-movingbars-white, .sprite-share-email-48, .sprite-share-facebook-48, .sprite-share-googleplus-48, .sprite-share-thistle-24, .sprite-share-thistle-32, .sprite-share-twitter-48, .sprite-share-white-24, .sprite-shareoutline-corfu-24, .sprite-shareoutline-shark-24, .sprite-shareoutline-shark-32, .sprite-shareoutline-thistle-24, .sprite-shareoutline-white-24, .sprite-shareoutline-white-32, .sprite-star-corfu-16, .sprite-star-shark-16, .sprite-star-shark-32, .sprite-star-thistle-16, .sprite-star-thistle-24, .sprite-star-thistle-32, .sprite-staroutline-shark-24, .sprite-staroutline-thistle-24, .sprite-visualization-annotation-corfu, .sprite-visualization-annotation-thistle, .sprite-visualization-clip-thistle, .sprite-visualization-clip-white, .sprite-visualization-movingbars-corfu, .sprite-visualization-movingbars-thistle, .sprite-visualization-movingbars-white, .sprite-visualization-segment-corfu, .sprite-visualization-segment-thistle, .sprite-visualization-segment-white, .sprite-visualization-slideshow-corfu, .sprite-visualization-slideshow-thistle {
-  background: url('../img/sprite-seeef570fef.png') no-repeat;
+  background: url('../images/sprite-seeef570fef.png') no-repeat;
 }
 
 /* line 202, sprite-nav/*.png */
 .sprite-nav-sprite, .sprite-nav-balloon-corner-leftbottom-8, .sprite-nav-balloon-corner-leftbottom, .sprite-nav-balloon-corner-lefttop-8, .sprite-nav-balloon-corner-lefttop, .sprite-nav-balloon-corner-rightbottom-8, .sprite-nav-balloon-corner-rightbottom, .sprite-nav-balloon-corner-righttop-8, .sprite-nav-balloon-corner-righttop, .sprite-nav-balloontip-160-white, .sprite-nav-balloontip-app-white, .sprite-nav-balloontip-embed-corfu, .sprite-nav-balloontip-embed-default, .sprite-nav-header-woordnl-corfu, .sprite-nav-homeoutline-white-32, .sprite-nav-infooutline-white-32, .sprite-nav-logo-corfu-320, .sprite-nav-pauseoutline-thistle-48, .sprite-nav-pauseoutline-white-32, .sprite-nav-playoutline-thistle-48, .sprite-nav-playoutline-white-32, .sprite-nav-searchoutline-white-32 {
-  background: url('../img/sprite-nav-s43551fa5b1.png') no-repeat;
+  background: url('../images/sprite-nav-s43551fa5b1.png') no-repeat;
 }
 
 /* line 60, ../../../../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
@@ -1301,7 +1301,7 @@ html.no-csstransforms3d .abstractoverlay.visible {
   height: 32px;
   line-height: 32px;
   padding-left: 40px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2624px;
 }
 /* line 74, sass/components/_annotations.scss */
@@ -1325,13 +1325,13 @@ html.no-csstransforms3d .abstractoverlay.visible {
 /* line 92, sass/components/_annotations.scss */
 .visualizer.annotation .annotation-slide-inner.selected .annotation-slide-navigation a {
   color: #00c9ff;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3408px;
 }
 /* line 96, sass/components/_annotations.scss */
 html.no-touch .visualizer.annotation .annotation-slide-inner.selected .annotation-slide-navigation a:hover {
   color: #9b00db;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2672px;
 }
 /* line 100, sass/components/_annotations.scss */
@@ -1362,7 +1362,7 @@ html.no-touch .visualizer.annotation .annotation-slide-inner.selected .annotatio
 /* line 129, sass/components/_annotations.scss */
 .visualizer.annotation .annotation-slide-inner.active .annotation-slide-navigation a {
   color: #9b00db;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2672px;
 }
 /* line 133, sass/components/_annotations.scss */
@@ -1431,7 +1431,7 @@ html.hardware-accelerate .visualizer.annotationsmall .annotation-slide-small {
   height: 32px;
   line-height: 32px;
   padding-left: 40px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2624px;
 }
 /* line 19, sass/components/_annotationssmall.scss */
@@ -1494,7 +1494,7 @@ html.no-touch .comments-container-toggle:hover {
 }
 /* line 26, sass/components/_comments.scss */
 html.no-touch .comments-container-toggle:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2960px;
 }
 /* line 31, sass/components/_comments.scss */
@@ -1506,7 +1506,7 @@ html.no-touch .comments-container-toggle:hover:before {
   left: 0;
   width: 32px;
   height: 32px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3640px;
 }
 /* line 44, sass/components/_comments.scss */
@@ -1519,7 +1519,7 @@ html.no-touch .comments-container-toggle:hover:before {
 }
 /* line 53, sass/components/_comments.scss */
 .comments-container.expanded .comments-container-toggle:before, html.no-touch .comments-container.expanded .comments-container-toggle:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3144px;
 }
 
@@ -1789,17 +1789,17 @@ html.no-touch .mediaslicepicker .choice:hover .choice-description,
   width: 24px;
   height: 24px;
   float: left;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3504px;
 }
 /* line 105, sass/components/_mediaslicepicker.scss */
 html.no-touch .mediaslicepicker .choice:hover .choice-icon-share {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3328px;
 }
 /* line 111, sass/components/_mediaslicepicker.scss */
 .mediaslicepicker .choice.selected .choice-icon-share {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3368px;
 }
 /* line 117, sass/components/_mediaslicepicker.scss */
@@ -1808,13 +1808,13 @@ html.no-touch .mediaslicepicker .choice:hover .choice-icon-share {
   width: 120px;
   height: 36px;
   margin: -6px 0px 0px 8px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2468px;
 }
 /* line 127, sass/components/_mediaslicepicker.scss */
 html.no-touch .mediaslicepicker .choice:hover .choice-icon-program,
 .mediaslicepicker .choice.selected .choice-icon-program {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2520px;
 }
 /* line 133, sass/components/_mediaslicepicker.scss */
@@ -1823,13 +1823,13 @@ html.no-touch .mediaslicepicker .choice:hover .choice-icon-program,
   width: 120px;
   height: 36px;
   margin: -6px 0px 0px 8px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4756px;
 }
 /* line 143, sass/components/_mediaslicepicker.scss */
 html.no-touch .mediaslicepicker .choice:hover .choice-icon-segment,
 .mediaslicepicker .choice.selected .choice-icon-segment {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4704px;
 }
 /* line 149, sass/components/_mediaslicepicker.scss */
@@ -1994,7 +1994,7 @@ html.no-touch .medialist-overlay .medialist-share:hover {
 }
 /* line 45, sass/components/_medialistoverlay.scss */
 html.no-touch .medialist-overlay .medialist-share:hover .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2420px;
 }
 /* line 52, sass/components/_medialistoverlay.scss */
@@ -2023,27 +2023,27 @@ html.no-touch .medialist-overlay .medialist-share:hover .icon {
   left: 0;
   width: 32px;
   height: 32px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4000px;
 }
 /* line 83, sass/components/_medialistoverlay.scss */
 html.no-touch .medialist-overlay .medialist-item-content:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3688px;
 }
 /* line 87, sass/components/_medialistoverlay.scss */
 html.no-touch .medialist-overlay .medialist-item-content:hover .medialist-item-visualizer-program {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2520px;
 }
 /* line 91, sass/components/_medialistoverlay.scss */
 html.no-touch .medialist-overlay .medialist-item-content:hover .medialist-item-visualizer-segment {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4704px;
 }
 /* line 95, sass/components/_medialistoverlay.scss */
 html.no-touch .medialist-overlay .medialist-item-content:hover .medialist-item-visualizer-slice {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4475px;
 }
 /* line 99, sass/components/_medialistoverlay.scss */
@@ -2067,17 +2067,17 @@ html.no-touch .medialist-overlay .medialist-item-content:hover .medialist-item-t
 }
 /* line 118, sass/components/_medialistoverlay.scss */
 .medialist-overlay .medialist-item-visualizer-program {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2572px;
 }
 /* line 122, sass/components/_medialistoverlay.scss */
 .medialist-overlay .medialist-item-visualizer-segment {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4900px;
 }
 /* line 126, sass/components/_medialistoverlay.scss */
 .medialist-overlay .medialist-item-visualizer-slice {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4808px;
 }
 /* line 130, sass/components/_medialistoverlay.scss */
@@ -2138,7 +2138,7 @@ html.no-touch .medialist-overlay .medialist-item-content:hover .medialist-item-t
   height: 16px;
   top: 10px;
   right: 0;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -916px;
 }
 /* line 197, sass/components/_medialistoverlay.scss */
@@ -2262,7 +2262,7 @@ html.no-csstransforms3d #infoscreen.invisible {
   z-index: 0;
   left: 0;
   top: 0;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4527px;
 }
 /* line 37, sass/components/_linklist.scss */
@@ -2279,17 +2279,17 @@ html.no-touch .linklist .linkitem:hover .abstract {
 }
 /* line 48, sass/components/_linklist.scss */
 html.no-touch .linklist .linkitem:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4288px;
 }
 /* line 55, sass/components/_linklist.scss */
 .linklist .linkitem.media:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4435px;
 }
 /* line 60, sass/components/_linklist.scss */
 html.no-touch .linklist .linkitem.media:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4362px;
 }
 
@@ -2463,7 +2463,7 @@ html.no-touch .media-related-container-toggle:hover {
 }
 /* line 22, sass/components/_media-related.scss */
 html.no-touch .media-related-container-toggle:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2960px;
 }
 /* line 27, sass/components/_media-related.scss */
@@ -2475,7 +2475,7 @@ html.no-touch .media-related-container-toggle:hover:before {
   left: 0;
   width: 32px;
   height: 32px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3640px;
 }
 /* line 40, sass/components/_media-related.scss */
@@ -2488,13 +2488,13 @@ html.no-touch .media-related-container-toggle:hover:before {
 }
 /* line 50, sass/components/_media-related.scss */
 .media-related-container.open .media-related-container-toggle:before, html.no-touch .media-related-container.open .media-related-container-toggle:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3144px;
 }
 
 /* line 56, sass/components/_media-related.scss */
 .media-related-container-loader {
-  background: url("../img/loaders/woordloader-corfu.gif") center center no-repeat;
+  background: url("../images/loaders/woordloader-corfu.gif") center center no-repeat;
   height: 32px;
   width: 32px;
   margin: 0 auto;
@@ -2621,7 +2621,7 @@ html.no-touch .media-related-container-toggle:hover:before {
 }
 /* line 12, sass/components/_newsarticle.scss */
 html.no-touch #newsarticle .back:hover .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2864px;
 }
 /* line 16, sass/components/_newsarticle.scss */
@@ -2834,12 +2834,12 @@ html.nl-touch #newsarticle .textimage a:hover, html.nl-touch
   left: 8px;
   width: 16px;
   height: 16px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -724px;
 }
 /* line 35, sass/components/_newslist.scss */
 .newslist-item-link:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -884px;
 }
 
@@ -2947,12 +2947,12 @@ html.nl-touch #newsarticle .textimage a:hover, html.nl-touch
   cursor: pointer;
   width: 48px;
   height: 48px;
-  background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+  background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
   background-position: 0 -844px;
 }
 /* line 86, sass/components/_player.scss */
 .player-controls-small .player-playpause.paused {
-  background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+  background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
   background-position: 0 -448px;
 }
 
@@ -3025,7 +3025,7 @@ html.nl-touch #newsarticle .textimage a:hover, html.nl-touch
   width: 32px;
   height: 32px;
   display: inline-block;
-  background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+  background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
   background-position: 0 -1100px;
   text-indent: -999999px;
   float: left;
@@ -3033,7 +3033,7 @@ html.nl-touch #newsarticle .textimage a:hover, html.nl-touch
 }
 /* line 40, sass/components/_playerslicer.scss */
 .playerslicer .player-playpause.paused {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4000px;
 }
 /* line 45, sass/components/_playerslicer.scss */
@@ -3153,7 +3153,7 @@ html.no-touch .playerslicer .slicer-in button:hover, html.no-touch
 }
 /* line 21, sass/components/searchform/_autocomplete.scss */
 .searchForm .autocomplete .active-label {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -64px;
 }
 /* line 24, sass/components/searchform/_autocomplete.scss */
@@ -3166,7 +3166,7 @@ html.no-csstransitions .searchForm .autocomplete .active-label {
 }
 /* line 33, sass/components/searchform/_autocomplete.scss */
 .searchForm .autocomplete .inactive-label {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -146px;
 }
 /* line 36, sass/components/searchform/_autocomplete.scss */
@@ -3187,7 +3187,7 @@ html.no-csstransitions .searchForm .autocomplete .inactive-label {
   border: 8px solid transparent;
   cursor: pointer;
   opacity: 0.6;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -5233px;
   -webkit-transition-property: opacity;
   -moz-transition-property: opacity;
@@ -3347,7 +3347,7 @@ html.hardware-accelerate .searchForm .facet-toggle {
   top: 4px;
   width: 33px;
   height: 33px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2768px;
 }
 /* line 30, sass/components/searchform/_facets.scss */
@@ -3360,7 +3360,7 @@ html.hardware-accelerate .searchForm .facet-toggle {
 }
 /* line 39, sass/components/searchform/_facets.scss */
 .searchForm .facet-toggle.active:before, html.no-touch .searchForm .facet-toggle:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2720px;
 }
 /* line 44, sass/components/searchform/_facets.scss */
@@ -3400,7 +3400,7 @@ html.hardware-accelerate .searchForm .facet-toggle {
 }
 /* line 76, sass/components/searchform/_facets.scss */
 .searchForm .facets.active .facet-toggle:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2720px;
 }
 /* line 82, sass/components/searchform/_facets.scss */
@@ -3470,7 +3470,7 @@ html.hardware-accelerate .searchForm .facet {
 }
 /* line 149, sass/components/searchform/_facets.scss */
 .searchForm .facet .title:after {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4214px;
   content: "";
   display: block;
@@ -3482,7 +3482,7 @@ html.hardware-accelerate .searchForm .facet {
 }
 /* line 161, sass/components/searchform/_facets.scss */
 .searchForm .facet .title.opened:after {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4328px;
 }
 /* line 170, sass/components/searchform/_facets.scss */
@@ -3535,7 +3535,7 @@ html.ie8 .searchForm .facet .term-checkbox {
   position: absolute;
   right: 16px;
   top: 7px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -692px;
 }
 /* line 223, sass/components/searchform/_facets.scss */
@@ -3574,7 +3574,7 @@ html.hardware-accelerate .searchForm .favorites-wrapper {
 }
 /* line 10, sass/components/searchform/_favorites.scss */
 html.no-touch .searchForm .favorites-wrapper:hover .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2284px;
 }
 /* line 15, sass/components/searchform/_favorites.scss */
@@ -3587,7 +3587,7 @@ html.no-touch .searchForm .favorites-wrapper:hover span {
   margin-right: 8px;
   margin-bottom: -4px;
   float: left;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2236px;
   height: 33px;
   width: 33px;
@@ -3612,7 +3612,7 @@ html.no-touch .searchForm .favorites-wrapper:hover span {
   height: 40px;
   margin-top: 24px;
   display: none;
-  background: url("../img/loaders/woordloader-corfu.gif") center center no-repeat;
+  background: url("../images/loaders/woordloader-corfu.gif") center center no-repeat;
   z-index: 20;
   position: absolute;
   top: 0;
@@ -3655,7 +3655,7 @@ html.no-touch .searchForm .result:hover .subTitle {
 /* line 34, sass/components/searchform/_results.scss */
 .searchForm .result .visualisation {
   height: 60px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -1000px;
   border-top: 16px solid transparent;
 }
@@ -3736,7 +3736,7 @@ html.no-touch .searchForm .result:hover .subTitle {
   width: 64px;
   height: 64px;
   z-index: 9;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -1572px;
 }
 /* line 121, sass/components/searchform/_results.scss */
@@ -3762,7 +3762,7 @@ html.no-touch .searchForm .result:hover .subTitle {
 }
 /* line 142, sass/components/searchform/_results.scss */
 html.no-touch .searchForm .result.program:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -1452px;
 }
 /* line 146, sass/components/searchform/_results.scss */
@@ -3786,7 +3786,7 @@ html.no-touch .searchForm .result.program:hover .duration {
   height: 16px;
   z-index: 10;
   margin-left: -24px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -820px;
 }
 /* line 174, sass/components/searchform/_results.scss */
@@ -3809,7 +3809,7 @@ html.no-touch .searchForm .result.segment:hover .duration {
 }
 /* line 191, sass/components/searchform/_results.scss */
 html.no-touch .searchForm .result.segment:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -852px;
 }
 /* line 2, sass/components/searchform/_pagenav.scss */
@@ -3842,7 +3842,7 @@ html.no-touch .searchForm .result.segment:hover:before {
 }
 /* line 23, sass/components/searchform/_pagenav.scss */
 .searchForm .pagenav .more:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4174px;
   content: '';
   display: block;
@@ -3857,7 +3857,7 @@ html.no-touch .searchForm .pagenav .more:hover {
 }
 /* line 36, sass/components/searchform/_pagenav.scss */
 html.no-touch .searchForm .pagenav .more:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3920px;
 }
 @media screen and (max-width: 767px) {
@@ -3945,7 +3945,7 @@ html.no-touch .searchForm .pagenav .more:hover:before {
   position: absolute;
   top: -2px;
   right: 0;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -692px;
 }
 /* line 29, sass/components/searchform/_querydescription.scss */
@@ -3954,7 +3954,7 @@ html.no-touch .searchForm .query-description .clear-query:hover {
 }
 /* line 32, sass/components/searchform/_querydescription.scss */
 html.no-touch .searchForm .query-description .clear-query:hover:before {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -692px;
 }
 /* line 1, sass/components/searchform/_sortselectbox.scss */
@@ -4083,7 +4083,7 @@ html.no-touch .searchForm .sort-wrapper .option:hover {
   width: 16px;
   height: 16px;
   z-index: -1;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -788px;
 }
 /* line 38, sass/components/_searchform.scss */
@@ -4099,7 +4099,7 @@ html.no-touch .searchForm .sort-wrapper .option:hover {
 }
 /* line 50, sass/components/_searchform.scss */
 .searching-page .searchForm .pagenav {
-  background: url("../img/loaders/woordloader-corfu.gif") center center no-repeat;
+  background: url("../images/loaders/woordloader-corfu.gif") center center no-repeat;
   width: 100%;
   margin-top: 8px;
   min-height: 56px;
@@ -4310,12 +4310,12 @@ html.hardware-accelerate #infoscreen, html.hardware-accelerate #app .slides .sli
 }
 /* line 59, sass/components/_slideshow.scss */
 .visualizenav.slideshow a.toinfoscreen .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4860px;
 }
 /* line 63, sass/components/_slideshow.scss */
 .visualizenav.slideshow a.sharepage .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4134px;
 }
 /* line 67, sass/components/_slideshow.scss */
@@ -4326,12 +4326,12 @@ html.no-touch .visualizenav.slideshow a:hover {
 }
 /* line 72, sass/components/_slideshow.scss */
 html.no-touch .visualizenav.slideshow a:hover.toinfoscreen .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -5157px;
 }
 /* line 76, sass/components/_slideshow.scss */
 .visualizenav.slideshow html.no-touch a:hover.sharepage .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -5013px;
 }
 
@@ -4499,7 +4499,7 @@ html.hardware-accelerate .mediateaser.mediateaser-s-large, html.hardware-acceler
   left: 0;
   height: 32px;
   width: 100%;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -948px;
 }
 /* line 73, sass/components/teaser/_media.scss */
@@ -4523,12 +4523,12 @@ html.hardware-accelerate .mediateaser.mediateaser-s-large, html.hardware-acceler
 .mediateaser.mediateaser-s-medium .playbutton {
   width: 32px;
   height: 32px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4000px;
 }
 /* line 92, sass/components/teaser/_media.scss */
 html.no-touch .mediateaser.mediateaser-s-medium .teaserlink:hover .playbutton {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3688px;
 }
 /* line 96, sass/components/teaser/_media.scss */
@@ -4552,12 +4552,12 @@ html.no-touch .mediateaser.mediateaser-s-medium .teaserlink:hover .playbutton {
 .mediateaser.mediateaser-s-large .playbutton {
   width: 48px;
   height: 48px;
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -564px;
 }
 /* line 120, sass/components/teaser/_media.scss */
 html.no-touch .mediateaser.mediateaser-s-large .teaserlink:hover .playbutton {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -372px;
 }
 /* line 124, sass/components/teaser/_media.scss */
@@ -4906,12 +4906,12 @@ html.hardware-accelerate .mediateaser.mediateaser-s-large, html.hardware-acceler
 }
 /* line 47, sass/components/teaser/_quote.scss */
 .quoteteaser.s-text-large .teaserlink .teaserlink-content:after {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3592px;
 }
 /* line 51, sass/components/teaser/_quote.scss */
 .quoteteaser.s-text-large .teaserlink .teaserlink-content:hover:after {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3240px;
 }
 /* line 56, sass/components/teaser/_quote.scss */
@@ -4930,12 +4930,12 @@ html.hardware-accelerate .mediateaser.mediateaser-s-large, html.hardware-acceler
 }
 /* line 79, sass/components/teaser/_quote.scss */
 .quoteteaser.s-text-normal .teaserlink .teaserlink-content:after {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -820px;
 }
 /* line 82, sass/components/teaser/_quote.scss */
 .quoteteaser.s-text-normal .teaserlink .teaserlink-content:hover:after {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -852px;
 }
 /* line 87, sass/components/teaser/_quote.scss */
@@ -4968,22 +4968,22 @@ html.no-touch .visualizer-list li:hover .metadata h1, html.no-touch .visualizer-
 }
 /* line 20, sass/components/_visualizer-list.scss */
 html.no-touch .visualizer-list li:hover .play {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -1772px;
 }
 /* line 24, sass/components/_visualizer-list.scss */
 html.no-touch .visualizer-list li:hover .visualization-annotation {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -5105px;
 }
 /* line 28, sass/components/_visualizer-list.scss */
 html.no-touch .visualizer-list li:hover .visualization-movingbars {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2520px;
 }
 /* line 32, sass/components/_visualizer-list.scss */
 html.no-touch .visualizer-list li:hover .visualization-slideshow {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -2092px;
 }
 /* line 37, sass/components/_visualizer-list.scss */
@@ -5038,22 +5038,22 @@ html.no-touch .visualizenav a:hover, .visualizenav a.active {
 }
 /* line 30, sass/components/_visualizer-nav.scss */
 html.no-touch .visualizenav a:hover.toinfoscreen .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -4248px;
 }
 /* line 34, sass/components/_visualizer-nav.scss */
 html.no-touch .visualizenav a:hover.sharepage .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -3368px;
 }
 /* line 40, sass/components/_visualizer-nav.scss */
 html.no-touch .visualizenav a.favoritepage:hover .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -1252px;
 }
 /* line 48, sass/components/_visualizer-nav.scss */
 html.no-touch .visualizenav a.favoritepage.active:hover .icon, .visualizenav a.favoritepage.active .icon {
-  background: url("../img/sprite-seeef570fef.png") no-repeat;
+  background: url("../images/sprite-seeef570fef.png") no-repeat;
   background-position: 0 -1172px;
 }
 /* line 54, sass/components/_visualizer-nav.scss */
@@ -5157,12 +5157,12 @@ html.no-touch #bar .nav-item:hover, #bar .nav-item:active, #bar .nav-item.active
 }
 /* line 79, sass/app/_bar.scss */
 #bar #playertime.play .icon {
-  background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+  background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
   background-position: 0 -1100px;
 }
 /* line 83, sass/app/_bar.scss */
 #bar #playertime.paused .icon {
-  background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+  background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
   background-position: 0 -1052px;
 }
 /* line 88, sass/app/_bar.scss */
@@ -5220,7 +5220,7 @@ html.viewvariant-small #bar #playertime {
 }
 /* line 144, sass/app/_bar.scss */
 #bar .woord {
-  background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+  background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
   background-position: 0 -728px;
   width: 230px;
   height: 44px;
@@ -5233,7 +5233,7 @@ html.viewvariant-small #bar #playertime {
 @media screen and (max-width: 767px) {
   /* line 144, sass/app/_bar.scss */
   #bar .woord {
-    background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+    background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
     background-position: 0 -908px;
     width: 167px;
     height: 32px;
@@ -5581,7 +5581,7 @@ html.touch.no-overflowscrolling.no-overflow-scroll #wrapper {
 #app .spinner {
   width: 32px;
   height: 32px;
-  background: url("../img/loaders/woordloader-corfu.gif");
+  background: url("../images/loaders/woordloader-corfu.gif");
   position: absolute;
   top: 5px;
   left: 50%;
@@ -5637,22 +5637,22 @@ html.touch.no-overflowscrolling.no-overflow-scroll #app .corners .sprite-nav-bal
   }
   /* line 188, sass/app/_site.scss */
   #app .corners .sprite-nav-balloon-corner-lefttop {
-    background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+    background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
     background-position: 0 -1196px;
   }
   /* line 192, sass/app/_site.scss */
   #app .corners .sprite-nav-balloon-corner-righttop {
-    background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+    background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
     background-position: 0 -1269px;
   }
   /* line 196, sass/app/_site.scss */
   #app .corners .sprite-nav-balloon-corner-leftbottom {
-    background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+    background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
     background-position: 0 -1219px;
   }
   /* line 200, sass/app/_site.scss */
   #app .corners .sprite-nav-balloon-corner-rightbottom {
-    background: url("../img/sprite-nav-s43551fa5b1.png") no-repeat;
+    background: url("../images/sprite-nav-s43551fa5b1.png") no-repeat;
     background-position: 0 -1244px;
   }
 }

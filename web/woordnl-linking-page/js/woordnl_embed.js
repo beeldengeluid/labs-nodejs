@@ -193,19 +193,21 @@ wnl.controller('playerCtrl', function ($scope) {
 	
 	//get the keyword times for a certain keyword
 	
-	$scope.loadKeywordTimes = function(id, kw) {
+	$scope.loadKeywordTimes = function(kw) {
 		if (kw == $scope.activeKeyword) {
-			$scope.seek($scope.activeTimes[++$scope.activeTimeIndex]);			
+			$scope.seek($scope.activeTimes[++$scope.activeTimeIndex]);
 		} else {
 			$.ajax({
 				dataType: 'json',
 				type: "GET",
-				url: '/'+SERVICE_PREFIX+'/get_kw_times?id=' + id + '&kw=' + kw,
+				url: '/'+SERVICE_PREFIX+'/get_kw_times?id=' + $scope.transcript + '&kw=' + kw,
 				error: function (err) {
 					console.debug(err);
 				},
 				success: function (json) {
 					//load the transcript tags in popcorn
+					console.debug('times');
+					console.debug(json);
 					if(json.times) {
 						$scope.activeKeyword = kw;
 						$scope.activeTimes = json.times;

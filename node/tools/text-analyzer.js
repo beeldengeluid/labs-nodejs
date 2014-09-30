@@ -42,8 +42,7 @@ module.exports = {
 	    if(text == null || text == '') {
 	        return null;        
 	    }
-	    var minwordlength = minwordlength ? minwordlength : 5;
-	    var simpleList = simpleList ? simpleList : true;
+	    var minwordlength = minwordlength ? minwordlength : 5;	   
 	    var results_sorted = null;
 	    var allwords = {};
 	    var results = [];
@@ -93,10 +92,10 @@ module.exports = {
 			// var lengthRelevancy = word.length - minwordlength / minwordlength;
 			// console.log(word, lengthRelevancy);
             var largedecision = tfidf * word.length;
-            results.push([word, largedecision, wordFreq]);
+            results.push({word : word, score: largedecision, freq : wordFreq});
 	    }
 		//sort the list by highest score
-	    results_sorted = results.sort(function(a, b){return b[1]-a[1]});
+	    results_sorted = results.sort(function(a, b){return b.score-a.score});
 		console.log('\n = HIGHEST SCORES =');
 		var highestLen = results_sorted.length <= 10 ? results_sorted.length : 10;	// max 10 words
 		for (i=0;i<highestLen;i++) {
@@ -107,7 +106,7 @@ module.exports = {
 	    if(simpleList && results_sorted) {
 	        var fws = [];
 	        for(key in results_sorted) {
-	            fws.push(results_sorted[key][0]);
+	            fws.push(results_sorted[key].word);
 	        }
 	        return fws;
 	    }

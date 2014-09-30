@@ -43,15 +43,19 @@ module.exports = {
 	
 	getKeywordTimes: function(asrFile, kw, callerObj, callback) {
 		console.log('Looking for kw: '+kw+ ' in ' + asrFile + ' in the ASR index...');
+		if (asrFile.indexOf('.semanticized') != -1) {
+			asrFile = asrFile.replace('.semanticized', '');
+		}
 		query = {"query":{"bool":{
 			"must":[
-			        {"query_string":{"default_field":"asr_chunk.asr_file","query":"\"230.39847574.asr1.hyp\""}},
+			        {"query_string":{"default_field":"asr_chunk.asr_file","query":"\""+asrFile+"\""}},
 			        {"query_string":{"default_field":"asr_chunk.keywords.word","query":"\""+kw+"\""}}
 			],
 			"must_not":[],
 			"should":[]}},
 			"from":0,"size":10,"sort":[],"facets":{}
 		}
+		console.log(JSON.stringify(query));
 		this._esClient.search(this._searchIndex, this._searchType, query)
 		.on('data', function(data) {
 			kwData = JSON.parse(data);
@@ -83,8 +87,7 @@ module.exports = {
 		console.log('Looking for term: '+term+ 'in the ASR index...');
 		query = {"query":{"bool":{
 			"must":[
-			        //{"query_string":{"default_field":"asr_chunk.words","query":"\"230.39847574.asr1.hyp\""}},
-			        {"query_string":{"default_field":"asr_chunk.words","query":"\""+term+"\""}}
+			        {"query_string":{"default_field":"asr_chunk.words","query": term}}
 			],
 			"must_not":[],
 			"should":[]}},
@@ -96,14 +99,8 @@ module.exports = {
 			scores = [];
 			var kws = null;
 			for (hit in kwData.hits.hits) {
-				//kws = kwData.hits.hits[hit]._source.keywords;
-				kws = kwData.hits.hits[hit]._score;
-				//for (k in kws) {
-				//	if(kws[k].word == kw) {						
-						scores = scores.concat(kws);						
-				//	}
-				//}
-				//console.log(kwData);
+				kws = kwData.hits.hits[hit]._score;				
+				scores = scores.concat(kws);
 			}			
 			callback({'msg' : callerObj, 'data' : {'ThemData' : kwData}});
 		})
@@ -116,34 +113,26 @@ module.exports = {
 			callback({'msg' : callerObj, 'data' : JSON.parse('{"error" : "Error while fetching context from ES"}')});
 		})
 		.exec();
-		
-	}
+	},
 	
-	//TODO get the transcript from the ASR search index
-	/*,getTranscript : function(id, callerObj, callback) {
+	
+	getTranscript : function(id, callerObj, callback) {
 		if(!this._esClient) {
-			this._esClient = new ElasticSearchClient({
-				host: 'localhost',
-			    port: 9200
-			});
+			callback(callerObj, JSON.stringify({error: 'No ES host specified!'}), null);
 		}
-		console.log('Looking for ' + asrFile + ' in the ASR index...');
-		query = {"query":{"bool":{"must":[{"query_string":{"default_field":"_id","query": "\"" + id + "\""}}],"must_not":[],"should":[]}}, fields : ["all_words"]};
-		
-		this._esClient.search(ANDERNIEUWS_INDEX, 'asr_transcript', query)
+		this._esClient.get(this._searchIndex, 'asr_transcript', id)
 		.on('data', function(data) {
-			console.log(data);
-			callback(callerObj, JSON.stringify(esQuery), JSON.parse(data), 'immix');
+			callback({'msg' : callerObj, 'data' : JSON.parse(data)});
 		})
-		.on('done', function(){
-			//always returns 0 right now			
+		.on('done', function() {
+			//always returns 0 right now
 		})
 		.on('error', function(error) {
-			console.log('While connecting to AN index: ');
+			console.log('While connecting to: ' + this._contextIndex);
 			console.log(error);
-			callback(callerObj, JSON.stringify(esQuery));
+			callback({'msg' : callerObj, 'data' : JSON.parse('{"error" : "Error while fetching ASR transcript from search index"}')});
 		})
 		.exec();
-	}*/
+	}
 
 }

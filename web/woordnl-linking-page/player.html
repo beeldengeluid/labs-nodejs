@@ -53,7 +53,8 @@
 		<!-- KEYWORD CLOUD -->
 	
 		<div class="keyword_cloud" ng-show="keywords">
-			<span ng-repeat="kw in keywords" style="font-size: {{getKeywordFontSize(kw.score)}}%" ng-click="loadKeywordTimes('230.39847574.asr1.hyp', kw.word)">
+			<span ng-repeat="kw in keywords" style="font-size: {{getKeywordFontSize(kw.score)}}%" 
+            ng-click="loadKeywordTimes(kw.word)">
 				{{kw.word}}
 			</span>
 		</div>
@@ -166,10 +167,10 @@
    	
    	<script src="/woordnl-rc/js/FullScreen.js"></script>
 	<script>
-	document.addEventListener("fullscreenchange", changePicture());
-	document.addEventListener("webkitfullscreenchange", changePicture());
-	document.addEventListener("mozfullscreenchange", changePicture());
-	document.addEventListener("MSFullscreenChange", changePicture());
+    	document.addEventListener("fullscreenchange", changePicture());
+    	document.addEventListener("webkitfullscreenchange", changePicture());
+    	document.addEventListener("mozfullscreenchange", changePicture());
+    	document.addEventListener("MSFullscreenChange", changePicture());
 	</script>
 </body>
 </html>
