@@ -85,14 +85,16 @@ module.exports = {
 	
 	getSearchResults: function(id, term, callerObj, callback) {
 		console.log('Looking for term: '+term+ 'in the ASR index...');
-		query = {"query":{"bool":{
-			"must":[
-			        {"query_string":{"default_field":"asr_chunk.words","query": term}}
-			],
-			"must_not":[],
-			"should":[]}},
-			"from":0,"size":100,"sort":[],"facets":{}
-		}
+		// query = {"query":{"bool":{
+			// "must":[
+			        // {"query_string":{"default_field":"asr_chunk.words","query": term}}
+			// ],
+			// "must_not":[],
+			// "should":[]}},
+			// "from":0,"size":100,"sort":[],"facets":{}
+		// }
+		query = {"query":{"common":{"words":{"query":term,"cutoff_frequency":0.001}}}}
+		console.log(JSON.stringify(query));
 		this._esClient.search(this._searchIndex, this._searchType, query)
 		.on('data', function(data) {
 			kwData = JSON.parse(data);
