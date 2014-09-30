@@ -84,7 +84,10 @@ wnl.controller('playerCtrl', function ($scope) {
 	
 	$scope.audioElementId = null;
 
-	$scope.imageHTML = 'nothing';
+	//for fullscreen mode
+	$scope.PICTURE_TIMEOUT = 5000;
+	$scope.currentFullscreenImage = 0;
+	$scope.fullscreenImages = [];
 	
 	/*******************************************************************
 	 * POPCORN RELATED FUNCTIONS
@@ -366,27 +369,27 @@ wnl.controller('playerCtrl', function ($scope) {
 	$scope.getKeywordFontSize = function (score) {
 		var pc = 100;
 		if (score >= 0.8) {
-			pc = 220;
+			pc = 250;
 		} else if (score >= 0.6) {
-			pc = 200;
+			pc = 230;
 		} else if (score >= 0.4) {
-			pc = 180;
+			pc = 210;
 		} else if (score >= 0.3) {
-			pc = 175;
+			pc = 205;
 		} else if (score >= 0.2) {
-			pc = 150;
+			pc = 180;
 		} else if (score >= 0.1) {
-			pc = 140;
+			pc = 170;
 		} else if (score >= 0.07) {
-			pc = 130;
+			pc = 160;
 		}  else if (score >= 0.05) {
-			pc = 120;
+			pc = 150;
 		}  else if (score >= 0.03) {
-			pc = 120;
+			pc = 150;
 		}  else {
-			pc = 90;
+			pc = 120;
 		}
-		return pc * 2;
+		return pc;
 	}
 	
 	/*
@@ -413,24 +416,55 @@ wnl.controller('playerCtrl', function ($scope) {
 		$scope.setImageBar();
 	}
 
-	$scope.setImageBar = function() {	
+	$scope.setImageBar = function() {
+		$scope.currentFullscreenImage = 0;
+		$scope.fullscreenImages = [];
 		$('.imageBar').remove();
 		var html = [];
 		console.debug($scope.foundTags);
 		$.each($scope.foundTags, function(k, tag) {
 			console.debug(tag);
-			$.each(tag.links, function(x, e) {
-				console.debug(e);
+			$.each(tag.links, function(x, e) {				
 				if(e && e.ANEFOData) {
 					for(var i = 0;i<e.ANEFOData.length > 0;i++) {
 						html.push('<a href="' + e.ANEFOData[i].url + '" target="_anefo">');
 						html.push('<img style="display:inline-block;" src="' + e.ANEFOData[i].img1 + '" title="'+e.ANEFOData[i].description+ '">');
 						html.push('</a>');
+						if(e.ANEFOData[i] && e.ANEFOData[i].img1 && e.ANEFOData[i].img1.indexOf("188x188") != -1) {
+							$scope.fullscreenImages.push(e.ANEFOData[i].img1.replace("188x188", "1280x1280"));
+						}
 					}
-				}								
+				}
 			});
-		});
+		});		
 		$('.barContainer').before('<div class="imageBar">'+html.join('')+'</div>');
+	}
+
+	$scope.enterFullScreen = function() {
+		$scope.fullscreenMode = true;
+		var elem = document.getElementById("FSimage");		
+		if(elem.requestFullScreen) {
+			elem.requestFullScreen();
+		} else if(elem.webkitRequestFullScreen ) {
+			elem.webkitRequestFullScreen();
+		} else if(elem.mozRequestFullScreen) {
+			elem.mozRequestFullScreen();
+		}
+		setTimeout($scope.changePicture, $scope.PICTURE_TIMEOUT);
+	}
+
+	$scope.changePicture = function() {
+		$scope.currentFullscreenImage++;
+		document.getElementById("FSimage").src = $scope.fullscreenImages[$scope.currentFullscreenImage % $scope.fullscreenImages.length];
+		if (document.fullscreenElement || document.webkitFullscreenElement ||
+                    document.mozFullScreenElement ||document.msFullscreenElement) {
+			setTimeout($scope.changePicture, $scope.PICTURE_TIMEOUT);
+		} else	{
+			$scope.safeApply(function(){
+				$scope.fullscreenMode = false;
+				$scope.fullscreenImages = [];			
+			});
+		}
 	}
 	
 	$scope.safeApply = function(fn) {
@@ -472,6 +506,7 @@ wnl.controller('playerCtrl', function ($scope) {
 			$scope.initPopcorn();
 			$scope.initPlayer();
 			$scope.setTranscript();
+			$('.fullscreen-btn').css('display', 'block');
 			//231.41137297.asr1.semanticized.hyp
 		}
 	}

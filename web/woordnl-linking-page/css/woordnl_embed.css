@@ -79,7 +79,7 @@
 
 .keyword_cloud {
 	position:relative;
-	height:50%;
+	height:45	%;
 }
 
 .keyword_cloud span {
@@ -107,9 +107,26 @@
 }
 
 .imageBar a {
-	display:inline-block;
+	display:inline-block;	
+	margin-right:10px;
+}
+
+.imageBar a img {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
-	margin-right:10px;
+}
+
+.fullscreen-btn {
+	display:none;
+	padding:3px;
+	position: absolute;
+	left: 190px;
+	top: 9px;
+	color: #a3b0c7;
+	background-color:white;
+	z-index: 999;
+}
+.fullscreen-btn:hover {
+	color:#9b00db;
 }

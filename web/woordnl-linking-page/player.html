@@ -49,13 +49,14 @@
 </head>
 <body ng-controller="playerCtrl">
 	
+
+    <button class="fullscreen-btn" ng-click="enterFullScreen()">[Fullscreen]</button>
+
 	<!-- INITIALLY INVISIBLE, WILL BE INSERTED IN THE RIGHT POSITION WHEN THE PLAYER & DATA HAS BEEN LOADED -->
 	
-	<div id="context-grid" style="display:none;">
-		
-		<!-- KEYWORD CLOUD -->
-	   
+	<div id="context-grid" style="display:none;">	
 
+		<!-- KEYWORD CLOUD -->	           
 		<div class="keyword_cloud" ng-show="keywords">
 			<div class="cloudTag" ng-repeat="kw in keywords" style="font-size: {{getKeywordFontSize(kw.score)}}%" 
             ng-click="loadKeywordTimes(kw.word)">
@@ -63,37 +64,9 @@
 			</div>
 		</div>
 
+        <!-- PLACEHOLDER FOR THE FULLSCREEN IMAGES-->
+        <img ng-show="fullscreenMode" id="FSimage">
 
-     <!--
-		<ul class="context-items">
-		
-		
-			<li class="context-item" ng-repeat="tag in foundTags" ng-show="tag.links.length > 0" ng-class-odd="'odd'" ng-class-even="'even'">
-				
-		
-				<div class="item-entities">
-					<span class="item-entity" ng-repeat="e in tag.links">
-						Wiki:<a href="{{e.url}}" target="_wiki">{{e.label}}</a>																														
-					</span>
-				</div>
-				
-		
-				<div class="item-photos" ng-repeat="e in tag.links" ng-class-odd="'odd'" ng-class-even="'even'">					
-					<a ng-show="e.ANEFOData.length > 0" href="{{e.ANEFOData[0].url}}" target="_anefo">
-						<img style="display:inline-block;" ng-src="{{e.ANEFOData[0].img1}}" title="{{e.ANEFOData[0].description}}">
-					</a>
-					<a ng-show="e.ANEFOData.length > 2" href="{{e.ANEFOData[2].url}}" target="_anefo">
-						<img style="display:inline-block;" ng-src="{{e.ANEFOData[2].img1}}" title="{{e.ANEFOData[2].description}}">
-					</a>
-					<a ng-show="e.ANEFOData.length > 4" href="{{e.ANEFOData[4].url}}" target="_anefo">
-						<img style="display:inline-block;" ng-src="{{e.ANEFOData[4].img1}}" title="{{e.ANEFOData[4].description}}">
-					</a>
-					<a><img id="FSimage"></a>
-					<button onclick="fullImager('{{e.ANEFOData[0].img1}}','{{e.ANEFOData[2].img1}}','{{e.ANEFOData[4].img1}}');">FullScreen</button>					
-				</div>
-			</li>
-		</ul>
-    -->
 	</div>
 		
 	
