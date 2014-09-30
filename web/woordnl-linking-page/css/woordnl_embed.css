@@ -13,8 +13,7 @@
     z-index:99;
     -webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	border-radius: 8px;
-	background-color:#e7ebf2;
+	border-radius: 8px;	
 	padding:1em;
 	overflow:auto;
 }
@@ -42,21 +41,6 @@
 	margin-top:0.25em;			
 }
 
-
-/*the keyword cloud*/
-
-.keyword_cloud {
-	position:relative;
-}
-
-.keyword_cloud span {
-	font-weight:bold;	
-	cursor:pointer;
-}
-
-.keyword_cloud span:hover {
-	text-decoration:underline;
-}
 
 /*The entities (i.e. wikilinks)*/
 
@@ -89,4 +73,43 @@
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
+}
+
+/*the keyword cloud*/
+
+.keyword_cloud {
+	position:relative;
+	height:50%;
+}
+
+.keyword_cloud span {
+	font-weight:bold;	
+	cursor:pointer;
+}
+
+.keyword_cloud span:hover {
+	text-decoration:underline;
+}
+
+.cloudTag {
+	font-family: Impact; 
+	color: rgb(0, 201, 255);
+	cursor:pointer;
+	padding:10px;
+	display:inline-block;
+}
+
+/*the image bar*/
+
+.imageBar {
+	position:absolute;
+	bottom:48px;
+}
+
+.imageBar a {
+	display:inline-block;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	margin-right:10px;
 }

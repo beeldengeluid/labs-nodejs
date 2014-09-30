@@ -58,7 +58,7 @@ function searchIN ()
 						//console.log(mapping[file].tags);
 						//<span class="highlight"> Test <em class="hlt1">Highlight</em></span> 
 						html='  \
-							<a href="http://rdlabs.beeldengeluid.nl/woordnl-rc/index_embed.html?urn='+urn+'">\
+							<a href="http://localhost:4000/woordnl-rc/player.html?urn='+urn+'">\
 							<div class="result program" data-urn="'+urn+'"> \
 							 \
 							<div class="visualisation">\

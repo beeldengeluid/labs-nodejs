@@ -83,6 +83,8 @@ wnl.controller('playerCtrl', function ($scope) {
 	$scope.lastPlayerUpdate = 0;
 	
 	$scope.audioElementId = null;
+
+	$scope.imageHTML = 'nothing';
 	
 	/*******************************************************************
 	 * POPCORN RELATED FUNCTIONS
@@ -174,7 +176,7 @@ wnl.controller('playerCtrl', function ($scope) {
 		var keywords = data._source.keywords.sort(function(a, b) {
 			return b.score - a.score;
 		});
-		$scope.keywords = keywords.slice(0, KEYWORD_LIMIT);
+		$scope.keywords = keywords.slice(0, KEYWORD_LIMIT);				
 		
 		//the rest of the context data is based on wikilinks (entities). Process them here
 		$scope.transcriptTags = data._source.wikilinks;			
@@ -189,6 +191,7 @@ wnl.controller('playerCtrl', function ($scope) {
 			});
 			s = e;
 		}
+		//setTimeout($scope.initCloud, 500);
 	}
 	
 	//get the keyword times for a certain keyword
@@ -383,7 +386,7 @@ wnl.controller('playerCtrl', function ($scope) {
 		}  else {
 			pc = 90;
 		}
-		return pc;
+		return pc * 2;
 	}
 	
 	/*
@@ -397,7 +400,7 @@ wnl.controller('playerCtrl', function ($scope) {
 		start = toMillis(start);
 		$scope.foundTags = [];
 		var tags = [];
-		var secs = 0;		
+		var secs = 0;
 		for(var i in $scope.transcriptTags) {			
 			secs = $scope.transcriptTags[i].begintime;
 			if(secs >= (start - CONTEXT_INTERVAL) && secs <= (start + CONTEXT_INTERVAL)) {
@@ -407,6 +410,27 @@ wnl.controller('playerCtrl', function ($scope) {
 		$scope.safeApply(function() {
 			$scope.foundTags = tags;			
 		});
+		$scope.setImageBar();
+	}
+
+	$scope.setImageBar = function() {	
+		$('.imageBar').remove();
+		var html = [];
+		console.debug($scope.foundTags);
+		$.each($scope.foundTags, function(k, tag) {
+			console.debug(tag);
+			$.each(tag.links, function(x, e) {
+				console.debug(e);
+				if(e && e.ANEFOData) {
+					for(var i = 0;i<e.ANEFOData.length > 0;i++) {
+						html.push('<a href="' + e.ANEFOData[i].url + '" target="_anefo">');
+						html.push('<img style="display:inline-block;" src="' + e.ANEFOData[i].img1 + '" title="'+e.ANEFOData[i].description+ '">');
+						html.push('</a>');
+					}
+				}								
+			});
+		});
+		$('.barContainer').before('<div class="imageBar">'+html.join('')+'</div>');
 	}
 	
 	$scope.safeApply = function(fn) {
@@ -472,6 +496,62 @@ wnl.controller('playerCtrl', function ($scope) {
   		}  		
     	return params;
 	}
+/*
+	$scope.initCloud = function() {
+		//var fontSize = d3.scale.log().range([10, 100]);
+		var cloudWords = [];
+		$.each($scope.keywords, function(k, w) {
+			//var score = $scope.getKeywordFontSize(w.score);
+			var size = 10 + Math.random() * 90
+			cloudWords.push({text : w.word + '', size: size});
+			console.debug(k)
+		});
+		console.debug(cloudWords);		
+		d3.layout.cloud().size([500, 300])      		
+      		.padding(5)
+      		.timeInterval(20)
+      		.rotate(function() { return 0; })
+      		.font("Impact")
+      		.fontSize(function(d) { return d.size; })
+      		.on("word", $scope.showCloudProgress)
+      		.on("end", $scope.initCloudComplete)
+      		.words([
+        		"Hello", "world", "normally", "you", "want", "more", "words", "pickles", "blowtorch", "shit",
+        		"than", "this"].map(function(d) {
+        		return {text: d, size: 10 + Math.random() * 90};
+      		}))
+      		.start();
+	}
+
+	$scope.showCloudProgress = function(e) {
+		console.debug(e);
+	}
+
+	$scope.getTransform = function(d) {          	
+		return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+	};
+
+	$scope.initCloudComplete = function(words) {
+		//$scope.d3keywords = words;
+		console.debug(words);
+		
+		d3.select(".tag-cloud").append("svg")
+        .attr("width", 500)
+        .attr("height", 300)
+      .append("g")
+        .attr("transform", "translate(300,150)")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", "rgb(0, 201, 255)")
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+	}*/
 
 	$scope.checkLoading();	
 	

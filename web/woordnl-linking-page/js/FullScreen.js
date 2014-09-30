@@ -46,8 +46,9 @@
             }
             
             function changePicture(){
+
                 count++;		//cycle through the list of images
-                document.getElementById("FSimage").src = imageList[count % imageList.length];
+                //document.getElementById("FSimage").src = imageList[count % imageList.length];
                 
 		if (document.fullscreenElement ||document.webkitFullscreenElement ||
                     document.mozFullScreenElement ||document.msFullscreenElement) 
@@ -58,7 +59,7 @@
 			//if user exits the full screen mode 
 			{
 			while(imageList.length > 0) {imageList.pop();}
-			document.getElementById("FSimage").style.display = "none";
+			//document.getElementById("FSimage").style.display = "none";
 			console.log("i am out of FULLSCREEN");
 			}
 			

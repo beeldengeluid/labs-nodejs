@@ -20,6 +20,8 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css">		
 	
 	<!-- WOORD.NL JS-->
+    <script src="/woordnl-rc/js/d3/d3.min.js" charset="utf-8"></script>
+    <script src="/woordnl-rc/js/d3/d3.layout.cloud.js" charset="utf-8"></script>    
 	<script src="/woordnl-rc/js/popcorn-js/plugins/popcorn.contextitem.js"></script>
 	<script src="/woordnl-rc/js/popcorn-js/plugins/popcorn.semantictag.js"></script>
 	<script src="/woordnl-rc/js/popcorn-js/plugins/popcorn.wikipedia.js"></script>
@@ -43,6 +45,7 @@
             document.write('<script src="' + jsServer + '/' + projectVersion + '/vpro/purno/purno.js"><\/script>');
         })();
     </script>
+
 </head>
 <body ng-controller="playerCtrl">
 	
@@ -51,27 +54,30 @@
 	<div id="context-grid" style="display:none;">
 		
 		<!-- KEYWORD CLOUD -->
-	
+	   
+
 		<div class="keyword_cloud" ng-show="keywords">
-			<span ng-repeat="kw in keywords" style="font-size: {{getKeywordFontSize(kw.score)}}%" 
+			<div class="cloudTag" ng-repeat="kw in keywords" style="font-size: {{getKeywordFontSize(kw.score)}}%" 
             ng-click="loadKeywordTimes(kw.word)">
 				{{kw.word}}
-			</span>
+			</div>
 		</div>
-	
+
+
+     <!--
 		<ul class="context-items">
 		
-			<!-- EEN BLOK PER TIJDSCODE -->			
+		
 			<li class="context-item" ng-repeat="tag in foundTags" ng-show="tag.links.length > 0" ng-class-odd="'odd'" ng-class-even="'even'">
 				
-				<!-- SHOW WIKI LINKS -->
+		
 				<div class="item-entities">
 					<span class="item-entity" ng-repeat="e in tag.links">
 						Wiki:<a href="{{e.url}}" target="_wiki">{{e.label}}</a>																														
 					</span>
 				</div>
 				
-				<!-- SHOW MAX 3 IMAGES FROM ANEFO -->
+		
 				<div class="item-photos" ng-repeat="e in tag.links" ng-class-odd="'odd'" ng-class-even="'even'">					
 					<a ng-show="e.ANEFOData.length > 0" href="{{e.ANEFOData[0].url}}" target="_anefo">
 						<img style="display:inline-block;" ng-src="{{e.ANEFOData[0].img1}}" title="{{e.ANEFOData[0].description}}">
@@ -83,14 +89,11 @@
 						<img style="display:inline-block;" ng-src="{{e.ANEFOData[4].img1}}" title="{{e.ANEFOData[4].description}}">
 					</a>
 					<a><img id="FSimage"></a>
-					<button onclick="fullImager('{{e.ANEFOData[0].img1}}','{{e.ANEFOData[2].img1}}','{{e.ANEFOData[4].img1}}');">FullScreen</button>
-					<!--
-					<button onclick="replaceContentInContainer('media-metadata-description',
-										   '<a ng-show="e.ANEFOData.length > 0" href="{{e.ANEFOData[0].url}}" target="_anefo"><img style="display:inline-block;" ng-src="{{e.ANEFOData[0].img1}}" title="{{e.ANEFOData[0].description}}"></a><a ng-show="e.ANEFOData.length > 2" href="{{e.ANEFOData[2].url}}" target="_anefo"><img style="display:inline-block;" ng-src="{{e.ANEFOData[2].img1}}" title="{{e.ANEFOData[2].description}}"></a><a ng-show="e.ANEFOData.length > 4" href="{{e.ANEFOData[4].url}}" target="_anefo"><img style="display:inline-block;" ng-src="{{e.ANEFOData[4].img1}}" title="{{e.ANEFOData[4].description}}"></a>');")>TestMeta</button>
-					-->
+					<button onclick="fullImager('{{e.ANEFOData[0].img1}}','{{e.ANEFOData[2].img1}}','{{e.ANEFOData[4].img1}}');">FullScreen</button>					
 				</div>
 			</li>
 		</ul>
+    -->
 	</div>
 		
 	
@@ -102,7 +105,8 @@
             </div>
         </div>        
     </div>    
-    <script src="slider2.js"></script>
+    <button ng-click="enterFullsreen()"></button>
+    
     <script src="//js.vpro.nl/ext/require/1.0.0/require.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>
@@ -176,5 +180,6 @@
     	document.addEventListener("mozfullscreenchange", changePicture());
     	document.addEventListener("MSFullscreenChange", changePicture());
 	</script>
+    
 </body>
 </html>
