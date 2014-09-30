@@ -13,7 +13,7 @@ function searchIN ()
 	else {
 		console.log('now false');
 	}
-        $.getJSON("http://localhost:4000/woordnl-rc/get_search_results?term="+str,
+        $.getJSON("http://rdlabs.beeldengeluid.nl/woordnl-rc/get_search_results?term="+str,
 			function(data)
 			{
 				jsonStr=data;
