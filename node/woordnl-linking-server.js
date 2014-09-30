@@ -109,7 +109,7 @@ var urlMap = {
 		//var kw = qs.parse(url.parse(req.url).query).kw;
 		//Now fetch all of the times the selected keyword occurs in the transcript
 		//console.log('your term is'+term);
-		getSeachResults(id,term, function(data) {
+		getSearchResults(id,term, function(data) {
 			res.simpleJSON(200, data);
 		});
 	}
@@ -238,7 +238,7 @@ function getKeywordTimesComplete(responseData) {
  * GET search Results from ES, based on a search term ---> THEMIS
  ************************************************************************************************************************/
 
-function getSeachResults(id, term, clientCallback) {
+function getSearchResults(id, term, clientCallback) {
 	//call the ASR index to fetch the transcript
 	asrIndexAPI.getSearchResults(
 		id, //asr file name
