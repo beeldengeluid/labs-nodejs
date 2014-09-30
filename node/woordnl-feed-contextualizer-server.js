@@ -230,7 +230,7 @@ var feed = new function () {
 		//TODO find a way to utilize this. Also compare it too what xTas does
 		//treeTagger.tagText(msg.wordFreqs.join(' '));
 		
-		//If configured, call the NER service to fetch entities
+		//If configured, call the NER service to fetch entities (both services don't work anymore...)
 		if(CONFIG['service.ner'] == 'nerd') {
 			nerdAnalyzer.executeNEROnText(cleanText, msg, this.messageAnalyzed.bind(this));
 		} else if(CONFIG['service.ner'] == 'xtas') {

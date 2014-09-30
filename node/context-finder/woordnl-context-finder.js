@@ -15,6 +15,8 @@ module.exports = {
 		}
 	
 		var str = this.getQueryString(query.wordFreqs,10,true,false);
+		console.log(query.wordFreqs);
+		console.log(str);
 		var esQuery = {"query":
 			{"bool": {
 				"must":[{"query_string":{"default_field":"words","query":str}}],
@@ -25,7 +27,7 @@ module.exports = {
 		}		
 
 		console.log(JSON.stringify(esQuery));
-		this._esClient.search('woordnl_asr', 'asr_chunk', esQuery)
+		this._esClient.search('woordnl_asr', 'asr_transcript', esQuery)
 
 			.on('data', function(data) {
 				//console.log(data);
@@ -57,7 +59,7 @@ module.exports = {
 					if (power == true) {
 						boostFactor = Math.pow(boostFactor, 2);
 					}
-					wordList[i] = wordList[i]+"^"+boostFactor.toString();
+					wordList[i] = wordList[i].word+"^"+boostFactor.toString();
 				}
 			}
 		}
