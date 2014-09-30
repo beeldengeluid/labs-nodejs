@@ -106,7 +106,6 @@ var urlMap = {
 		// fetch the query string from the request
 		var id = qs.parse(url.parse(req.url).query).id;
 		var term = qs.parse(url.parse(req.url).query).term;
-		console.log(term);
 		//var kw = qs.parse(url.parse(req.url).query).kw;
 		//Now fetch all of the times the selected keyword occurs in the transcript
 		//console.log('your term is'+term);
