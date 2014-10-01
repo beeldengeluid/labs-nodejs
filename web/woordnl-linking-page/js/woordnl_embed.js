@@ -65,7 +65,7 @@ function toPrettyDuration(sec) {
 
 
 /* Main controller */
-wnl.controller('playerCtrl', function ($scope) {
+wnl.controller('playerCtrl', function ($scope, $compile) {
 	
 	/*******************************************************************
 	 * SCOPE VARIABLES
@@ -74,8 +74,9 @@ wnl.controller('playerCtrl', function ($scope) {
 	$scope.loading = false;
 	$scope.dragging = false;
 	
-	$scope.transcriptFiles = [];
-	
+	$scope.startTime = 0;
+
+	$scope.transcriptFiles = [];	
 	$scope.transcriptTags = [];	
 	
 	//the popcorn object
@@ -99,11 +100,6 @@ wnl.controller('playerCtrl', function ($scope) {
 
 		//$scope.pop = Popcorn.baseplayer('#' + POPCORN_DIV);
 		$scope.pop = Popcorn('#' + $scope.audioElementId);
-
-		/*
-		$scope.pop.on('timeupdate', function() {			
-			document.getElementById('time').innerHTML = toPrettyDuration(this.currentTime());			
-		});*/
 	}
 	
 	$scope.goSeek = function(event) {
@@ -159,7 +155,7 @@ wnl.controller('playerCtrl', function ($scope) {
 				
 				//play the file
 				var mp3 = $scope.mp3 ? $scope.mp3 : WOORDNL_MP3_BASE_URL + '/' + id.split('.')[1] + '.mp3'
-				$scope.playFragment(mp3, 0);
+				$scope.playFragment(mp3, $scope.startTime);
 			}
 		});
 	}	
@@ -169,8 +165,16 @@ wnl.controller('playerCtrl', function ($scope) {
 			//console.debug('it does not exist yet');
 			setTimeout($scope.injectContextGrid, 300);
 		} else {
-			//$('#context-grid').insertAfter('.detailsContainer-inner');
-			$('#context-grid').css('display', 'block');
+			var html = [];
+			html.push('<div id="keyword_cloud" ng-show="keywords">');
+			html.push('<div class="cloudTag" ng-repeat="kw in keywords" ');
+			html.push('style="font-size: {{getKeywordFontSize(kw.score)}}%" ng-click="loadKeywordTimes(kw.word)">');
+			html.push('{{kw.word}}</div></div>');
+			console.debug('done!')
+			console.debug($compile(html.join(''))($scope));
+			$scope.safeApply(function(){
+				$('.detailsContainer-inner').after($compile(html.join(''))($scope));			
+			});
 		}
 	}
 	
@@ -182,7 +186,7 @@ wnl.controller('playerCtrl', function ($scope) {
 		$scope.keywords = keywords.slice(0, KEYWORD_LIMIT);				
 		
 		//the rest of the context data is based on wikilinks (entities). Process them here
-		$scope.transcriptTags = data._source.wikilinks;			
+		$scope.transcriptTags = data._source.wikilinks;
 		for (var i in $scope.transcriptTags) {
 			var s = toMillis($scope.transcriptTags[i].begintime) / 1000;
 			var e = s + 1;	
@@ -194,7 +198,6 @@ wnl.controller('playerCtrl', function ($scope) {
 			});
 			s = e;
 		}
-		//setTimeout($scope.initCloud, 500);
 	}
 	
 	//get the keyword times for a certain keyword
@@ -288,6 +291,7 @@ wnl.controller('playerCtrl', function ($scope) {
 		$scope.safeApply(function() {
 			$scope.mediaPlaying = true;
 		});
+		console.debug('PLAYING');
 	}
 	
 	$scope.onPause = function(e) {
@@ -311,6 +315,7 @@ wnl.controller('playerCtrl', function ($scope) {
 	}
 	
 	$scope.seek = function(millis) {
+		console.debug('Seeking to: ' + millis);
 		if($scope.audioPlayer) {
 			$scope.audioPlayer.currentTime = millis / 1000;
 			//$scope.pop.currentTime(millis / 1000);
@@ -324,7 +329,7 @@ wnl.controller('playerCtrl', function ($scope) {
 	$scope.playFragment = function(contentURL, start) {
 		if(!$scope.currentFragment || ($scope.currentFragment && contentURL != $scope.currentFragment.url)) {
 			$scope.mediaPlaying = false;
-			$scope.currentFragment = {url : contentURL, start : toMillis(start)};						
+			$scope.currentFragment = {url : contentURL, start : start};//start is in ms
 			$scope.audioPlayer = document.getElementById($scope.audioElementId);
 			$('#audioSource').attr('src', contentURL);
 			$scope.audioPlayer.addEventListener('play', $scope.onPlay, false);
@@ -460,9 +465,9 @@ wnl.controller('playerCtrl', function ($scope) {
                     document.mozFullScreenElement ||document.msFullscreenElement) {
 			setTimeout($scope.changePicture, $scope.PICTURE_TIMEOUT);
 		} else	{
-			$scope.safeApply(function(){
+			$scope.safeApply(function() {
 				$scope.fullscreenMode = false;
-				$scope.fullscreenImages = [];			
+				$scope.fullscreenImages = [];
 			});
 		}
 	}
@@ -491,6 +496,7 @@ wnl.controller('playerCtrl', function ($scope) {
 			//get this from the url
 			var urlParams = $scope.getParamsFromUrl();
 			var urn = urlParams.urn.replace(/%3A/g, ':');
+			$scope.startTime = parseInt(urlParams.start);
 			$scope.mp3 = urnMapping[urn];
 			var pomsID = $scope.mp3.substring('http://download.omroep.nl/vpro/'.length, $scope.mp3.indexOf('.mp3'));
 			console.debug(pomsID);
@@ -507,6 +513,10 @@ wnl.controller('playerCtrl', function ($scope) {
 			$scope.initPlayer();
 			$scope.setTranscript();
 			$('.fullscreen-btn').css('display', 'block');
+			document.addEventListener("fullscreenchange", $scope.changePicture());
+    		document.addEventListener("webkitfullscreenchange", $scope.changePicture());
+    		document.addEventListener("mozfullscreenchange", $scope.changePicture());
+    		document.addEventListener("MSFullscreenChange", $scope.changePicture());
 			//231.41137297.asr1.semanticized.hyp
 		}
 	}

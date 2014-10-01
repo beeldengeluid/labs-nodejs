@@ -4,16 +4,11 @@ function searchIN ()
 	var mapping = woordnlMapping;
 	scores = [];
 	files= [];
-    var str = document.getElementById('q').value;
+	var str = document.getElementById('q').value;
 	var gg = document.getElementById('results-toggle').checked;
 	console.log("toggle:"+gg);
-	if (gg) {
-		console.log("now true");
-	}
-	else {
-		console.log('now false');
-	}
-        $.getJSON("http://rdlabs.beeldengeluid.nl/woordnl-rc/get_search_results?term="+str,
+	
+        $.getJSON("http://localhost:4000/woordnl-rc/get_search_results?term="+str,
 			function(data)
 			{
 				jsonStr=data;
@@ -32,10 +27,11 @@ function searchIN ()
 					//console.log("did it");
 					
 					file=jsonStr.ThemData.hits.hits[hit]._source.asr_file;
+					console.log(jsonStr.ThemData.hits.hits[hit]);
 					console.log(file);
 					var asrs=file.split("\.");
 					console.log(asrs[1]);
-					var date,subtitle,broadcast,duration,title="";
+					var date,subtitle,broadcast,duration,title,highlight="";
 					file=asrs[1];
 					if (mapping[file])
 					{
@@ -55,10 +51,20 @@ function searchIN ()
 							}
 						if (mapping[file].broadcasters) broadcast=mapping[file].broadcasters;
 						if (mapping[file].duration) duration=mapping[file].duration;
+						if (gg) {
+							highlight=mapping[file].tags;
+							}
+						else	{
+							for (word in jsonStr.ThemData.hits.hits[hit]._source.keywords)
+								{
+								highlight+=jsonStr.ThemData.hits.hits[hit]._source.keywords[word].word;
+								highlight+=",";
+								}
+							}
 						//console.log(mapping[file].tags);
 						//<span class="highlight"> Test <em class="hlt1">Highlight</em></span> 
 						html='  \
-							<a href="http://rdlabs.beeldengeluid.nl/woordnl-rc/player.html?urn='+urn+'">\
+							<a href="http://localhost:4000/woordnl-rc/player.html?urn='+urn+'">\
 							<div class="result program" data-urn="'+urn+'"> \
 							 \
 							<div class="visualisation">\
@@ -66,18 +72,20 @@ function searchIN ()
 							<span class="publishDate">'+date+'</span>\
 							</span><span class="subTitle">'+subtitle+'</span> <div class="highlights">\
 							</div>\
+							<div class="highlights"><span class="highlight">'+highlight+'</span></div>\
 							<div class="meta"><span class="duration">'+duration+'</span><span class="genres">Interview</span>\
 							<span class="broadcasters"> \
-							<span class="broadcaster">'+broadcast+'</span></span> </div></div></a> ';
+							<span class="broadcaster">'+broadcast+'</span></span> </div>\
+							</div></a> ';
 						if (gg)
 						{	//console.log("gg is :"+gg);
 							if ($.inArray(asrs[1], files)==-1)
 								{
-							files.push(asrs[1]);
-							$("#Themresults").append(html);
-							count="<h1>"+files.length+" resultaaten</h1>"
-							$("#resultq").html(count);
-							htmlcount+=1;
+									files.push(asrs[1]);
+									$("#Themresults").append(html);
+									count="<h1>"+files.length+" resultaaten</h1>"
+									$("#resultq").html(count);
+									htmlcount+=1;
 							
 								}
 						}

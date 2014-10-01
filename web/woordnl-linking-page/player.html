@@ -51,25 +51,8 @@
 	
 
     <button class="fullscreen-btn" ng-click="enterFullScreen()">[Fullscreen]</button>
-
-	<!-- INITIALLY INVISIBLE, WILL BE INSERTED IN THE RIGHT POSITION WHEN THE PLAYER & DATA HAS BEEN LOADED -->
-	
-	<div id="context-grid" style="display:none;">	
-
-		<!-- KEYWORD CLOUD -->	           
-		<div class="keyword_cloud" ng-show="keywords">
-			<div class="cloudTag" ng-repeat="kw in keywords" style="font-size: {{getKeywordFontSize(kw.score)}}%" 
-            ng-click="loadKeywordTimes(kw.word)">
-				{{kw.word}}
-			</div>
-		</div>
-
-        <!-- PLACEHOLDER FOR THE FULLSCREEN IMAGES-->
-        <img ng-show="fullscreenMode" id="FSimage">
-
-	</div>
-		
-	
+	<img ng-show="fullscreenMode" id="FSimage">
+    
     <div id="wrapper">
         <div class="loader">
             <div class="loader-inner">
@@ -142,17 +125,8 @@
         })();    
     </script>
    	<!-- INJECT R&D CODE HERE AND MAINLY MAKE SURE TO SELECT FETCH THE AUDIO ID-->
-   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>	
+   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
    	<script src="/woordnl-rc/js/woordnl_embed.js"></script>
-	<!-- Code fo Fullscreen Images-->
-   	
-   	<script src="/woordnl-rc/js/FullScreen.js"></script>
-	<script>
-    	document.addEventListener("fullscreenchange", changePicture());
-    	document.addEventListener("webkitfullscreenchange", changePicture());
-    	document.addEventListener("mozfullscreenchange", changePicture());
-    	document.addEventListener("MSFullscreenChange", changePicture());
-	</script>
     
 </body>
 </html>
