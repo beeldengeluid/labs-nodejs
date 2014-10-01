@@ -114,12 +114,16 @@
 	overflow:hidden;
 }
 
-.imageBar a {
+.imageBar .barItem {
 	display:inline-block;	
 	margin-right:10px;
 }
 
-.imageBar a img {
+.barItem a {
+	color: #00c9ff;
+}
+
+.imageBar img {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	border-radius: 8px;

@@ -131,6 +131,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 				console.debug(err);
 			},
 			success: function (json) {
+				console.debug(json);
 				//insert the grid into the embed player
 				$scope.injectContextGrid();
 				
@@ -158,9 +159,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 			html.push('<div id="keyword_cloud" ng-show="keywords">');
 			html.push('<div class="cloudTag" ng-repeat="kw in keywords" ');
 			html.push('style="font-size: {{getKeywordFontSize(kw.score)}}%" ng-click="loadKeywordTimes(kw.word)">');
-			html.push('{{kw.word}}</div></div>');
-			console.debug('done!')
-			console.debug($compile(html.join(''))($scope));
+			html.push('{{kw.word}}</div></div>');			
 			$scope.safeApply(function(){
 				$('.detailsContainer-inner').after($compile(html.join(''))($scope));			
 			});
@@ -419,9 +418,11 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 			$.each(tag.links, function(x, e) {
 				if(e && e.ANEFOData) {
 					for(var i = 0;i<e.ANEFOData.length > 0;i++) {
-						html.push('<a href="' + e.ANEFOData[i].url + '" target="_anefo">');
-						html.push('<img style="display:inline-block;" src="' + e.ANEFOData[i].img1 + '" title="'+e.ANEFOData[i].description+ '">');
-						html.push('</a>');
+						html.push('<div class="barItem">');
+						html.push('<div><a href="' + e.ANEFOData[i].url + '" target="_anefo">');
+						html.push('<img src="' + e.ANEFOData[i].img1 + '" title="'+e.ANEFOData[i].description+ '">');						
+						html.push('</a></div>');
+						html.push('<div><a href="'+e.url+'" target="_wikipedia">' + e.label + '</a></div></div>');
 						if(e.ANEFOData[i] && e.ANEFOData[i].img1 && e.ANEFOData[i].img1.indexOf("188x188") != -1) {
 							if(e.ANEFOData[i].img1.replace("188x188", "1280x1280") != undefined) {
 								$scope.fullscreenImages.push(e.ANEFOData[i].img1.replace("188x188", "1280x1280"));
@@ -429,8 +430,9 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 						}
 					}
 				}
+				//html.push('<a href="'+e.url+'">' + e.label + '</a>');
 			});
-		});		
+		});
 		$('.barContainer').before('<div class="imageBar">'+html.join('')+'</div>');
 	}
 
