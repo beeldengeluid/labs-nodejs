@@ -223,8 +223,9 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 		return mapping;
 	};
 
-	$scope.gotoWoordnl = function(pomsId) {
-		window.open('http://www.woord.nl/luister.program.'+pomsId+'.html');
+	$scope.gotoWoordnl = function(asrId) {
+		//window.open('http://www.woord.nl/luister.program.'+pomsId+'.html');
+		window.open('http://rdlabs.beeldengeluid.nl/woordnl-rc/player.html?urn=' + woordnlMapping[asrId].urn)
 	}
 	
 	$scope.getSourceOrder = function(sources) {

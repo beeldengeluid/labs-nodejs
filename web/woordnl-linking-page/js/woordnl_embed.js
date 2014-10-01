@@ -100,6 +100,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 
 		//$scope.pop = Popcorn.baseplayer('#' + POPCORN_DIV);
 		$scope.pop = Popcorn('#' + $scope.audioElementId);
+		//$scope.pop.on('timeupdate', function(){});
 	}
 	
 	$scope.goSeek = function(event) {
@@ -113,18 +114,6 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 			var pc = x / (w / 100);
 			var dur = toMillis($scope.audioPlayer.duration);
 			$scope.seek((dur / 100) * pc);
-		}
-	}
-	
-	//load some dummy data in the popcorn object
-	$scope.loadPopcornEventData = function() {		
-		for(var i=0;i<10;i++) {
-			$scope.pop.footnote({
-				start: i * 5 + 1,
-				end: i * 5 + 2,
-				text: "Showing the number: " + i,
-				target: "test_div"
-			});
 		}
 	}
 	
@@ -158,7 +147,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 				$scope.playFragment(mp3, $scope.startTime);
 			}
 		});
-	}	
+	}
 	
 	$scope.injectContextGrid = function() {
 		if (!$('.detailsContainer-inner').exists()) {
@@ -188,8 +177,8 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 		//the rest of the context data is based on wikilinks (entities). Process them here
 		$scope.transcriptTags = data._source.wikilinks;
 		for (var i in $scope.transcriptTags) {
-			var s = toMillis($scope.transcriptTags[i].begintime) / 1000;
-			var e = s + 1;	
+			var s = $scope.transcriptTags[i].begintime / 1000;
+			var e = s + 1;			
 			$scope.pop.semantictag({
 				start: s,
 				end: e,
@@ -270,7 +259,9 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 		if(!e) {
 			e = window.event;
 		}
-		$scope.seek($scope.currentFragment.start);
+		if($scope.currentFragment.start > 0) {
+			$scope.seek($scope.currentFragment.start);
+		}
 		$scope.audioPlayer.play();
 	}
 	
@@ -291,7 +282,6 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 		$scope.safeApply(function() {
 			$scope.mediaPlaying = true;
 		});
-		console.debug('PLAYING');
 	}
 	
 	$scope.onPause = function(e) {
@@ -426,10 +416,8 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 		$scope.fullscreenImages = [];
 		$('.imageBar').remove();
 		var html = [];
-		console.debug($scope.foundTags);
 		$.each($scope.foundTags, function(k, tag) {
-			console.debug(tag);
-			$.each(tag.links, function(x, e) {				
+			$.each(tag.links, function(x, e) {
 				if(e && e.ANEFOData) {
 					for(var i = 0;i<e.ANEFOData.length > 0;i++) {
 						html.push('<a href="' + e.ANEFOData[i].url + '" target="_anefo">');
@@ -499,14 +487,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 			$scope.startTime = parseInt(urlParams.start);
 			$scope.mp3 = urnMapping[urn];
 			var pomsID = $scope.mp3.substring('http://download.omroep.nl/vpro/'.length, $scope.mp3.indexOf('.mp3'));
-			console.debug(pomsID);
 			$scope.transcript = woordnlMapping[pomsID].asrFile || '230.39847574.asr1.semanticized.hyp';
-
-			console.debug('Found a transcript: ' + $scope.transcript);
-			console.debug('URN: ' + urn);
-			console.debug('Found a mp3: ' + $scope.mp3);
-			
-			
 			
 			//alert('Going to load some pretty nifty stuff');
 			$scope.initPopcorn();

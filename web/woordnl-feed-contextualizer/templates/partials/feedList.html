@@ -22,7 +22,7 @@
 
 		<div class="row woordnl-items">
 			<div class="col-md-12" ng-repeat="md in item.related['woordnl']">
-				<div class="panel panel-default" ng-click="gotoWoordnl(md.mapping.pomsID)">
+				<div class="panel panel-default" ng-click="gotoWoordnl(md.asrId)">
 					<div class="panel-heading">
 						<a ng-if="md.mapping.pomsID" target="_woordnl">
 							<span class="title" ng-repeat="t in md.mapping.titles">

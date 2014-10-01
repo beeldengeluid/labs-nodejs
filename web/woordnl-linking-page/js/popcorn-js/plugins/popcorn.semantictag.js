@@ -7,11 +7,11 @@
 (function (Popcorn) {
   Popcorn.plugin("semantictag", {
 
-	_setup : function(options) {	  
+	_setup : function(options) {
 	  //
     },
     
-    start: function(event, options) {    	
+    start: function(event, options) {
     	options.callback(options.start);
     	        
     },
