@@ -8,7 +8,7 @@ function searchIN ()
 	var gg = document.getElementById('results-toggle').checked;
 	console.log("toggle:"+gg);
 	
-        $.getJSON("http://localhost:4000/woordnl-rc/get_search_results?term="+str,
+        $.getJSON("http://rdlabs.beeldengeluid.nl/woordnl-rc/get_search_results?term="+str,
 			function(data)
 			{
 				jsonStr=data;
@@ -64,7 +64,7 @@ function searchIN ()
 						//console.log(mapping[file].tags);
 						//<span class="highlight"> Test <em class="hlt1">Highlight</em></span> 
 						html='  \
-							<a href="http://localhost:4000/woordnl-rc/player.html?urn='+urn+'">\
+							<a href="http://rdlabs.beeldengeluid.nl/woordnl-rc/player.html?urn='+urn+'">\
 							<div class="result program" data-urn="'+urn+'"> \
 							 \
 							<div class="visualisation">\
