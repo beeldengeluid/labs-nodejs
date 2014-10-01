@@ -52,7 +52,7 @@ module.exports = {
 	    if(!isCleanText) {
 	    	text = this.cleanupText(text);
 	    }
-
+		
 	    //split up the text in separate words and calculate the frequency of each word (+ the total number of words)
 	    var textWords = text.split(/[ ]+/);
 		for (i=0;i<textWords.length;i++) {
@@ -96,12 +96,16 @@ module.exports = {
 	    }
 		//sort the list by highest score
 	    results_sorted = results.sort(function(a, b){return b.score-a.score});
-		console.log('\n = HIGHEST SCORES =');
-		var highestLen = results_sorted.length <= 10 ? results_sorted.length : 10;	// max 10 words
-		for (i=0;i<highestLen;i++) {
-			console.log(results_sorted[i]);
+		
+		// make N top terms dependent of feed text length.
+		if (textWords.length < 100 ) {
+			var N_topTerms = Math.round(Math.log(textWords.length));
+		} else {
+			var topTermPercentage = 5;
+			var N_topTerms = Math.round( (textWords.length * topTermPercentage )/100);
 		}
-	    
+		results_sorted = results_sorted.slice(0,N_topTerms);
+
 	    // By default, just return the most frequent words in a simple list without scores
 	    if(simpleList && results_sorted) {
 	        var fws = [];
