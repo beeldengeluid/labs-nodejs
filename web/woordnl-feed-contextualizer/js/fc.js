@@ -96,7 +96,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 
 	//stores retrieved feed items in the client
 	$scope.storeFeedItems = function(json) {
-		console.debug(json);
+		//console.debug(json);
 		$scope.safeApply(function() {
 			$scope.offset = 0;
 			//Loop door alle (RSS) feed items
@@ -173,7 +173,8 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 										snippet : rd.hits.hits[i]._source.words,
 										//keywords : rd.hits.hits[i]._source.keywords,
 										start : rd.hits.hits[i]._source.wordTimes.trim().split(' ')[0],
-										score : rd.hits.hits[i]._score
+										score : rd.hits.hits[i]._score,
+										highlights : $scope.fetchHighlights(rd.hits.hits[i].highlight.words)
 									});
 									found = true;
 									added[id] = true;
@@ -188,6 +189,20 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 			}
 		}
 		return md;
+	}
+
+	$scope.fetchHighlights = function(highlights) {
+		var hl = [];
+		var match = "";
+		var regex = /<em>(.*?)<\/em>/ig;
+		$.each(highlights, function(k, v) {
+			while (match = regex.exec(v)) {
+				if(hl.indexOf(match[1]) == -1) {
+					hl.push(match[1]);
+				}
+			}
+		});
+		return hl;
 	}
 
 	$scope.getWoordnlMapping = function(asrId) {

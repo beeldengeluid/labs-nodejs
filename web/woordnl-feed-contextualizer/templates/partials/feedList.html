@@ -38,14 +38,14 @@
 							<span ng-if="md.mapping">
 								<strong>Uitgezonden op</strong>: {{md.mapping.sortDate}}
 							</span><br><br>
+							<strong ng-if="md.highlights">Matches:</strong>
+							<span class="tag" ng-repeat="hl in md.highlights">
+								<em>{{hl}}</em>
+							</span><br>
 							<strong ng-if="md.mapping.tags">Tags:</strong>
 							<span class="tag" ng-repeat="tag in md.mapping.tags">
 								<em>{{tag}}</em>
-							</span><br>							
-							<strong ng-if="md.keywords">More tags:</strong>
-							<span class="tag" ng-repeat="kw in md.keywords">
-								<em>{{kw.word}}</em>
-							</span>
+							</span>														
 						</div>
 					</div>
 				</div>

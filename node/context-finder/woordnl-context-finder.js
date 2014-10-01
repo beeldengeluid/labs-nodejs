@@ -23,10 +23,14 @@ module.exports = {
 				"must_not":[],
 				"should":[]}
 			},
-			"from":0,"size":10,"sort":[],"facets":{}
-		}		
-
-		console.log(JSON.stringify(esQuery));
+			"from":0,"size":10,"sort":[],
+			"highlight": {
+    			"fields": {
+      				"words": {}
+    			}
+  			}
+		}
+		
 		this._esClient.search('woordnl_asr', 'asr_transcript', esQuery)
 
 			.on('data', function(data) {
