@@ -460,7 +460,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
                     document.mozFullScreenElement ||document.msFullscreenElement) {
 			console.debug('(still) in fullscreen');
 		} else	{ //if not make sure the variables are reset
-			$('#FSimage').attr('src', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+			$('#FSimage').attr('src', '/woordnl-rc/images/noFS.png');
 			$scope.safeApply(function() {
 				$scope.fullscreenMode = false;
 			});
