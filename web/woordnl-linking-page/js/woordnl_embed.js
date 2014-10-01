@@ -422,7 +422,12 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 						html.push('<div><a href="' + e.ANEFOData[i].url + '" target="_anefo">');
 						html.push('<img src="' + e.ANEFOData[i].img1 + '" title="'+e.ANEFOData[i].description+ '">');						
 						html.push('</a></div>');
-						html.push('<div><a href="'+e.url+'" target="_wikipedia">' + e.label + '</a></div></div>');
+						if(i == 0) {
+							html.push('<div><a href="'+e.url+'" target="_wikipedia">' + e.label + '</a></div>');
+						} else {
+							html.push('<div><a href="'+e.url+'" target="_wikipedia">&nbsp;</a></div>');
+						}
+						html.push('</div>');
 						if(e.ANEFOData[i] && e.ANEFOData[i].img1 && e.ANEFOData[i].img1.indexOf("188x188") != -1) {
 							if(e.ANEFOData[i].img1.replace("188x188", "1280x1280") != undefined) {
 								$scope.fullscreenImages.push(e.ANEFOData[i].img1.replace("188x188", "1280x1280"));
