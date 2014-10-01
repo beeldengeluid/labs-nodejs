@@ -305,7 +305,6 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 	}
 	
 	$scope.seek = function(millis) {
-		console.debug('Seeking to: ' + millis);
 		if($scope.audioPlayer) {
 			$scope.audioPlayer.currentTime = millis / 1000;
 			//$scope.pop.currentTime(millis / 1000);
@@ -424,7 +423,9 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 						html.push('<img style="display:inline-block;" src="' + e.ANEFOData[i].img1 + '" title="'+e.ANEFOData[i].description+ '">');
 						html.push('</a>');
 						if(e.ANEFOData[i] && e.ANEFOData[i].img1 && e.ANEFOData[i].img1.indexOf("188x188") != -1) {
-							$scope.fullscreenImages.push(e.ANEFOData[i].img1.replace("188x188", "1280x1280"));
+							if(e.ANEFOData[i].img1.replace("188x188", "1280x1280") != undefined) {
+								$scope.fullscreenImages.push(e.ANEFOData[i].img1.replace("188x188", "1280x1280"));
+							}
 						}
 					}
 				}
@@ -435,7 +436,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 
 	$scope.enterFullScreen = function() {
 		$scope.fullscreenMode = true;
-		var elem = document.getElementById("FSimage");		
+		var elem = document.getElementById("FSimage");
 		if(elem.requestFullScreen) {
 			elem.requestFullScreen();
 		} else if(elem.webkitRequestFullScreen ) {
@@ -443,21 +444,35 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 		} else if(elem.mozRequestFullScreen) {
 			elem.mozRequestFullScreen();
 		}
-		setTimeout($scope.changePicture, $scope.PICTURE_TIMEOUT);
+		$scope.changePicture();
+	}
+
+	$scope.fullScreenStateChanged = function() {
+		console.debug('state changed');
+		if (document.fullscreenElement || document.webkitFullscreenElement ||
+                    document.mozFullScreenElement ||document.msFullscreenElement) {
+			console.debug('(still) in fullscreen');
+		} else	{ //if not make sure the variables are reset
+			$('#FSimage').attr('src', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+			$scope.safeApply(function() {
+				$scope.fullscreenMode = false;
+			});
+		}
 	}
 
 	$scope.changePicture = function() {
-		$scope.currentFullscreenImage++;
-		document.getElementById("FSimage").src = $scope.fullscreenImages[$scope.currentFullscreenImage % $scope.fullscreenImages.length];
-		if (document.fullscreenElement || document.webkitFullscreenElement ||
-                    document.mozFullScreenElement ||document.msFullscreenElement) {
+		//check if the user is still in fullscreen mode
+		if($scope.fullscreenMode) {
 			setTimeout($scope.changePicture, $scope.PICTURE_TIMEOUT);
-		} else	{
-			$scope.safeApply(function() {
-				$scope.fullscreenMode = false;
-				$scope.fullscreenImages = [];
-			});
-		}
+			if($scope.currentFullscreenImage + 1 < $scope.fullscreenImages.length) {
+				$scope.currentFullscreenImage++;
+			} else {
+				$scope.currentFullscreenImage = 0;
+			}
+			if($scope.fullscreenImages.length > 0) {
+				document.getElementById("FSimage").src = $scope.fullscreenImages[$scope.currentFullscreenImage];		
+			}
+		}		
 	}
 	
 	$scope.safeApply = function(fn) {
@@ -475,7 +490,7 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 	 * INITIALIZATION
 	 *******************************************************************/
 	
-	$scope.checkLoading = function() {		
+	$scope.checkLoading = function() {
 		if (!$('.player-canvas').exists()) {
 			setTimeout($scope.checkLoading, 300);
 		} else {
@@ -494,10 +509,10 @@ wnl.controller('playerCtrl', function ($scope, $compile) {
 			$scope.initPlayer();
 			$scope.setTranscript();
 			$('.fullscreen-btn').css('display', 'block');
-			document.addEventListener("fullscreenchange", $scope.changePicture());
-    		document.addEventListener("webkitfullscreenchange", $scope.changePicture());
-    		document.addEventListener("mozfullscreenchange", $scope.changePicture());
-    		document.addEventListener("MSFullscreenChange", $scope.changePicture());
+			document.addEventListener("fullscreenchange", $scope.fullScreenStateChanged, false);
+    		document.addEventListener("webkitfullscreenchange", $scope.fullScreenStateChanged, false);
+    		document.addEventListener("mozfullscreenchange", $scope.fullScreenStateChanged, false);
+    		document.addEventListener("MSFullscreenChange", $scope.fullScreenStateChanged, false);
 			//231.41137297.asr1.semanticized.hyp
 		}
 	}

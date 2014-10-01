@@ -272,7 +272,7 @@ var feed = new function () {
 				real_time_items.shift();
 			}
 			
-			//Push the message to the clients
+			//Push the message to the clients			
 			this.pushMessages();
 		}
 	}

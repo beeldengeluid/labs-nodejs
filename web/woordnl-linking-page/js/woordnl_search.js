@@ -13,7 +13,7 @@ function searchIN ()
 			count=jsonStr.ThemData.hits.total;				
 			console.log(data);
 			$("#Themresults").html("");
-			var htmlcount=0;				
+			var htmlcount=0;
 			for (hit in jsonStr.ThemData.hits.hits)
 			{
 				file=jsonStr.ThemData.hits.hits[hit]._source.asr_file;
