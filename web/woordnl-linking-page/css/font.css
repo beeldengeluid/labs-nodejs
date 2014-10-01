@@ -1,0 +1,44 @@
+/* @license
+ * MyFonts Webfont Build ID 1346118, 2011-10-11T10:00:09-0400
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: Chevin Light by G-Type Collection
+ * URL: http://www.myfonts.com/fonts/fw-g-type/chevin/light/
+ *
+ * Webfont: Chevin Medium by G-Type Collection
+ * URL: http://www.myfonts.com/fonts/fw-g-type/chevin/medium/
+ *
+ *
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=1346118
+ * Licensed pageviews: 10,000
+ * Webfonts copyright: &#x00A9;2003 G-Type.  Designed and digitized by Nick Cooke  01943 461 808
+ *
+ * © 2011 Bitstream Inc
+*/
+
+@font-face {
+    font-family: 'chevin';
+    src: url('chevin.eot');
+    src: url('chevin.eot?#iefix') format('embedded-opentype'),
+         url('chevin.woff') format('woff'),
+         url('chevin.ttf') format('truetype'),
+         url('chevin.svg#wf') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'chevin';
+    src: url('chevin_bold.eot');
+    src: url('chevin_bold.eot?#iefix') format('embedded-opentype'),
+         url('chevin_bold.woff') format('woff'),
+         url('chevin_bold.ttf') format('truetype'),
+         url('chevin_bold.svg#wf') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
