@@ -108,7 +108,7 @@ fc.controller('feedCtrl', function ($scope, $sce, hotkeys) {
 						id : json[i].id,
 						title: typeof json[i].title == 'string' ? $sce.trustAsHtml(json[i].title) : 'Geen titel',
 						summary : typeof json[i].summary == 'string' ? $sce.trustAsHtml(json[i].summary) : 'Geen omschrijving',
-						pubDate : d ? d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() : '',
+						pubDate : d ? d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() : '',
 						url : json[i].url,
 						domain : $scope.getLocation(json[i].url).hostname,
 						categories : typeof json[i].categories == 'string' ? json[i].categories : '',
