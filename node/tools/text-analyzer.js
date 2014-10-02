@@ -98,12 +98,7 @@ module.exports = {
 	    results_sorted = results.sort(function(a, b){return b.score-a.score});
 		
 		// make N top terms dependent of feed text length.
-		if (textWords.length < 100 ) {
-			var N_topTerms = Math.round(Math.log(textWords.length));
-		} else {
-			var topTermPercentage = 5;
-			var N_topTerms = Math.round( (textWords.length * topTermPercentage )/100);
-		}
+		var N_topTerms = Math.round(Math.log(textWords.length));
 		results_sorted = results_sorted.slice(0,N_topTerms);
 
 	    // By default, just return the most frequent words in a simple list without scores
@@ -125,20 +120,19 @@ module.exports = {
 		dirty = dirty.replace(/<\/h2>/g," </h2>");
 		dirty = dirty.replace(/<\/h3>/g," </h3>");
 		dirty = dirty.replace(/<\/em>/g," </em>");
+		dirty = dirty.replace(/<\/strong>/g," </strong>");
+		dirty = dirty.replace(/<\/a>/g," </a>");
+		dirty = dirty.replace(/<\/span>/g," </span>");
 		var clean = sanitizeHtml(dirty, {
 			allowedTags: [],
 			allowedAttributes: {}
 		});
-		// http://feeds.nos.nl/nosnieuwsalgemeen
-		// http://www.nu.nl/feeds/rss/algemeen.rss
-		// http://www.commit-nl.nl/rss
-		// http://www.nrc.nl/rss.php : gaat fout met: &#8216;
-		// http://www.nu.nl/feeds/rss/werk-en-prive.rss
 
 		clean = clean.replace(/&#\d{2-4};/g, " ");	//escape html escape character codes
-	    clean = clean.replace(/[,#!%&;:=_`\'~\"\t\n]/g, " ");
+		clean = clean.replace(/\S+@\S+\.\S+/g," ");	// (very) simple e-mail addresses checking
+	    clean = clean.replace(/[,#!%&;:=_`\'~\"\t\n‘’“”]/g, " ");
 		clean = clean.replace(/[\-\[\]\.\/\+\?\|\(\)\{\}\\\^\*\$]/g," ");
-		// console.log(clean+'\n\n');
+		console.log(clean+'\n\n');
 		return clean;
 	}
 };
