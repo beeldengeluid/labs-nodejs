@@ -15,7 +15,7 @@ module.exports = {
 		}
 	
 		var str = this.getQueryString(query.wordFreqs,10,true,false);
-		console.log(query.wordFreqs);
+		// console.log(query.wordFreqs);
 		console.log(str);
 		var esQuery = {"query":  
 			{"bool": {
