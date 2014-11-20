@@ -6,11 +6,11 @@ function searchIN ()
 	files= [];
 	var str = document.getElementById('q').value;
 	var gg = document.getElementById('results-toggle').checked;
-    $.getJSON("http://rdlabs.beeldengeluid.nl/woordnl-rc/get_search_results?term="+str,
+    $.getJSON("/woordnl-rc/get_search_results?term="+str,
 		function(data)
 		{
 			jsonStr=data;
-			count=jsonStr.ThemData.hits.total;				
+			count=jsonStr.ThemData.hits.total;
 			console.log(data);
 			$("#Themresults").html("");
 			var htmlcount=0;
@@ -29,7 +29,7 @@ function searchIN ()
 					if (mapping[file].titles[1]) subtitle=mapping[file].titles[1].value;
 					urn = mapping[file].urn;
 					publish=mapping[file].publishStart;
-					
+
 					if (publish)
 						{
 						date=publish.split("T");
@@ -53,7 +53,7 @@ function searchIN ()
 						}
 					var start = gg ? 0 : jsonStr.ThemData.hits.hits[hit]._source.start;
 					var html='  \
-						<a href="http://rdlabs.beeldengeluid.nl/woordnl-rc/player.html?urn='+urn+'&start='+start+'">\
+						<a href="/woordnl-rc/player.html?urn='+urn+'&start='+start+'">\
 						<div class="result program" data-urn="'+urn+'"> \
 						 \
 						<div class="visualisation">\
@@ -72,26 +72,25 @@ function searchIN ()
 							{
 								files.push(asrs[1]);
 								$("#Themresults").append(html);
-								count="<h1>"+files.length+" resultaaten</h1>"
+								count="<h1>"+files.length+" resultaten</h1>"
 								$("#resultq").html(count);
 								htmlcount+=1;
-						
+
 							}
 					}
 					else	{
 						//console.log("gg is :"+gg);
 						$("#Themresults").append(html);
 						htmlcount+=1;
-						
+
 						}
 				}
-			
+
 			}
 			console.log("Got to END");
 			console.log("unique results posted: "+htmlcount);
-			htmlcount="<h1>"+htmlcount+" resultaaten</h1>"
+			htmlcount="<h1>"+htmlcount+" resultaten</h1>"
 			$("#resultq").html(htmlcount);
 		});
-	
+
 	}
-	
