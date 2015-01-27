@@ -18,6 +18,7 @@ Install
 -------
 
 https://prerender.io/documentation
+
 https://github.com/prerender/prerender
 
 	$ git clone https://github.com/prerender/prerender.git
@@ -30,13 +31,26 @@ Open port
 
 	$ export PORT=1337 (default is port 3000)
 
-Cache
------
+Caching: Amazon Web Services
+----------------------------
 
 	$ export AWS_ACCESS_KEY_ID=<aws access key>
 	$ export AWS_SECRET_ACCESS_KEY=<aws secret access key>
 	$ export S3_BUCKET_NAME=<bucket name>
 	$ export AWS_REGION=eu-west-1
+
+Caching: MongoDB
+----------------
+
+https://github.com/lammertw/prerender-mongodb-cache
+
+In your local prerender project run:
+
+	$ npm install prerender-mongodb-cache --save
+
+Then in the server.js that initializes the prerender:
+
+	server.use(require('prerender-mongodb-cache'));
 
 
 Installing on localhost
@@ -44,13 +58,3 @@ Installing on localhost
 
 There might be some dependencies issues when installing this on your localhost.
 You need Python (v2.7 recommended, v3.x.x is not supported) and a C++ compiler.
-
-Run the following commands when encountering problems during npm install:
-
-https://github.com/TooTallNate/node-gyp
-
-	$ npm install -g node-gyp
-	
-Windows
-
-	$ npm install --msvs_version=2012
