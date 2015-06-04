@@ -57,4 +57,5 @@ Installing on localhost
 -----------------------
 
 There might be some dependencies issues when installing this on your localhost.
+
 You need Python (v2.7 recommended, v3.x.x is not supported) and a C++ compiler.
