@@ -2,27 +2,27 @@
  * http://www.no-margin-for-errors.com/blog/2010/07/26/deliver-real-time-information-to-your-users-using-node-js/
  * http://expressjs.com/api.html#middleware
  * http://blog.nemikor.com/2010/05/21/long-polling-in-nodejs/
- * 
+ *
  * http://www.nu.nl/feeds/rss/tag/amsterdam.rss ---> werkt in zekere zin wel
  * http://www.nu.nl/feeds/rss/tag/olie.rss ---> parse error in index.js van http-proxy
- * 
+ *
  * ANEFO
  * http://www.gahetna.nl/beeldbank-api/opensearch/?q=3.18.20&count=100&startIndex=1
  * http://www.gahetna.nl/beeldbank-api/opensearch/description-document
- * 
+ *
  * PAPERS over IR:
  * http://ciir.cs.umass.edu/publications/index.html
- * 
+ *
  * OPMERKELIJK:
- * - in NERD zit een bug waardoor soms de verkeerde entities terug worden gegeven 
- * 
+ * - in NERD zit een bug waardoor soms de verkeerde entities terug worden gegeven
+ *
  * http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/
  * http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/#Linux
  * http://tst-centrale.org/images/stories/producten/documentatie/ehc_handleiding_nl.pdf
- * 
- * 
+ *
+ *
  * http://semanticize.uva.nl/dev/nl?learning=OAIR2013.nSVM&context=276.35818555.asr1.hyp-SPK02-003-test1&text=wij%20wonen%20allemaal%20in%20een%20klein%20landje&normalize=lower,dash&filter=learningProbability&gt;=0
- * 
+ *
  * */
 
 var http = require("http"),
@@ -78,7 +78,7 @@ app.post('/add_feed_item', function(req, res) {
 });
 
 /* Is polled to get the latest item from the list */
-app.get('/real_time_feed', function(req, res) {	
+app.get('/real_time_feed', function(req, res) {
 	proxy.web(req, res, { target: MESSAGE_SERVER });
 });
 
@@ -90,12 +90,12 @@ app.listen(CONFIG['proxy-server.port'], function(err) {
 	if (err) {
 		return cb(err);
 	}
-	
+
 	//only needed when started as root (needed for ports below 2014)
 	if(parseInt(CONFIG['proxy-server.port']) < 1024) {
 		//Find out which user used sudo through the environment variable
 		var uid = parseInt(process.env.SUDO_UID);
-		
+
 	    //Set our server's uid to that user
 		if (uid) {
 			process.setuid(uid);
@@ -108,7 +108,7 @@ console.log('Static content served at http://127.0.0.1:' + CONFIG['proxy-server.
 
 
 //**************************************************************************************************************
-//MESSAGE SERVER 
+//MESSAGE SERVER
 //**************************************************************************************************************
 
 //load the stopwords into memory
@@ -145,14 +145,14 @@ var urlMap = {
  */
 
 http.createServer(function (req, res) {
-	
+
 	//add a convenience function to each response object
 	res.simpleJSON = function (code, obj) {
-		var body = JSON.stringify(obj);		
+		var body = JSON.stringify(obj);
 		res.setEncoding = 'utf8';
 		res.end(body);
 	};
-	
+
 	//fetch the correct handler from the urlMap
 	handler  = urlMap[url.parse(req.url).pathname] || notFound;
 
@@ -179,28 +179,28 @@ http.createServer(function (req, res) {
 console.log('Server running at http://127.0.0.1:' + CONFIG['message-server.port']);
 
 /**
- * Used whenever a 404 response needs to be returned 
+ * Used whenever a 404 response needs to be returned
  */
 
 function notFound(req, res) {
-	res.sendwriteHeadHeader(404, [ ["Content-Type", "text/plain"], ["Content-Length", CONFIG['message-server-not-found-message'].length]]);
+	res.setHeader(404, [ ["Content-Type", "text/plain"], ["Content-Length", CONFIG['message-server-not-found-message'].length]]);
 	res.write(CONFIG['message-server-not-found-message']);
 	res.end();
 }
 
 /**
- * This object contains all functions related to the processing of (RSS) messages 
+ * This object contains all functions related to the processing of (RSS) messages
  */
 var feed = new function () {
 	var real_time_items = [];
 	var callbacks = [];
 	var analysis_requests = [];
 
-	this.appendRSSFeed = function(feedURL) {		
+	this.appendRSSFeed = function(feedURL) {
 		parser.parseURL(feedURL, {}, function(err, out) {
 			if(err) {
 				console.log(err)
-			} 
+			}
 			else if(out) {
 				//Add the feed items to the list of messages
 				for (var i=0;i<out['items'].length;i++) {
@@ -211,25 +211,25 @@ var feed = new function () {
 			}
 		}.bind(this));
 	};
-	
+
 	this.appendMessage = function(json) {
 		// Append the new item.
 		this.addProcessedMessage(json);
 	};
-	
+
 	this.addProcessedMessage = function(msg) {
 		//Set the uuid of each message
 		msg.id = uuid.v4();
 		//Get the most notable words ordered by 'importance' (for details, see text-analyzer.js)
 		// console.log(msg.title+'\n');
 		// console.log(msg.summary+'\n');
-		
+
 		var cleanText = textAnalyzer.cleanupText(msg.title + ' ' + msg.summary);
 		msg.wordFreqs = textAnalyzer.getMostImportantWords(cleanText, STOP_WORDS, IDF_SCORES, true);
-		
+
 		//TODO find a way to utilize this. Also compare it too what xTas does
 		//treeTagger.tagText(msg.wordFreqs.join(' '));
-		
+
 		//If configured, call the NER service to fetch entities (both services don't work anymore...)
 		if(CONFIG['service.ner'] == 'nerd') {
 			nerdAnalyzer.executeNEROnText(cleanText, msg, this.messageAnalyzed.bind(this));
@@ -239,44 +239,44 @@ var feed = new function () {
 			this.messageAnalyzed(msg, {'entities' : {}, 'sourceText' : ''});
 		}
 	}
-	
+
 	this.messageAnalyzed = function(msg, analysis) {
 		var query = {};
 		msg.entities = analysis ? analysis.entities : {};
-		
+
 		//construct the query object
 		query = {'entities' : msg.entities, 'wordFreqs' : msg.wordFreqs};
 
 		var sources = [];
 		sources.push.apply(sources, CONFIG['context-sources']);
-		
+
 		//query all of the desired contexts (TODO add configurability latorrrr)
 		contextAggregator.queryContexts(query, msg, sources, this.processedMessageComplete.bind(this));
 	}
-	
+
 	this.processedMessageComplete = function(aggregatedData) {
 		if(aggregatedData) {
 			var msg = aggregatedData.msg;
 			var data = aggregatedData.data;
-			
+
 			//Add the time the message was added
 			msg.timestamp = new Date().getTime();
-			
+
 			//Add the data (also containing the query) to the message
 			msg.related = data;
-			
+
 			real_time_items.push(msg);
-			
+
 			// Make sure we don't flood the server
 			while (real_time_items.length > CONFIG['message-cache-size']) {
 				real_time_items.shift();
 			}
-			
-			//Push the message to the clients			
+
+			//Push the message to the clients
 			this.pushMessages();
 		}
 	}
-	
+
 	this.pushMessages = function() {
 		// As soon as something is pushed, call the query callback
 		while (callbacks.length > 0) {
@@ -285,7 +285,7 @@ var feed = new function () {
 			cb.callback(data);
 		}
 	};
-	
+
 	this.getMessagesSince = function(since) {
 		var matching = [];
 		for (var i = 0; i < real_time_items.length; i++) {
@@ -293,13 +293,13 @@ var feed = new function () {
 			if (real_time_item.timestamp > since) {
 				matching.push(real_time_item);
 			}
-		}		
+		}
 		return matching;
 	}
 
-	this.query = function (since, callback) {		
+	this.query = function (since, callback) {
 		var matching = this.getMessagesSince(since);
-		
+
 		//if there are messages immediately send them back to the caller
 		if (matching.length != 0) {
 			callback(matching);
@@ -308,7 +308,7 @@ var feed = new function () {
 			callbacks.push({timestamp: new Date().getTime(), callback: callback});
 		}
 	};
-	
+
 	setInterval(function() {
 		// close out requests older than 15 seconds
 		var expiration = new Date().getTime() - CONFIG['long-poll.interval'];

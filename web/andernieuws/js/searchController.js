@@ -1,5 +1,5 @@
 angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer', function ($scope, audioPlayer) {
-	
+
 	$scope.results = {};
 	$scope.resultsPerASRFile = {};
 	$scope.entities = [];
@@ -13,32 +13,52 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	$scope.keywordsPerTranscript = null;
 	$scope.audioPlaying = false;
 	$scope.audioLoaded = false;
-	
+
+	$scope.monthly = null;
+	$scope.keywords = null;
+
+	$scope.init = function() {
+		$('#anchor_tabs a').click(function (e) {
+			console.debug('yes??')
+			e.preventDefault();
+			$(this).tab('show');
+		});
+	}
+
 	$scope.searchTopic = function(topic) {
 		$scope.s = topic;
-		$scope.search();		
-	}	
-	
+		$scope.search();
+	}
+
 	/**
 	 * Sends a search request to the server and returns an object with ASR segments and keywords
 	 */
 	$scope.search = function() {
-		console.debug('searching stuff in ASR...');	
-		$scope.loading = true;		
+		var url = '/andernieuws/search?s=' + $scope.s;
+		if($scope.startDate) {
+			url += '&sd=' + $scope.startDate;
+		}
+		if($scope.endDate) {
+			url += '&ed=' + $scope.endDate;
+		}
+		if($scope.interval) {
+			url += '&i=' + $scope.interval;
+		}
+		$scope.loading = true;
 		$.ajax({
 			dataType: 'json',
 			type: "GET",
-			url: '/andernieuws/search?s=' + $scope.s,
+			url: url,
 			error: function (err) {
 				$scope.loading = false;
 			},
 			success: function (data) {
-				$scope.processResultsNew(data);
+				$scope.processResults(data);
 			}
 		});
 	}
-	
-	$scope.processResultsNew = function(data) {
+
+	$scope.processResults = function(data) {
 		if(!data.message) {
 			$scope.$apply(function() {
 				$scope.loading = false;
@@ -54,51 +74,61 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			});
 		}
 	}
-	
-	/**
-	 * @depreacted Processes the data obtained by the search call, so it's suitable for display
-	 */
-	$scope.processResults = function(data) {
-		if (data && data.ASRChunks) {
-			console.debug(data);
-			//set the result total
-			$scope.resultTotal = data.ASRChunks.hits.total;
-			
-			var results = {};
-			var resultsPerASRFile = {};
-			var res = null;
-			
-			//group relevant keywords per transcript
-			$scope.calculateKeywordsPerTranscript(data.keywords);
-			
-			//convert ES response data into the client model
-			$.each(data.ASRChunks.hits.hits, function(key, value) {
-				res = {
-					id : value._id,
-					asrFile : value._source.asr_file,
-					mp3URL : 'http://os-immix-w/woord-nl-mp3/' + value._source.asr_file.split('.')[1] + '.mp3',
-					asrChunk : value._source,
-					keywords : $scope.getKeywords(value._source.keywords),
-					occurances : $scope.getOccurances(value._source.words, value._source.wordTimes)
-				}				
-				results[value._id] = res;
-				if(resultsPerASRFile[value._source.asr_file]){
-					resultsPerASRFile[value._source.asr_file].push(res);
-				} else {
-					resultsPerASRFile[value._source.asr_file] = [res];
-				}
-			});
-			/*
-			results.sort(function(a, b){
-				return a.asrFile - b.asrFile;
-			});*/
-			$scope.$apply(function() {
-				$scope.results = results;
-				$scope.resultsPerASRFile = resultsPerASRFile;
-			});
-		}
+
+	$scope.loadMonthlyKeywords = function() {
+		$scope.monthly = null;
+		var url = '/andernieuws/searchkeywords?t=0';
+		$.ajax({
+			dataType: 'json',
+			type: "GET",
+			url: '/andernieuws/resources/monthly-keywords.json',
+			error: function (err) {
+				console.debug(err);
+				$scope.loading = false;
+			},
+			success: function (data) {
+				$scope.showMontlyKeywords(data);
+			}
+		});
 	}
-	
+
+	$scope.searchKeywords = function() {
+		$scope.keywords = null;
+		var url = '/andernieuws/searchkw?l=50'
+		if($scope.startDate) {
+			url += '&sd=' + $scope.startDate;
+		}
+		if($scope.endDate) {
+			url += '&ed=' + $scope.endDate;
+		}
+		$scope.loading = true;
+		$.ajax({
+			dataType: 'json',
+			type: "GET",
+			url: url,
+			error: function (err) {
+				$scope.loading = false;
+			},
+			success: function (data) {
+				$scope.showKeywords(data);
+			}
+		});
+	}
+
+	$scope.showMontlyKeywords = function(data) {
+		$scope.$apply(function(){
+			$scope.monthly = data;
+			$scope.loading = false;
+		});
+	}
+
+	$scope.showKeywords = function(data) {
+		$scope.$apply(function(){
+			$scope.keywords = data;
+			$scope.loading = false;
+		});
+	}
+
 	$scope.getKeywords = function(keywordData) {
 		var keywords = [];
 		if (keywordData) {
@@ -109,7 +139,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		}
 		return null;
 	}
-	
+
 	$scope.getOccurances = function(asrChunk, wordTimes) {
 		if(asrChunk && wordTimes) {
 			var words = asrChunk.split(' ');
@@ -124,13 +154,13 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		}
 		return [];
 	}
-	
+
 	$scope.playFragment = function(mediaItem) {
 		audioPlayer.play(mediaItem.audioUrl, mediaItem.spokenAt[0][0] / 1000);
 		$scope.audioPlaying = true;
 		$scope.audioLoaded = true;
 	}
-	
+
 	$scope.toggleAudio = function() {
 		if($scope.audioLoaded) {
 			if (audioPlayer.isPlaying()) {
@@ -142,8 +172,8 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			}
 		}
 	}
-	
-	$scope.getKeywordClass = function(freq) {		
+
+	$scope.getKeywordClass = function(freq) {
 		var cl = 'primary';
 		switch(freq) {
 			case 1: cl = 'primary';break;
@@ -152,7 +182,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		}
 		return freq > 3 ? 'danger' : cl;
 	}
-	
+
 	$scope.safeApply = function(fn) {
 		var phase = this.$root.$$phase;
 		if(phase == '$apply' || phase == '$digest') {
@@ -163,5 +193,9 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			this.$apply(fn);
 		}
 	};
+
+	//load the monthly keywords
+
+	$scope.loadMonthlyKeywords();
 
 }]);

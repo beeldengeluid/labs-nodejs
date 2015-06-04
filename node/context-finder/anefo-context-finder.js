@@ -6,7 +6,8 @@ var http = require('http'),
 
 module.exports = {
 		
-	/** 
+	/**
+	 * API docs: http://www.gahetna.nl/beeldbank-api/opensearch/description-document 
 	 * EXAMPLE URL http://www.gahetna.nl/beeldbank-api/opensearch/?searchTerms=Trefwoorden:glas&count=10&startIndex=1	 
 	 */
 	search : function(query, callerObj, callback) {

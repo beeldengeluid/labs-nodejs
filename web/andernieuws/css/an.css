@@ -1,18 +1,22 @@
+#control_panel, #keyword_panel, #monthly_panel {
+	margin-top:10px;
+}
+
 .loading {
 	display:none;
 }
 
 #audioPlayer {
-	display:none;	
+	display:none;
 }
 
-#results {
+.label-list {
 	margin:1em 0em;
 	padding:0px;
 	list-style:none;
 }
 
-#results li {
+.label-list li {
 	float:left;
 	font-size:140%;
 	margin:0.25em 0.25em 0 0;
@@ -20,7 +24,7 @@
 }
 
 .transcript {
-	list-style:none;	
+	list-style:none;
 	margin-bottom:1em;
 }
 
@@ -42,7 +46,7 @@
 	cursor:pointer;
 }
 
-.overall.keywords {	
+.overall.keywords {
 	padding-bottom:0.5em;
 	margin-bottom:0.5em;
 	border-bottom:1px dashed darkgray;
