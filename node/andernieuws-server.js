@@ -17,6 +17,7 @@ var treeTagger = require('./tools/tree-tagger');
 var ANDERNIEUWS_INDEX = 'andernieuws_proper_idf';
 var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords_proper_idf.json';
 var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex_proper_idf.json';
+var KEYWORD_TYPES_FILE = '../web/andernieuws/resources/keywordtypes.json';
 //var ANDERNIEUWS_INDEX = 'andernieuws_kwindex';
 //var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords.json';
 //var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex.json';
@@ -34,6 +35,7 @@ var _esClient = new ElasticSearchClient({
 
 var _allKeywords = readJSONFileData(KEYWORD_ALL_FILE);
 var _kwIndex = readJSONFileData(KEYWORD_INDEX_FILE);
+var _kwTypes = readJSONFileData(KEYWORD_TYPES_FILE);
 var _dates = null;
 var _weird = null;
 
@@ -394,7 +396,8 @@ function searchkw(startDate, endDate, limit, cb) {
     		prediction : prediction,
     		all : _allKeywords[k],
     		count : count,
-    		alldates : _dates.length
+    		alldates : _dates.length,
+    		type : _kwTypes[k]
     	})
     }
 
