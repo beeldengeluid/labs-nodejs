@@ -16,6 +16,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 	$scope.monthly = null;
 	$scope.keywords = null;
+	$scope.sortByScore = false;
 
 	$scope.init = function() {
 		$('#anchor_tabs a').click(function (e) {
@@ -81,7 +82,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		$.ajax({
 			dataType: 'json',
 			type: "GET",
-			url: '/andernieuws/resources/monthly-keywords.json',
+			url: '/andernieuws/resources/monthly-keywords-proper-idf.json',
 			error: function (err) {
 				console.debug(err);
 				$scope.loading = false;
@@ -94,7 +95,8 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 	$scope.searchKeywords = function() {
 		$scope.keywords = null;
-		var url = '/andernieuws/searchkw?l=50'
+		var limit = $scope.kwlimit ? $scope.kwlimit : 50;
+		var url = '/andernieuws/searchkw?l=' + limit;
 		if($scope.startDate) {
 			url += '&sd=' + $scope.startDate;
 		}
@@ -113,6 +115,17 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 				$scope.showKeywords(data);
 			}
 		});
+	}
+
+	$scope.sortKeywords = function() {
+		$scope.sortByScore = !$scope.sortByScore;
+		$scope.keywords.sort(function(a, b){
+			if ($scope.sortByScore) {
+				return b.freq - a.freq;
+			} else {
+				return b.score - a.score;
+			}
+		})
 	}
 
 	$scope.showMontlyKeywords = function(data) {
@@ -181,6 +194,20 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			case 3: cl = 'warning';break;
 		}
 		return freq > 3 ? 'danger' : cl;
+	}
+
+	$scope.getKwClass = function(score) {
+		var cl = 'primary';
+		if(score < 50) {
+			cl = 'primary';
+		} else if (score >= 50 && score < 100) {
+			cl = 'success';
+		} else if (score >= 100 && score < 200) {
+			cl = 'warning';
+		} else if (score >= 200) {
+			cl = 'danger';
+		}
+		return cl;
 	}
 
 	$scope.safeApply = function(fn) {

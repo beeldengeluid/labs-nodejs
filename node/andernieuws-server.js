@@ -10,12 +10,16 @@ var uuid = require('node-uuid');
 var ElasticSearchClient = require('elasticsearchclient');
 var querystring = require('querystring');
 var moment = require('moment');
+var treeTagger = require('./tools/tree-tagger');
 
 /* Global vars */
 
-var ANDERNIEUWS_INDEX = 'andernieuws_kwindex';
-var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords.json';
-var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex.json';
+var ANDERNIEUWS_INDEX = 'andernieuws_proper_idf';
+var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords_proper_idf.json';
+var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex_proper_idf.json';
+//var ANDERNIEUWS_INDEX = 'andernieuws_kwindex';
+//var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords.json';
+//var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex.json';
 var CLUSTER_INTERVAL = 3000 * 1;
 var KEYWORD_LIMIT = 30;
 var MESSAGE_PORT = 1337;
@@ -85,6 +89,10 @@ app.get('/all_keywords', function(req, res) {
 	proxy.web(req, res, { target: MESSAGE_SERVER });
 });
 
+app.get('/postag', function(req, res) {
+	proxy.web(req, res, { target: MESSAGE_SERVER });
+});
+
 app.listen(STATIC_PORT);
 
 console.log('Static content & API served at http://127.0.0.1:' + STATIC_PORT);
@@ -128,6 +136,14 @@ var urlMap = {
 		var endDate = qs.parse(url.parse(req.url).query).ed;
 		getAllKeywords(startDate, endDate, {}, 0, function(data) {
 			res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+			res.simpleJSON(200, data);
+		});
+	},
+
+	'/postag' : function (req, res) {
+		var text = qs.parse(url.parse(req.url).query).text;
+		getPOSTags(text, function(data) {
+			res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
 			res.simpleJSON(200, data);
 		});
 	}
@@ -369,6 +385,7 @@ function searchkw(startDate, endDate, limit, cb) {
     //put all of the counted keywords of this period in a list so it can be sorted for the UI
     var prediction = 0;
     for(k in kwCounts) {
+    	//THIS IS THE KEY PART OF THE ALGORITHM WHICH SHOULD BE IMPROVED
     	prediction = _allKeywords[k] / 100 * (count / (_dates.length / 100));
     	temp.push({
     		score : kwCounts[k] - prediction,
@@ -388,6 +405,12 @@ function searchkw(startDate, endDate, limit, cb) {
 
     //call back
     cb(temp.slice(0, limit));
+}
+
+function getPOSTags(text, cb) {
+	treeTagger.tagWord(text, function(wordType) {
+		cb(wordType);
+	});
 }
 
 /**

@@ -161,6 +161,10 @@
 											placeholder="dd-mm-yyyy">
 										</div>
 										<div class="form-group">
+											<input id="kwlimit" ng-model="kwlimit" class="form-control" type="text" value="" size="7"
+											placeholder="Aantal">
+										</div>
+										<div class="form-group">
 											<button type="submit" class="btn btn-primary">Submit</button>
 										</div>
 									</form>
@@ -173,11 +177,16 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										Keywords from this period
+										<button type="button" ng-click="sortKeywords()" class="btn btn-default">
+											Sort by frequency: {{sortByScore}}
+										</button>
 									</div>
 									<div class="panel-body">
 										<ul class="label-list">
 											<li ng-repeat="kw in keywords">
-												<span class="label label-default">{{kw.word}}</span>
+												<span class="label label-{{getKwClass(kw.score)}}">
+													{{kw.word}}
+												</span>
 											</li>
 										</ul>
 									</div>
