@@ -2,7 +2,7 @@ var vpro = {
 	"env":"PROD",
 	"thisServer":"http://embed.vpro.nl",
 	"ProjectName":"js-server",
-	"ProjectVersion":"1.42.0",//1.37.0
+	"ProjectVersion":"1.61.0",//"1.42.0",//1.37.0
 	"BuildDate":"2014-04-28T15:40:02",
 	"SCMRevision":"66538",
 	"SCMBranch":"tags/REL-1.37.0/js-server",
