@@ -6,7 +6,7 @@ var vpro = {
 	"BuildDate":"2014-04-28T15:40:02",
 	"SCMRevision":"66538",
 	"SCMBranch":"tags/REL-1.37.0/js-server",
-	"JavascriptDirectory":"1.42",//1.37
+	"JavascriptDirectory":"1.61",//1.42, 1.37
 	"configuration":{
 		"jsServer":"http://js.vpro.nl",
 		"imageServer":"http://images.poms.omroep.nl/image/",

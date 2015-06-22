@@ -185,7 +185,10 @@
 										<ul class="label-list">
 											<li ng-repeat="kw in keywords">
 												<span class="label label-{{getKwClass(kw.score)}}">
-													{{kw.word}} ({{kw.type}})
+													{{kw.word}} ({{kw.type | limitTo : 4}})
+													<span ng-if="{{kw.type | limitTo : 4 == 'verb'}}" class="glyphicon glyphicon-text-background"></span>
+													<span ng-if="{{kw.type | limitTo : 4 == 'noun'}}" class="glyphicon glyphicon-cog"></span>
+													<span ng-if="{{kw.type | limitTo : 3 == 'adj'}}" class="glyphicon glyphicon-text-background"></span>
 												</span>
 											</li>
 										</ul>
