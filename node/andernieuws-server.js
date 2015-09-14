@@ -11,31 +11,35 @@ var ElasticSearchClient = require('elasticsearchclient');
 var querystring = require('querystring');
 var moment = require('moment');
 var treeTagger = require('./tools/tree-tagger');
+var yaml = require('js-yaml');
+
+//**************************************************************************************************************
+//READ CONFIGURATION FROM YAML AND SET GLOBAL VARS
+//**************************************************************************************************************
+
+try {
+	CONFIG = yaml.safeLoad(fs.readFileSync('./config/andernieuws-config.yml', 'utf8'));
+	console.log(CONFIG);
+} catch (e) {
+	console.log(e);
+}
+
+var esConfig = {
+	host: CONFIG['es.host'],
+    port: CONFIG['es.port'],
+    path: CONFIG['es.path']
+}
+if(CONFIG['user'] && CONFIG['password']) {
+	esConfig['auth'] = CONFIG['es.user'] + ':' + CONFIG['es.password'];
+}
 
 /* Global vars */
+var MESSAGE_SERVER = 'http://'+CONFIG['messageserver.host']+':'+CONFIG['messageserver.port'];
 
-var ANDERNIEUWS_INDEX = 'andernieuws_kwindex';
-var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords_proper_idf.json';
-var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex_proper_idf.json';
-var KEYWORD_TYPES_FILE = '../web/andernieuws/resources/keywordtypes.json';
-//var ANDERNIEUWS_INDEX = 'andernieuws_kwindex';
-//var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords.json';
-//var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex.json';
-var CLUSTER_INTERVAL = 3000 * 1;
-var KEYWORD_LIMIT = 30;
-var MESSAGE_PORT = 1337;
-var MESSAGE_SERVER = 'http://localhost:' + MESSAGE_PORT;
-var STATIC_PORT = 3000;
-var FETCH_SIZE = 1000;
-
-var _esClient = new ElasticSearchClient({
-	host: 'hugodrax',
-    port: 9200,
-});
-
-var _allKeywords = readJSONFileData(KEYWORD_ALL_FILE);
-var _kwIndex = readJSONFileData(KEYWORD_INDEX_FILE);
-var _kwTypes = readJSONFileData(KEYWORD_TYPES_FILE);
+var _esClient = new ElasticSearchClient(esConfig);
+var _allKeywords = readJSONFileData(CONFIG['keywords_file']);
+var _kwIndex = readJSONFileData(CONFIG['keywords_index_file']);
+var _kwTypes = readJSONFileData(CONFIG['keywords_types_file']);
 var _dates = null;
 var _weird = null;
 
@@ -95,9 +99,9 @@ app.get('/postag', function(req, res) {
 	proxy.web(req, res, { target: MESSAGE_SERVER });
 });
 
-app.listen(STATIC_PORT);
+app.listen(CONFIG['localhost.port']);
 
-console.log('Static content & API served at http://127.0.0.1:' + STATIC_PORT);
+console.log('Static content & API served at http://127.0.0.1:' + CONFIG['localhost.port']);
 
 /********************************************************************************
  * MESSAGE SERVER
@@ -112,7 +116,7 @@ var urlMap = {
 		var endDate = qs.parse(url.parse(req.url).query).ed;
 		var clusterInterval = qs.parse(url.parse(req.url).query).i;
 		if(!clusterInterval) {
-			clusterInterval = CLUSTER_INTERVAL;
+			clusterInterval = CONFIG['cluster_interval'];
 		}
 		search(s, startDate, endDate, {}, 0, parseInt(clusterInterval), function(data) {
 			res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
@@ -125,7 +129,7 @@ var urlMap = {
 		var endDate = qs.parse(url.parse(req.url).query).ed;
 		var limit = qs.parse(url.parse(req.url).query).l;
 		if(!limit) {
-			limit = KEYWORD_LIMIT;
+			limit = CONFIG['keyword_limit'];
 		}
 		searchkw(startDate, endDate, parseInt(limit), function(data) {
 			res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
@@ -181,9 +185,9 @@ http.createServer(function (req, res) {
 	} else {
 		handler(req, res);
 	}
-}).listen(MESSAGE_PORT);
+}).listen(CONFIG['messageserver.port']);
 
-console.log('Message server running at http://127.0.0.1:' + MESSAGE_PORT);
+console.log('Message server running at http://127.0.0.1:' + CONFIG['messageserver.port']);
 
 function notFound(req, res) {
     res.sendwriteHeadHeader(404, [ ["Content-Type", "text/plain"], ["Content-Length", CONFIG['message-server-not-found-message'].length]]);
@@ -220,7 +224,7 @@ function getAllKeywords(startDate, endDate, keywords, offset, cb) {
 	} else if(endDate) {
 		query["query"]["filtered"]["filter"]["range"] = {"metadata.broadcast_date":{"to": endDate}};
 	}
-	_esClient.search(ANDERNIEUWS_INDEX, 'asr_chunk', query, {size: FETCH_SIZE, from : offset , analyzer : 'text_nl'})
+	_esClient.search(CONFIG['es.index.name'], 'asr_chunk', query, {size: CONFIG['es.search.size'], from : offset , analyzer : 'text_nl'})
 	.on('data', function(data) {
 		var id = uuid.v4();
 		data = JSON.parse(data);
@@ -239,7 +243,7 @@ function getAllKeywords(startDate, endDate, keywords, offset, cb) {
 					}
 				}
 			}
-			if((offset + FETCH_SIZE) >= data.hits.total) {
+			if((offset + CONFIG['es.search.size']) >= data.hits.total) {
 				//call back the client when all has been fetched.
 				console.log('Got it all, calling back the client');
 				var c = 0;
@@ -249,8 +253,8 @@ function getAllKeywords(startDate, endDate, keywords, offset, cb) {
 				console.log('Unique keywords: '  + c);
 				cb(keywords);
 			} else {
-				console.log('Fetching some more: ' + (offset + FETCH_SIZE));
-				getAllKeywords(startDate, endDate, keywords, offset + FETCH_SIZE, cb);
+				console.log('Fetching some more: ' + (offset + CONFIG['es.search.size']));
+				getAllKeywords(startDate, endDate, keywords, offset + CONFIG['es.search.size'], cb);
 			}
 		}
 	})
@@ -290,7 +294,7 @@ function search(s, startDate, endDate, results, offset, clusterInterval, cb) {
 	} else if(endDate) {
 		query["query"]["filtered"]["filter"]["range"] = {"metadata.broadcast_date":{"to": endDate}};
 	}
-	_esClient.search(ANDERNIEUWS_INDEX, 'asr_chunk', query, {size : FETCH_SIZE, from : offset, analyzer : 'text_nl'})
+	_esClient.search(CONFIG['es.index.name'], 'asr_chunk', query, {size : CONFIG['es.search.size'], from : offset, analyzer : 'text_nl'})
 		.on('data', function(data) {
 			var data = JSON.parse(data);
 			if(data && data.hits) {
@@ -308,7 +312,7 @@ function search(s, startDate, endDate, results, offset, clusterInterval, cb) {
 					//immediately call back the client in case of no results
 					console.log('No results found for: ' + s);
 					cb({message : 'No results found for: ' + s});
-				} else if((offset + FETCH_SIZE) >= data.hits.total) {
+				} else if((offset + CONFIG['es.search.size']) >= data.hits.total) {
 					//all occurances of the search have been retrieved, now prepare the data for the next call
 					console.log(data.hits.total + ' results found');
 					var id = uuid.v4();
@@ -323,7 +327,7 @@ function search(s, startDate, endDate, results, offset, clusterInterval, cb) {
 					}
 				} else {
 					//if there are more results fetch them first, before going into the surrounding keyword fray
-					search(s, startDate, endDate, results, offset + FETCH_SIZE, clusterInterval, cb);
+					search(s, startDate, endDate, results, offset + CONFIG['es.search.size'], clusterInterval, cb);
 				}
 			} else {
 				//something went wrong. Call back the client.
@@ -448,7 +452,7 @@ function getSurroundingKeywords(id, asrFile, segmentTimes, timeRadius) {
 		}
 
 		//add the query to the list of queries (will be executed in one go, using msearch)
-		queries.push({size : '1000', index : ANDERNIEUWS_INDEX, type : 'asr_chunk'});
+		queries.push({size : '1000', index : CONFIG['es.index.name'], type : 'asr_chunk'});
 		queries.push(query);
 	}
 

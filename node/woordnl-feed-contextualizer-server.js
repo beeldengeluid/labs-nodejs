@@ -278,7 +278,7 @@ var feed = new function () {
 	}
 
 	this.pushMessages = function() {
-		// As soon as something is pushed, call the query callback
+		// As soon as something is added, call the query callback
 		while (callbacks.length > 0) {
 			var cb = callbacks.shift();
 			var data = this.getMessagesSince(cb.timestamp);

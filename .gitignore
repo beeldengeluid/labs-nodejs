@@ -3,3 +3,7 @@ src
 .sass-cache
 node_modules
 bower_components
+andernieuws-config.yml
+labs-config.yml
+woordnl-feed-contextualizer.yml
+woordnl-linking-server.yml

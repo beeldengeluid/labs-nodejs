@@ -28,6 +28,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	}
 
 	$scope.searchTopic = function(topic) {
+		$('#anchor_tabs a:eq(0)').tab('show');
 		$scope.s = topic;
 		$scope.search();
 	}

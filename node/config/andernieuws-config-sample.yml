@@ -1,0 +1,26 @@
+#the app listens to this port, note that the client AJAX calls port 80, so make sure to put some proxy in front!
+localhost.port: 3000
+
+#message server (the server in direct contact with ElasticSearch, it is a separate node server)
+messageserver.host: localhost
+messageserver.port: 1337
+
+#elastic search params
+es.host: localhost
+es.port: 9200
+es.path: ''
+es.user: ''
+es.password: ''
+es.index.name: yourindex
+es.search.size: 500
+
+#the amount in milliseconds around each topical hit that is considered to be part of the related keywords
+cluster_interval: 3000
+
+#the amount of keywords looked for
+keyword_limit: 30
+
+#files that store the precalculated keyword search results per month
+keywords_file: '../web/andernieuws/resources/allkeywords_proper_idf.json'
+keywords_index_file: '../web/andernieuws/resources/kwindex_proper_idf.json'
+keywords_types_file: '../web/andernieuws/resources/keywordtypes.json'
