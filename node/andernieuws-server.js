@@ -14,7 +14,7 @@ var treeTagger = require('./tools/tree-tagger');
 
 /* Global vars */
 
-var ANDERNIEUWS_INDEX = 'andernieuws_proper_idf';
+var ANDERNIEUWS_INDEX = 'andernieuws_kwindex';
 var KEYWORD_ALL_FILE = '../web/andernieuws/resources/allkeywords_proper_idf.json';
 var KEYWORD_INDEX_FILE = '../web/andernieuws/resources/kwindex_proper_idf.json';
 var KEYWORD_TYPES_FILE = '../web/andernieuws/resources/keywordtypes.json';
@@ -29,7 +29,7 @@ var STATIC_PORT = 3000;
 var FETCH_SIZE = 1000;
 
 var _esClient = new ElasticSearchClient({
-	host: 'localhost',
+	host: 'hugodrax',
     port: 9200,
 });
 

@@ -16,6 +16,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 	$scope.monthly = null;
 	$scope.keywords = null;
+	$scope.kwGroups = null;
 	$scope.sortByScore = false;
 
 	$scope.init = function() {
@@ -119,7 +120,13 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 	$scope.sortKeywords = function() {
 		$scope.sortByScore = !$scope.sortByScore;
-		$scope.keywords.sort(function(a, b){
+		$.each($scope.kwGroups, function(type, kws){
+			$scope.kwGroups[type] = $scope.sortKeywordType(kws);
+		});
+	}
+
+	$scope.sortKeywordType = function(keywords) {
+		return keywords.sort(function(a, b){
 			if ($scope.sortByScore) {
 				return b.freq - a.freq;
 			} else {
@@ -136,8 +143,20 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	}
 
 	$scope.showKeywords = function(data) {
+		var kwGroups = {};
+
+		$.each(data, function(i, kw) {
+			if(kwGroups[kw.type] == undefined) {
+				kwGroups[kw.type] = [kw];
+			} else {
+				kwGroups[kw.type].push(kw);
+			}
+		});
+		console.debug(kwGroups);
+		//TODO
 		$scope.$apply(function(){
-			$scope.keywords = data;
+			//$scope.keywords = data;
+			$scope.kwGroups = kwGroups;
 			$scope.loading = false;
 		});
 	}

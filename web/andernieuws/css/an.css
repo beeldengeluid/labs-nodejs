@@ -55,3 +55,12 @@
 .highlight {
 	color:goldenrod;
 }
+
+.kwGroup {
+	width:100%;
+	float:left;
+}
+.kwGroup h4 {
+	text-align: center;
+	background-color:#e3e3e3;
+}

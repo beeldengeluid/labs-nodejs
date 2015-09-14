@@ -173,7 +173,9 @@
 							</div>
 							<br>
 
-							<div class="row" ng-show="keywords">
+							<!-- GEVONDEN KEYWORDS -->
+
+							<div class="row" ng-show="kwGroups">
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										Keywords from this period
@@ -182,16 +184,16 @@
 										</button>
 									</div>
 									<div class="panel-body">
-										<ul class="label-list">
-											<li ng-repeat="kw in keywords">
-												<span class="label label-{{getKwClass(kw.score)}}">
-													{{kw.word}} ({{kw.type | limitTo : 4}})
-													<span ng-if="{{kw.type | limitTo : 4 == 'verb'}}" class="glyphicon glyphicon-text-background"></span>
-													<span ng-if="{{kw.type | limitTo : 4 == 'noun'}}" class="glyphicon glyphicon-cog"></span>
-													<span ng-if="{{kw.type | limitTo : 3 == 'adj'}}" class="glyphicon glyphicon-text-background"></span>
-												</span>
-											</li>
-										</ul>
+										<div ng-repeat="(key, value) in kwGroups" class="kwGroup">
+											<h4>{{key}}</h4>
+											<ul class="label-list">
+												<li ng-repeat="kw in value">
+													<span class="label label-{{getKwClass(kw.score)}}">
+														{{kw.word}}
+													</span>
+												</li>
+											</ul>
+										</div>
 									</div>
 								</div>
 							</div>
