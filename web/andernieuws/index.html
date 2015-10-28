@@ -111,6 +111,37 @@
 										<div class="form-group">
 											<button type="submit" class="btn btn-primary">Submit</button>
 										</div>
+										<br><br>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_nouns" value="0" checked> Nouns
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_verbs" value="1" checked> Verbs
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_adjectives" value="2" checked> Adjectives
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_adverbs" value="3" checked> Adverbs
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_pronouns" value="4" checked> Pronouns
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_numbers" value="5" checked> Numbers
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_prepositions" value="6" checked> Prepositions
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_determiners" value="7" checked> Determiners
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_interjections" value="8" checked> Interjections
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="s_include_conjunctions" value="9" checked> Conjunctions
+										</label>
 									</form>
 
 									<!-- RESULT LIST -->
@@ -122,7 +153,7 @@
 									    <li ng-repeat="topic in topicData"><!--ng-if="topic.itemCount > 1"-->
 									        <span class="label label-{{getKeywordClass(topic.itemCount)}}"
 									            ng-click="searchTopic(topic.topic)">
-									            {{topic.topic}} ({{topic.itemCount}})
+									            {{topic.topic}} ({{topic.itemCount}}) [{{topic.type}}]
 									        </span>
 									        &nbsp;
 									        <span ng-repeat="item in topic.mediaItems" title="{{item.audioUrl}} - {{item.date}}" ng-click="playFragment(item)">

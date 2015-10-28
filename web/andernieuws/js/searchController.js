@@ -35,9 +35,24 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 	/**
 	 * Sends a search request to the server and returns an object with ASR segments and keywords
+	 FIXME weird mix of jQuery and Angular... ah well who cares?
 	 */
 	$scope.search = function() {
+		var includeNouns = $('#s_include_nouns').is(':checked') ? 'y' : 'n';
+		var includeVerbs = $('#s_include_verbs').is(':checked') ? 'y' : 'n';
+		var includeAdjectives = $('#s_include_adjectives').is(':checked') ? 'y' : 'n';
+		var includeAdverbs = $('#s_include_adverbs').is(':checked') ? 'y' : 'n';
+		var includePronouns = $('#s_include_pronouns').is(':checked') ? 'y' : 'n';
+		var includeNumbers = $('#s_include_numbers').is(':checked') ? 'y' : 'n';
+		var includePrepositions = $('#s_include_prepositions').is(':checked') ? 'y' : 'n';
+		var includeDeterminers = $('#s_include_determiners').is(':checked') ? 'y' : 'n';
+		var includeInterjections = $('#s_include_interjections').is(':checked') ? 'y' : 'n';
+		var includeConjunctions = $('#s_include_conjunctions').is(':checked') ? 'y' : 'n';
 		var url = '/andernieuws/search?s=' + $scope.s;
+		url += '&i_n=' + includeNouns + '&i_v=' + includeVerbs + '&i_adj=' + includeAdjectives;
+		url += '&i_adv=' + includeAdverbs + '&i_pro=' + includePronouns + '&i_num=' + includeNumbers;
+		url += '&i_pre=' + includePrepositions + '&i_det=' + includeDeterminers;
+		url += '&i_int=' + includeInterjections + '&i_con=' + includeConjunctions;
 		if($scope.startDate) {
 			url += '&sd=' + $scope.startDate;
 		}
@@ -56,6 +71,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 				$scope.loading = false;
 			},
 			success: function (data) {
+				console.debug(data);
 				$scope.processResults(data);
 			}
 		});

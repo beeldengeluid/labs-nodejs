@@ -119,29 +119,52 @@ var urlMap = {
 		var startDate = qs.parse(url.parse(req.url).query).sd;
 		var endDate = qs.parse(url.parse(req.url).query).ed;
 		var clusterInterval = qs.parse(url.parse(req.url).query).i;
+		var wordTypeFilters = {
+			includeNouns : qs.parse(url.parse(req.url).query).i_n == 'y' ? true : false,
+			includeVerbs : qs.parse(url.parse(req.url).query).i_v == 'y' ? true : false,
+			includeAdjectives : qs.parse(url.parse(req.url).query).i_adj == 'y' ? true : false,
+			includeAdverbs : qs.parse(url.parse(req.url).query).i_adv == 'y' ? true : false,
+			includePronouns : qs.parse(url.parse(req.url).query).i_pro == 'y' ? true : false,
+			includeNumbers : qs.parse(url.parse(req.url).query).i_num == 'y' ? true : false,
+			includePrepositions : qs.parse(url.parse(req.url).query).i_pre == 'y' ? true : false,
+			includeDeterminers : qs.parse(url.parse(req.url).query).i_det == 'y' ? true : false,
+			includeInterjections : qs.parse(url.parse(req.url).query).i_int == 'y' ? true : false,
+			includeConjunctions : qs.parse(url.parse(req.url).query).i_con == 'y' ? true : false
+		}
 		if(!clusterInterval) {
 			clusterInterval = CONFIG['cluster_interval'];
 		}
-		search(s, startDate, endDate, {}, 0, parseInt(clusterInterval), function(data) {
-			res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-			res.simpleJSON(200, data);
-		});
+		search(
+			s,
+			startDate,
+			endDate,
+			wordTypeFilters,
+			{},
+			0,
+			parseInt(clusterInterval),
+			function(data) {
+				res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+				res.simpleJSON(200, data);
+			}
+		);
 	},
 
 	'/searchkw' : function (req, res) {
 		var startDate = qs.parse(url.parse(req.url).query).sd;
 		var endDate = qs.parse(url.parse(req.url).query).ed;
 		var limit = qs.parse(url.parse(req.url).query).l;
-		var includeNouns = qs.parse(url.parse(req.url).query).i_n == 'y' ? true : false;
-		var includeVerbs = qs.parse(url.parse(req.url).query).i_v == 'y' ? true : false;
-		var includeAdjectives = qs.parse(url.parse(req.url).query).i_adj == 'y' ? true : false;
-		var includeAdverbs = qs.parse(url.parse(req.url).query).i_adv == 'y' ? true : false;
-		var includePronouns = qs.parse(url.parse(req.url).query).i_pro == 'y' ? true : false;
-		var includeNumbers = qs.parse(url.parse(req.url).query).i_num == 'y' ? true : false;
-		var includePrepositions = qs.parse(url.parse(req.url).query).i_pre == 'y' ? true : false;
-		var includeDeterminers = qs.parse(url.parse(req.url).query).i_det == 'y' ? true : false;
-		var includeInterjections = qs.parse(url.parse(req.url).query).i_int == 'y' ? true : false;
-		var includeConjunctions = qs.parse(url.parse(req.url).query).i_con == 'y' ? true : false;
+		var wordTypeFilters = {
+			includeNouns : qs.parse(url.parse(req.url).query).i_n == 'y' ? true : false,
+			includeVerbs : qs.parse(url.parse(req.url).query).i_v == 'y' ? true : false,
+			includeAdjectives : qs.parse(url.parse(req.url).query).i_adj == 'y' ? true : false,
+			includeAdverbs : qs.parse(url.parse(req.url).query).i_adv == 'y' ? true : false,
+			includePronouns : qs.parse(url.parse(req.url).query).i_pro == 'y' ? true : false,
+			includeNumbers : qs.parse(url.parse(req.url).query).i_num == 'y' ? true : false,
+			includePrepositions : qs.parse(url.parse(req.url).query).i_pre == 'y' ? true : false,
+			includeDeterminers : qs.parse(url.parse(req.url).query).i_det == 'y' ? true : false,
+			includeInterjections : qs.parse(url.parse(req.url).query).i_int == 'y' ? true : false,
+			includeConjunctions : qs.parse(url.parse(req.url).query).i_con == 'y' ? true : false
+		}
 		if(!limit) {
 			limit = CONFIG['keyword_limit'];
 		}
@@ -149,16 +172,7 @@ var urlMap = {
 			startDate,
 			endDate,
 			parseInt(limit),
-			includeNouns,
-			includeVerbs,
-			includeAdjectives,
-			includeAdverbs,
-			includePronouns,
-			includeNumbers,
-			includePrepositions,
-			includeDeterminers,
-			includeInterjections,
-			includeConjunctions,
+			wordTypeFilters,
 			function(data) {
 				res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
 				res.simpleJSON(200, data);
@@ -303,7 +317,7 @@ function getAllKeywords(startDate, endDate, keywords, offset, cb) {
 //the search message queue
 var msgQueue = {};
 
-function search(s, startDate, endDate, results, offset, clusterInterval, cb) {
+function search(s, startDate, endDate, wordTypeFilters, results, offset, clusterInterval, cb) {
 	query = {
 			"query" : {
 				"filtered": {
@@ -349,14 +363,21 @@ function search(s, startDate, endDate, results, offset, clusterInterval, cb) {
 					for (asrFile in results) {
 						toBeFound.push(asrFile);
 					}
-					msgQueue[id] = {'toBeCalled' : toBeFound, 'clientCallback' : cb, 'keywords' : {}, 'search' : s};
+					msgQueue[id] = {
+						'toBeCalled' : toBeFound,
+						'clientCallback' : cb,
+						'keywords' : {},
+						'search' : s,
+						'wordTypeFilters' : wordTypeFilters
+					};
 					//for each segment find the surrounding keywords
 					for (var key in results) {
 						getSurroundingKeywords(id, key, results[key], clusterInterval);
 					}
 				} else {
 					//if there are more results fetch them first, before going into the surrounding keyword fray
-					search(s, startDate, endDate, results, offset + CONFIG['es.search.size'], clusterInterval, cb);
+					search(s, startDate, endDate, wordTypeFilters,
+						results, offset + CONFIG['es.search.size'], clusterInterval, cb);
 				}
 			} else {
 				//something went wrong. Call back the client.
@@ -377,9 +398,7 @@ function search(s, startDate, endDate, results, offset, clusterInterval, cb) {
 /**
 * Keyword search
 * */
-function searchkw(startDate, endDate, limit, includeNouns, includeVerbs, includeAdjectives,
-	includeAdverbs, includePronouns, includeNumbers, includePrepositions, includeDeterminers,
-	includeInterjections, includeConjunctions, cb) {
+function searchkw(startDate, endDate, limit, wordTypeFilters, cb) {
 	if(_dates == null) {
 		_dates = parseDates();
 	}
@@ -424,9 +443,7 @@ function searchkw(startDate, endDate, limit, includeNouns, includeVerbs, include
     for(k in kwCounts) {
     	//THIS IS THE KEY PART OF THE ALGORITHM WHICH SHOULD BE IMPROVED
     	prediction = _allKeywords[k] / 100 * (count / (_dates.length / 100));
-    	if(includeKeywordBasedOnWordType(k, includeNouns, includeVerbs, includeAdjectives,
-    		includeAdverbs, includePronouns, includeNumbers, includePrepositions, includeDeterminers,
-    		includeInterjections, includeConjunctions)) {
+    	if(includeKeywordBasedOnWordType(k, wordTypeFilters)) {
 	    	temp.push({
 	    		score : kwCounts[k] - prediction,
 	    		word : k,
@@ -449,42 +466,42 @@ function searchkw(startDate, endDate, limit, includeNouns, includeVerbs, include
     cb(temp.slice(0, limit));
 }
 
-function includeKeywordBasedOnWordType(word, includeNouns, includeVerbs, includeAdjectives,
-	includeAdverbs, includePronouns, includeNumbers, includePrepositions, includeDeterminers,
-	includeInterjections, includeConjunctions) {
+function includeKeywordBasedOnWordType(word, filters) {
 	var wordType = _kwTypes[word];
-	if(includeNouns && includeVerbs && includeAdjectives && includeAdverbs && includePronouns && includeNumbers
-		&& includePrepositions && includeDeterminers && includeInterjections && includeConjunctions) {
+	if(filters.includeNouns && filters.includeVerbs && filters.includeAdjectives && filters.includeAdverbs
+		&& filters.includePronouns && filters.includeNumbers
+		&& filters.includePrepositions && filters.includeDeterminers && filters.includeInterjections
+		&& filters.includeConjunctions) {
 		return true;
 	}
-	if(!includeNouns && wordType.indexOf('noun') != -1) {
+	if(!filters.includeNouns && wordType.indexOf('noun') != -1) {
 		return false;
 	}
-	if(!includeVerbs && wordType.indexOf('verb') != -1) {
+	if(!filters.includeVerbs && wordType.indexOf('verb') != -1) {
 		return false;
 	}
-	if(!includeAdjectives && wordType.indexOf('adj') != -1) {
+	if(!filters.includeAdjectives && wordType.indexOf('adj') != -1) {
 		return false;
 	}
-	if(!includeAdverbs && wordType.indexOf('adv') != -1) {
+	if(!filters.includeAdverbs && wordType.indexOf('adv') != -1) {
 		return false;
 	}
-	if(!includePronouns && wordType.indexOf('pro') != -1) {
+	if(!filters.includePronouns && wordType.indexOf('pro') != -1) {
 		return false;
 	}
-	if(!includeNumbers && wordType.indexOf('num') != -1) {
+	if(!filters.includeNumbers && wordType.indexOf('num') != -1) {
 		return false;
 	}
-	if(!includePrepositions && wordType.indexOf('pre') != -1) {
+	if(!filters.includePrepositions && wordType.indexOf('pre') != -1) {
 		return false;
 	}
-	if(!includeDeterminers && wordType.indexOf('det') != -1) {
+	if(!filters.includeDeterminers && wordType.indexOf('det') != -1) {
 		return false;
 	}
-	if(!includeInterjections && wordType.indexOf('int') != -1) {
+	if(!filters.includeInterjections && wordType.indexOf('int') != -1) {
 		return false;
 	}
-	if(!includeConjunctions && wordType.indexOf('con') != -1) {
+	if(!filters.includeConjunctions && wordType.indexOf('con') != -1) {
 		return false;
 	}
 	return true;
@@ -637,8 +654,9 @@ function formatResponseData(queueItem) {
 		mi = mi.sort(function(a, b) {
 			return moment(b.date, 'DD-MM-YYYY').isBefore(moment(a.date, 'DD-MM-YYYY'));
 		});
-
-		td.push({topic : k, mediaItems : mi, itemCount : mi.length});
+		if(includeKeywordBasedOnWordType(k, queueItem.wordTypeFilters)) {//filter only the desired word types
+			td.push({topic : k, type : _kwTypes[k], mediaItems : mi, itemCount : mi.length});
+		}
 	}
 	td = td.sort(function(a, b) {
 		//always put the searched topic on top. The rest is ordered by the amount of fragments
