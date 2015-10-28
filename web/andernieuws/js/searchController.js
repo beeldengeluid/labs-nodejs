@@ -138,6 +138,8 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		$.each($scope.kwGroups, function(type, kws){
 			$scope.kwGroups[type] = $scope.sortKeywordType(kws);
 		});
+
+		$scope.keywords = $scope.sortKeywordType($scope.keywords);
 	}
 
 	$scope.sortKeywordType = function(keywords) {
@@ -170,7 +172,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		console.debug(kwGroups);
 		//TODO
 		$scope.$apply(function(){
-			//$scope.keywords = data;
+			$scope.keywords = data;
 			$scope.kwGroups = kwGroups;
 			$scope.loading = false;
 		});

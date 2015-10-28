@@ -216,6 +216,17 @@
 										</button>
 									</div>
 									<div class="panel-body">
+										<!-- All results-->
+										<div class="kwGroup">
+											<h4>Alle woorden van eender welk type</h4>
+											<ul class="label-list">
+												<li ng-repeat="kw in keywords">
+													<span ng-click="searchTopic(kw.word)"
+													class="label label-{{getKwClass(kw.score)}}">{{kw.word}}</span>
+												</li>
+											</ul>
+										</div>
+										<!-- The results ordered per word type-->
 										<div ng-repeat="(key, value) in kwGroups" class="kwGroup">
 											<h4>{{key}}</h4>
 											<ul class="label-list">
