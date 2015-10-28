@@ -48,7 +48,7 @@ var _weird = null;
  ********************************************************************************/
 
 function readJSONFileData(fn) {
-	console.log('Loading the kwindex.json file');
+	console.log('Loading ' + fn);
 	if (!fn) {
 		return null;
 	}
@@ -61,8 +61,9 @@ function parseDates() {
 	_weird = null;
 	for (d in _kwIndex) {
         if (d && d != 'null') {
+        	console.log(d);
 			date = moment(d, 'DD-MM-YYYY');
-			dates.push(date)
+			dates.push(date);
         } else {
 			_weird = _kwIndex[d];
         }
@@ -72,6 +73,9 @@ function parseDates() {
     });
     return dates;
 }
+
+console.log('Try this out for size');
+parseDates();
 
 /********************************************************************************
  * STATIC/PROXY/API SERVER
@@ -128,13 +132,38 @@ var urlMap = {
 		var startDate = qs.parse(url.parse(req.url).query).sd;
 		var endDate = qs.parse(url.parse(req.url).query).ed;
 		var limit = qs.parse(url.parse(req.url).query).l;
+		var includeNouns = qs.parse(url.parse(req.url).query).i_n == 'y' ? true : false;
+		var includeVerbs = qs.parse(url.parse(req.url).query).i_v == 'y' ? true : false;
+		var includeAdjectives = qs.parse(url.parse(req.url).query).i_adj == 'y' ? true : false;
+		var includeAdverbs = qs.parse(url.parse(req.url).query).i_adv == 'y' ? true : false;
+		var includePronouns = qs.parse(url.parse(req.url).query).i_pro == 'y' ? true : false;
+		var includeNumbers = qs.parse(url.parse(req.url).query).i_num == 'y' ? true : false;
+		var includePrepositions = qs.parse(url.parse(req.url).query).i_pre == 'y' ? true : false;
+		var includeDeterminers = qs.parse(url.parse(req.url).query).i_det == 'y' ? true : false;
+		var includeInterjections = qs.parse(url.parse(req.url).query).i_int == 'y' ? true : false;
+		var includeConjunctions = qs.parse(url.parse(req.url).query).i_con == 'y' ? true : false;
 		if(!limit) {
 			limit = CONFIG['keyword_limit'];
 		}
-		searchkw(startDate, endDate, parseInt(limit), function(data) {
-			res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-			res.simpleJSON(200, data);
-		});
+		searchkw(
+			startDate,
+			endDate,
+			parseInt(limit),
+			includeNouns,
+			includeVerbs,
+			includeAdjectives,
+			includeAdverbs,
+			includePronouns,
+			includeNumbers,
+			includePrepositions,
+			includeDeterminers,
+			includeInterjections,
+			includeConjunctions,
+			function(data) {
+				res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+				res.simpleJSON(200, data);
+			}
+		);
 	},
 
 	'/all_keywords' : function (req, res) {
@@ -348,7 +377,9 @@ function search(s, startDate, endDate, results, offset, clusterInterval, cb) {
 /**
 * Keyword search
 * */
-function searchkw(startDate, endDate, limit, cb) {
+function searchkw(startDate, endDate, limit, includeNouns, includeVerbs, includeAdjectives,
+	includeAdverbs, includePronouns, includeNumbers, includePrepositions, includeDeterminers,
+	includeInterjections, includeConjunctions, cb) {
 	if(_dates == null) {
 		_dates = parseDates();
 	}
@@ -393,16 +424,20 @@ function searchkw(startDate, endDate, limit, cb) {
     for(k in kwCounts) {
     	//THIS IS THE KEY PART OF THE ALGORITHM WHICH SHOULD BE IMPROVED
     	prediction = _allKeywords[k] / 100 * (count / (_dates.length / 100));
-    	temp.push({
-    		score : kwCounts[k] - prediction,
-    		word : k,
-    		freq : kwCounts[k],
-    		prediction : prediction,
-    		all : _allKeywords[k],
-    		count : count,
-    		alldates : _dates.length,
-    		type : _kwTypes[k]
-    	})
+    	if(includeKeywordBasedOnWordType(k, includeNouns, includeVerbs, includeAdjectives,
+    		includeAdverbs, includePronouns, includeNumbers, includePrepositions, includeDeterminers,
+    		includeInterjections, includeConjunctions)) {
+	    	temp.push({
+	    		score : kwCounts[k] - prediction,
+	    		word : k,
+	    		freq : kwCounts[k],
+	    		prediction : prediction,
+	    		all : _allKeywords[k],
+	    		count : count,
+	    		alldates : _dates.length,
+	    		type : _kwTypes[k]
+	    	});
+	    }
     }
 
     //sort based on freq and prediction
@@ -412,6 +447,47 @@ function searchkw(startDate, endDate, limit, cb) {
 
     //call back
     cb(temp.slice(0, limit));
+}
+
+function includeKeywordBasedOnWordType(word, includeNouns, includeVerbs, includeAdjectives,
+	includeAdverbs, includePronouns, includeNumbers, includePrepositions, includeDeterminers,
+	includeInterjections, includeConjunctions) {
+	var wordType = _kwTypes[word];
+	if(includeNouns && includeVerbs && includeAdjectives && includeAdverbs && includePronouns && includeNumbers
+		&& includePrepositions && includeDeterminers && includeInterjections && includeConjunctions) {
+		return true;
+	}
+	if(!includeNouns && wordType.indexOf('noun') != -1) {
+		return false;
+	}
+	if(!includeVerbs && wordType.indexOf('verb') != -1) {
+		return false;
+	}
+	if(!includeAdjectives && wordType.indexOf('adj') != -1) {
+		return false;
+	}
+	if(!includeAdverbs && wordType.indexOf('adv') != -1) {
+		return false;
+	}
+	if(!includePronouns && wordType.indexOf('pro') != -1) {
+		return false;
+	}
+	if(!includeNumbers && wordType.indexOf('num') != -1) {
+		return false;
+	}
+	if(!includePrepositions && wordType.indexOf('pre') != -1) {
+		return false;
+	}
+	if(!includeDeterminers && wordType.indexOf('det') != -1) {
+		return false;
+	}
+	if(!includeInterjections && wordType.indexOf('int') != -1) {
+		return false;
+	}
+	if(!includeConjunctions && wordType.indexOf('con') != -1) {
+		return false;
+	}
+	return true;
 }
 
 function getPOSTags(text, cb) {

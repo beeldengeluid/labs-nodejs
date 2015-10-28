@@ -150,7 +150,7 @@
 								<div class="col-md-12">
 									<form class="form-inline" role="form" ng-submit="searchKeywords()">
 										<div class="form-group">
-											<label for="feed">Zoekt!</label>
+											<label for="feed">Periode</label>
 										</div>
 										<div class="form-group">
 											<input id="start_date" ng-model="startDate" class="form-control" type="text" value="" size="20"
@@ -161,12 +161,44 @@
 											placeholder="dd-mm-yyyy">
 										</div>
 										<div class="form-group">
+											<label for="feed">Aantal</label>
 											<input id="kwlimit" ng-model="kwlimit" class="form-control" type="text" value="" size="7"
 											placeholder="Aantal">
 										</div>
 										<div class="form-group">
 											<button type="submit" class="btn btn-primary">Submit</button>
 										</div>
+										<br><br>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_nouns" value="0" checked> Nouns
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_verbs" value="1" checked> Verbs
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_adjectives" value="2" checked> Adjectives
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_adverbs" value="3" checked> Adverbs
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_pronouns" value="4" checked> Pronouns
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_numbers" value="5" checked> Numbers
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_prepositions" value="6" checked> Prepositions
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_determiners" value="7" checked> Determiners
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_interjections" value="8" checked> Interjections
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="include_conjunctions" value="9" checked> Conjunctions
+										</label>
 									</form>
 								</div>
 

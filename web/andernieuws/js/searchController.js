@@ -98,7 +98,21 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	$scope.searchKeywords = function() {
 		$scope.keywords = null;
 		var limit = $scope.kwlimit ? $scope.kwlimit : 50;
+		var includeNouns = $('#include_nouns').is(':checked') ? 'y' : 'n';
+		var includeVerbs = $('#include_verbs').is(':checked') ? 'y' : 'n';
+		var includeAdjectives = $('#include_adjectives').is(':checked') ? 'y' : 'n';
+		var includeAdverbs = $('#include_adverbs').is(':checked') ? 'y' : 'n';
+		var includePronouns = $('#include_pronouns').is(':checked') ? 'y' : 'n';
+		var includeNumbers = $('#include_numbers').is(':checked') ? 'y' : 'n';
+		var includePrepositions = $('#include_prepositions').is(':checked') ? 'y' : 'n';
+		var includeDeterminers = $('#include_determiners').is(':checked') ? 'y' : 'n';
+		var includeInterjections = $('#include_interjections').is(':checked') ? 'y' : 'n';
+		var includeConjunctions = $('#include_conjunctions').is(':checked') ? 'y' : 'n';
 		var url = '/andernieuws/searchkw?l=' + limit;
+		url += '&i_n=' + includeNouns + '&i_v=' + includeVerbs + '&i_adj=' + includeAdjectives;
+		url += '&i_adv=' + includeAdverbs + '&i_pro=' + includePronouns + '&i_num=' + includeNumbers;
+		url += '&i_pre=' + includePrepositions + '&i_det=' + includeDeterminers;
+		url += '&i_int=' + includeInterjections + '&i_con=' + includeConjunctions;
 		if($scope.startDate) {
 			url += '&sd=' + $scope.startDate;
 		}
