@@ -37,9 +37,9 @@ if(CONFIG['user'] && CONFIG['password']) {
 var MESSAGE_SERVER = 'http://'+CONFIG['messageserver.host']+':'+CONFIG['messageserver.port'];
 
 var _esClient = new ElasticSearchClient(esConfig);
-var _allKeywords = readJSONFileData(CONFIG['keywords_file']);
-var _kwIndex = readJSONFileData(CONFIG['keywords_index_file']);
-var _kwTypes = readJSONFileData(CONFIG['keywords_types_file']);
+var _allKeywords = readJSONFileData(CONFIG['keywords_file']);//stores all words + their freqs
+var _kwIndex = readJSONFileData(CONFIG['keywords_index_file']);//stores words + freq per day
+var _kwTypes = readJSONFileData(CONFIG['keywords_types_file']);//stores per word the word types
 var _dates = null;
 var _weird = null;
 
@@ -400,6 +400,7 @@ function search(s, startDate, endDate, wordTypeFilters, results, offset, cluster
 * */
 function searchkw(startDate, endDate, limit, wordTypeFilters, cb) {
 	if(_dates == null) {
+		//load all the dates with precalculated keywords in memory
 		_dates = parseDates();
 	}
 	var rankedKeywords = [];
