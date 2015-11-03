@@ -76,6 +76,11 @@
 							Monthly keywords
 						</a>
 					</li>
+					<li role="presentation">
+						<a href="#monthly_keywords_inv" aria-controls="monthly_keywords_inv" role="tab" data-toggle="tab">
+							Monthly keywords (inv)
+						</a>
+					</li>
 				</ul>
 
 				<div class="tab-content">
@@ -300,7 +305,35 @@
 							</div>
 						</div>
 
-				</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane" id="monthly_keywords_inv">
+
+						<div id="monthly_panel_inv" class="container">
+							<div class="row" ng-show="monthlyInv">
+								<div class="col-md-4" ng-repeat="kws in monthlyInv">
+									<div class="panel panel-default" style="height:420px;">
+										<div class="panel-heading">
+											Month {{$index}}
+										</div>
+										<div class="panel-body">
+											<ul ng-if="$odd" class="label-list">
+												<li ng-repeat="kw in kws">
+													<span class="label label-default">{{kw.word}}</span>
+												</li>
+											</ul>
+											<ul ng-if="$even" class="label-list">
+												<li ng-repeat="kw in kws">
+													<span class="label label-warning">{{kw.word}}</span>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
 			</div>
 
 

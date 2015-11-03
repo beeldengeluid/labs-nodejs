@@ -96,7 +96,6 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 	$scope.loadMonthlyKeywords = function() {
 		$scope.monthly = null;
-		var url = '/andernieuws/searchkeywords?t=0';
 		$.ajax({
 			dataType: 'json',
 			type: "GET",
@@ -107,6 +106,22 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			},
 			success: function (data) {
 				$scope.showMontlyKeywords(data);
+			}
+		});
+	}
+
+	$scope.loadMonthlyKeywordsInv = function() {
+		$scope.monthlyInv = null;
+		$.ajax({
+			dataType: 'json',
+			type: "GET",
+			url: '/andernieuws/resources/monthly-keywords-proper-idf-inv.json',
+			error: function (err) {
+				console.debug(err);
+				$scope.loading = false;
+			},
+			success: function (data) {
+				$scope.showMontlyKeywordsInv(data);
 			}
 		});
 	}
@@ -171,6 +186,13 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	$scope.showMontlyKeywords = function(data) {
 		$scope.$apply(function(){
 			$scope.monthly = data;
+			$scope.loading = false;
+		});
+	}
+
+	$scope.showMontlyKeywordsInv = function(data) {
+		$scope.$apply(function(){
+			$scope.monthlyInv = data;
 			$scope.loading = false;
 		});
 	}
@@ -276,5 +298,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	//load the monthly keywords
 
 	$scope.loadMonthlyKeywords();
+
+	$scope.loadMonthlyKeywordsInv();
 
 }]);

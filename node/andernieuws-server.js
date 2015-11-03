@@ -409,12 +409,12 @@ function searchkw(startDate, endDate, limit, wordTypeFilters, cb) {
 	var d = null;
 	var kws = null;
 	var kwCounts = {};
-	var count = 0;
+	var dateCount = 0;
 	var inPeriod = false;
 	//select the dates within the provided range
-    for(k in _dates) {
+    for(dt in _dates) {
     	inPeriod = false;
-    	d = _dates[k];
+    	d = _dates[dt];
     	if (sd && !ed) {
     		inPeriod = d.isSame(sd) || d.isAfter(sd);
     	} else if(!sd && ed) {
@@ -435,25 +435,26 @@ function searchkw(startDate, endDate, limit, wordTypeFilters, cb) {
     				kwCounts[k] = kws[k];
     			}
     		}
-    		count++;
+    		dateCount++;
     	}
     }
     temp = [];
     //put all of the counted keywords of this period in a list so it can be sorted for the UI
     var prediction = 0;
-    for(k in kwCounts) {
+    for(kw in kwCounts) {
     	//THIS IS THE KEY PART OF THE ALGORITHM WHICH SHOULD BE IMPROVED
-    	prediction = _allKeywords[k] / 100 * (count / (_dates.length / 100));
-    	if(includeKeywordBasedOnWordType(k, wordTypeFilters)) {
+    	//prediction = _allKeywords[kw] / 100 * (dateCount / (_dates.length / 100));
+    	prediction = (_allKeywords[kw] / _dates.length) * dateCount;
+    	if(includeKeywordBasedOnWordType(kw, wordTypeFilters)) {
 	    	temp.push({
-	    		score : kwCounts[k] - prediction,
-	    		word : k,
-	    		freq : kwCounts[k],
+	    		score : kwCounts[kw] - prediction,
+	    		word : kw,
+	    		freq : kwCounts[kw],
 	    		prediction : prediction,
-	    		all : _allKeywords[k],
-	    		count : count,
+	    		all : _allKeywords[kw],
+	    		count : dateCount,//FXIME this variable is completely meaningless for the client?
 	    		alldates : _dates.length,
-	    		type : _kwTypes[k]
+	    		type : _kwTypes[kw]
 	    	});
 	    }
     }
