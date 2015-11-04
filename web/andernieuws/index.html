@@ -141,7 +141,7 @@
 
 									<!-- RESULT LIST -->
 
-									<h3>{{numTopics}}</h3>
+									<h3>Gevonden onderwerpen: {{numTopics}} | Aantal voorkomens van zoekterm: {{searchFreq}}</h3>
 									<ul id="results" class="label-list">
 
 
@@ -261,7 +261,7 @@
 											<ul class="label-list">
 												<li ng-repeat="kw in keywords">
 													<span ng-click="searchTopic(kw.word)"
-													class="label label-{{getKwClass(kw)}}">{{kw.word}}({{kw.freq}})</span>
+													class="label label-{{getKwClass(kw)}}">{{kw.word}}({{kw.freq}}/{{kw.all}})</span>
 												</li>
 											</ul>
 										</div>
@@ -272,7 +272,7 @@
 												<li ng-repeat="kw in value">
 													<span ng-click="searchTopic(kw.word)"
 													class="label label-{{getKwClass(kw)}}">
-													{{kw.word}} ({{kw.freq}})
+													{{kw.word}} ({{kw.freq}}/{{kw.all}})
 													</span>
 												</li>
 											</ul>

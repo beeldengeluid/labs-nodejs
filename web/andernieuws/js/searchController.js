@@ -79,10 +79,14 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	}
 
 	$scope.processResults = function(data) {
+		console.debug(data[0]);
 		if(!data.message) {
 			$scope.$apply(function() {
 				$scope.loading = false;
 				$scope.numTopics = data.length;
+				if(data.length > 0) {
+					$scope.searchFreq = data[0].searchFreq;
+				}
 				$scope.topicData = data;
 			});
 		} else {
@@ -90,6 +94,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			$scope.$apply(function() {
 				$scope.loading = false;
 				$scope.numTopics = 0;
+				$scope.searchFreq = 0;
 				$scope.topicData = null;
 			});
 		}

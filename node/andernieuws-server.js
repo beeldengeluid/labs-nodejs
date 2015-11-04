@@ -141,7 +141,8 @@ var urlMap = {
 			startDate,
 			endDate,
 			wordTypeFilters,
-			{},
+			{},//segmentTimes
+			[],//directHits
 			0,
 			parseInt(clusterInterval),
 			function(data) {
@@ -323,7 +324,7 @@ function getAllKeywords(startDate, endDate, keywords, offset, cb) {
 //the search message queue
 var msgQueue = {};
 
-function search(s, startDate, endDate, wordTypeFilters, results, offset, clusterInterval, cb) {
+function search(s, startDate, endDate, wordTypeFilters, segmentTimes, directHits, offset, clusterInterval, cb) {
 	query = {
 			"query" : {
 				"filtered": {
@@ -347,16 +348,25 @@ function search(s, startDate, endDate, wordTypeFilters, results, offset, cluster
 		.on('data', function(data) {
 			var data = JSON.parse(data);
 			if(data && data.hits) {
-				var f = null;
-				//find the ids (file names) of the ASR transcripts
+				var asrFile = null;
+				asrCounter = 0;
+
 				for (var i in data.hits.hits) {
-					f = data.hits.hits[i]._source.asr_file;
-					if(results[f]) {
-						results[f].push([data.hits.hits[i]._source.start, data.hits.hits[i]._source.end]);
+
+					//get the start & end times of each hit per ASR file, use this as input to find surrounding keywords
+					asrFile = data.hits.hits[i]._source.asr_file;
+					if(segmentTimes[asrFile]) {
+						segmentTimes[asrFile].push([data.hits.hits[i]._source.start, data.hits.hits[i]._source.end]);
 					} else {
-						results[f] = [[data.hits.hits[i]._source.start, data.hits.hits[i]._source.end]];
+						segmentTimes[asrFile] = [[data.hits.hits[i]._source.start, data.hits.hits[i]._source.end]];
+						asrCounter++;
 					}
+
+					//add the 'direct hits' to a separate array and add it to the message object later
+					directHits.push(data.hits.hits[i]);
 				}
+
+				console.log('# of different asr files: ' + asrCounter)
 				if (offset == 0 && data.hits.total == 0) {
 					//immediately call back the client in case of no results
 					console.log('No results found for: ' + s);
@@ -366,24 +376,26 @@ function search(s, startDate, endDate, wordTypeFilters, results, offset, cluster
 					console.log(data.hits.total + ' results found');
 					var id = uuid.v4();
 					var toBeFound = [];
-					for (asrFile in results) {
-						toBeFound.push(asrFile);
+					for (key in segmentTimes) {
+						toBeFound.push(key);//key=asrFile
 					}
+					//add the message to the queue before requesting the surrounding keywords
 					msgQueue[id] = {
 						'toBeCalled' : toBeFound,
 						'clientCallback' : cb,
 						'keywords' : {},
 						'search' : s,
+						'directHits' : directHits,
 						'wordTypeFilters' : wordTypeFilters
 					};
 					//for each segment find the surrounding keywords
-					for (var key in results) {
-						getSurroundingKeywords(id, key, results[key], clusterInterval);
+					for (var key in segmentTimes) {
+						getSurroundingKeywords(id, key, segmentTimes[key], clusterInterval);
 					}
 				} else {
 					//if there are more results fetch them first, before going into the surrounding keyword fray
 					search(s, startDate, endDate, wordTypeFilters,
-						results, offset + CONFIG['es.search.size'], clusterInterval, cb);
+						segmentTimes, directHits, offset + CONFIG['es.search.size'], clusterInterval, cb);
 				}
 			} else {
 				//something went wrong. Call back the client.
@@ -645,7 +657,7 @@ function formatResponseData(queueItem) {
 				videoUrl = getVideoUrl(item);
 				if(audioUrl) {//&& videoUrl
 					topic = item._source.keywords[kw].word;
-					//topicTimes = getTimes(item._source.keywords[kw]);
+					//keren/momenten dat het woord in de ASR file genoemd wordt (dus niet in de chunk)
 					topicTimes = item._source.keywords[kw].times;
 					date = item._source.metadata.broadcast_date;
 					if(topicData[topic]) {
@@ -683,19 +695,51 @@ function formatResponseData(queueItem) {
 			}
 		}
 	}
+/*
+	//(over)write the topicData with the directHit data
+	var dhData = queueItem.directHits;
+	console.log('DATA ('+queueItem.search+'): ' + dhData.length);
+	topicData[queueItem.search] = { mediaItems : []};
+	var dhCount = 0;
+	for (var i=0;i<dhData.length;i++) {
+		date = dhData[i]._source.metadata.broadcast_date;
+		asrFile = dhData[i]._source.asr_file;
+		audioUrl = asrFile.replace(/.xml/g, '.mp3');
+		videoUrl = getVideoUrl(dhData[i]);
+		if(topicData[queueItem.search].mediaItems[asrFile] == undefined) {
+			dhCount++;
+		}
+		topicData[queueItem.search].mediaItems[asrFile] = {
+			topic : queueItem.search,
+			videoUrl : videoUrl,
+			audioUrl : audioUrl,
+			date : date,
+			spokenAt : []
+		}
+	}
+	console.log('NUMBER OF ITEMS FINALLY: ' + dhCount);
+	*/
+
+	//convert everything to a list of topics
 	var td = [];
 	var mi = null;
-	for (k in topicData) {
+	for (topic in topicData) {
 		mi = [];
-		for(var m in topicData[k].mediaItems) {
-			mi.push(topicData[k].mediaItems[m]);
+		for(var m in topicData[topic].mediaItems) {
+			mi.push(topicData[topic].mediaItems[m]);
 		}
 		//sort the mediaitems per topic by date
 		mi = mi.sort(function(a, b) {
 			return moment(b.date, 'DD-MM-YYYY').isBefore(moment(a.date, 'DD-MM-YYYY'));
 		});
-		if(includeKeywordBasedOnWordType(k, queueItem.wordTypeFilters)) {//filter only the desired word types
-			td.push({topic : k, type : _kwTypes[k], mediaItems : mi, itemCount : mi.length});
+		if(includeKeywordBasedOnWordType(topic, queueItem.wordTypeFilters)) {//filter only the desired word types
+			td.push({
+				topic : topic,
+				type : _kwTypes[topic],
+				mediaItems : mi,
+				searchFreq : queueItem.directHits.length,
+				itemCount : mi.length
+			});
 		}
 	}
 	td = td.sort(function(a, b) {
