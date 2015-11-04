@@ -61,7 +61,6 @@ function parseDates() {
 	_weird = null;
 	for (d in _kwIndex) {
         if (d && d != 'null') {
-        	//console.log(d);
 			date = moment(d, 'DD-MM-YYYY');
 			dates.push(date);
         } else {
@@ -71,6 +70,9 @@ function parseDates() {
     dates.sort(function(a, b){
     	return a.unix() - b.unix();
     });
+    /*for(var i=0;i<dates.length;i++) {
+    	console.log(dates[i].toString())
+    }*/
     return dates;
 }
 

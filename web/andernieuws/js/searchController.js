@@ -14,7 +14,6 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	$scope.audioPlaying = false;
 	$scope.audioLoaded = false;
 
-	$scope.monthly = null;
 	$scope.keywords = null;
 	$scope.kwGroups = null;
 
@@ -96,38 +95,6 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		}
 	}
 
-	$scope.loadMonthlyKeywords = function() {
-		$scope.monthly = null;
-		$.ajax({
-			dataType: 'json',
-			type: "GET",
-			url: '/andernieuws/resources/monthly-keywords-proper-idf.json',
-			error: function (err) {
-				console.debug(err);
-				$scope.loading = false;
-			},
-			success: function (data) {
-				$scope.showMontlyKeywords(data);
-			}
-		});
-	}
-
-	$scope.loadMonthlyKeywordsInv = function() {
-		$scope.monthlyInv = null;
-		$.ajax({
-			dataType: 'json',
-			type: "GET",
-			url: '/andernieuws/resources/monthly-keywords-proper-idf-inv.json',
-			error: function (err) {
-				console.debug(err);
-				$scope.loading = false;
-			},
-			success: function (data) {
-				$scope.showMontlyKeywordsInv(data);
-			}
-		});
-	}
-
 	$scope.searchKeywords = function(sort) {
 		sort = sort == undefined ? 's' : sort;
 		$scope.sort = sort;
@@ -170,20 +137,6 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 				console.debug(data);
 				$scope.showKeywords(data);
 			}
-		});
-	}
-
-	$scope.showMontlyKeywords = function(data) {
-		$scope.$apply(function(){
-			$scope.monthly = data;
-			$scope.loading = false;
-		});
-	}
-
-	$scope.showMontlyKeywordsInv = function(data) {
-		$scope.$apply(function(){
-			$scope.monthlyInv = data;
-			$scope.loading = false;
 		});
 	}
 
@@ -304,12 +257,6 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			this.$apply(fn);
 		}
 	};
-
-	//load the monthly keywords
-
-	$scope.loadMonthlyKeywords();
-
-	$scope.loadMonthlyKeywordsInv();
 
 	//for quick testing
 	$scope.startDate = '01-03-2011';
