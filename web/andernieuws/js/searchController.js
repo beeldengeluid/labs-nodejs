@@ -126,7 +126,8 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		});
 	}
 
-	$scope.searchKeywords = function() {
+	$scope.searchKeywords = function(sort) {
+		sort = sort == undefined ? 's' : sort;
 		$scope.keywords = null;
 		var limit = $scope.kwlimit ? $scope.kwlimit : 50;
 		var includeNouns = $('#include_nouns').is(':checked') ? 'y' : 'n';
@@ -150,6 +151,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		if($scope.endDate) {
 			url += '&ed=' + $scope.endDate;
 		}
+		url += '&sort=' + sort;
 		$scope.loading = true;
 		$.ajax({
 			dataType: 'json',
@@ -159,6 +161,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 				$scope.loading = false;
 			},
 			success: function (data) {
+				console.debug(data);
 				$scope.showKeywords(data);
 			}
 		});
@@ -166,11 +169,19 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 	$scope.sortKeywords = function() {
 		$scope.sortByScore = !$scope.sortByScore;
+		var sort = 's';
+		if($scope.sortByScore) {
+			sort = 'f';
+		}
+		$scope.searchKeywords(sort);
+		/*
+		$scope.sortByScore = !$scope.sortByScore;
 		$.each($scope.kwGroups, function(type, kws){
 			$scope.kwGroups[type] = $scope.sortKeywordType(kws);
 		});
 
 		$scope.keywords = $scope.sortKeywordType($scope.keywords);
+		*/
 	}
 
 	$scope.sortKeywordType = function(keywords) {
@@ -207,8 +218,6 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 				kwGroups[kw.type].push(kw);
 			}
 		});
-		console.debug(kwGroups);
-		//TODO
 		$scope.$apply(function(){
 			$scope.keywords = data;
 			$scope.kwGroups = kwGroups;

@@ -152,6 +152,7 @@ var urlMap = {
 	'/searchkw' : function (req, res) {
 		var startDate = qs.parse(url.parse(req.url).query).sd;
 		var endDate = qs.parse(url.parse(req.url).query).ed;
+		var sort = qs.parse(url.parse(req.url).query).sort;
 		var limit = qs.parse(url.parse(req.url).query).l;
 		var wordTypeFilters = {
 			includeNouns : qs.parse(url.parse(req.url).query).i_n == 'y' ? true : false,
@@ -171,6 +172,7 @@ var urlMap = {
 		searchkw(
 			startDate,
 			endDate,
+			sort,
 			parseInt(limit),
 			wordTypeFilters,
 			function(data) {
@@ -398,7 +400,7 @@ function search(s, startDate, endDate, wordTypeFilters, results, offset, cluster
 /**
 * Keyword search
 * */
-function searchkw(startDate, endDate, limit, wordTypeFilters, cb) {
+function searchkw(startDate, endDate, sort, limit, wordTypeFilters, cb) {
 	if(_dates == null) {
 		//load all the dates with precalculated keywords in memory
 		_dates = parseDates();
@@ -444,7 +446,7 @@ function searchkw(startDate, endDate, limit, wordTypeFilters, cb) {
     for(kw in kwCounts) {
     	//THIS IS THE KEY PART OF THE ALGORITHM WHICH SHOULD BE IMPROVED
     	//prediction = _allKeywords[kw] / 100 * (dateCount / (_dates.length / 100));
-    	prediction = (_allKeywords[kw] / _dates.length) * dateCount;
+    	prediction = (parseFloat(_allKeywords[kw]) / parseFloat(_dates.length)) * parseFloat(dateCount);
     	if(includeKeywordBasedOnWordType(kw, wordTypeFilters)) {
 	    	temp.push({
 	    		score : kwCounts[kw] - prediction,
@@ -461,7 +463,11 @@ function searchkw(startDate, endDate, limit, wordTypeFilters, cb) {
 
     //sort based on freq and prediction
     temp.sort(function(a, b){
-    	return (b.freq - b.prediction) - (a.freq - a.prediction);
+    	if(sort == 'f') {
+    		return b.freq - a.freq;
+    	} else {
+    		return b.score - a.score;
+    	}
     });
 
     //call back
