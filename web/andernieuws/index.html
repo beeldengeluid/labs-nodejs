@@ -201,6 +201,11 @@
 											<input id="kwlimit" ng-model="kwlimit" class="form-control" type="text" value="" size="7"
 											placeholder="Aantal">
 										</div>
+										<div class="checkbox">
+											<label>
+												<input id="kw_order" type="checkbox" checked> Most popular
+											</label>
+										</div>
 										<div class="form-group">
 											<button type="submit" class="btn btn-primary">Submit</button>
 										</div>
@@ -247,9 +252,17 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										Keywords from this period
-										<button type="button" ng-click="sortKeywords()" class="btn btn-default">
-											Sort by frequency: {{sortByScore}}
-										</button>
+										<div class="btn-group" role="group" aria-label="...">
+											<button type="button" ng-click="searchKeywords('s')" class="btn btn-default">
+												Score
+											</button>
+											<button type="button" ng-click="searchKeywords('s2')" class="btn btn-default">
+												Score2
+											</button>
+											<button type="button" ng-click="searchKeywords('f')" class="btn btn-default">
+												Frequency
+											</button>
+										</div>
 									</div>
 									<div class="panel-body">
 										<!-- All results-->
@@ -258,7 +271,7 @@
 											<ul class="label-list">
 												<li ng-repeat="kw in keywords">
 													<span ng-click="searchTopic(kw.word)"
-													class="label label-{{getKwClass(kw.score)}}">{{kw.word}}</span>
+													class="label label-{{getKwClass(kw)}}">{{kw.word}}({{kw.score}})</span>
 												</li>
 											</ul>
 										</div>
@@ -268,7 +281,9 @@
 											<ul class="label-list">
 												<li ng-repeat="kw in value">
 													<span ng-click="searchTopic(kw.word)"
-													class="label label-{{getKwClass(kw.score)}}">{{kw.word}}</span>
+													class="label label-{{getKwClass(kw)}}">
+													{{kw.word}} ({{kw.score}})
+													</span>
 												</li>
 											</ul>
 										</div>

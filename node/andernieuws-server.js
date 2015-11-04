@@ -61,7 +61,7 @@ function parseDates() {
 	_weird = null;
 	for (d in _kwIndex) {
         if (d && d != 'null') {
-        	console.log(d);
+        	//console.log(d);
 			date = moment(d, 'DD-MM-YYYY');
 			dates.push(date);
         } else {
@@ -153,6 +153,7 @@ var urlMap = {
 		var startDate = qs.parse(url.parse(req.url).query).sd;
 		var endDate = qs.parse(url.parse(req.url).query).ed;
 		var sort = qs.parse(url.parse(req.url).query).sort;
+		var order = qs.parse(url.parse(req.url).query).ord;
 		var limit = qs.parse(url.parse(req.url).query).l;
 		var wordTypeFilters = {
 			includeNouns : qs.parse(url.parse(req.url).query).i_n == 'y' ? true : false,
@@ -173,6 +174,7 @@ var urlMap = {
 			startDate,
 			endDate,
 			sort,
+			order,
 			parseInt(limit),
 			wordTypeFilters,
 			function(data) {
@@ -400,7 +402,7 @@ function search(s, startDate, endDate, wordTypeFilters, results, offset, cluster
 /**
 * Keyword search
 * */
-function searchkw(startDate, endDate, sort, limit, wordTypeFilters, cb) {
+function searchkw(startDate, endDate, sort, order, limit, wordTypeFilters, cb) {
 	if(_dates == null) {
 		//load all the dates with precalculated keywords in memory
 		_dates = parseDates();
@@ -442,19 +444,35 @@ function searchkw(startDate, endDate, sort, limit, wordTypeFilters, cb) {
     }
     temp = [];
     //put all of the counted keywords of this period in a list so it can be sorted for the UI
+    var freq = 0;
     var prediction = 0;
+    var score = 0;
+    var score2 = 0;
     for(kw in kwCounts) {
     	//THIS IS THE KEY PART OF THE ALGORITHM WHICH SHOULD BE IMPROVED
     	//prediction = _allKeywords[kw] / 100 * (dateCount / (_dates.length / 100));
+
+    	freq = kwCounts[kw];
+
     	prediction = (parseFloat(_allKeywords[kw]) / parseFloat(_dates.length)) * parseFloat(dateCount);
+
+    	if(Math.round(freq) != 0 && Math.round(prediction) != 0) {
+    		score = Math.round(freq) / Math.round(prediction);
+    	} else {
+    		score = 0;
+    	}
+
+    	score2 = freq - prediction;
+
     	if(includeKeywordBasedOnWordType(kw, wordTypeFilters)) {
 	    	temp.push({
-	    		score : kwCounts[kw] - prediction,
-	    		word : kw,
-	    		freq : kwCounts[kw],
+	    		score : score,
+	    		score2 : score2,
+	    		freq : freq,
 	    		prediction : prediction,
+	    		word : kw,
 	    		all : _allKeywords[kw],
-	    		count : dateCount,//FXIME this variable is completely meaningless for the client?
+	    		dateCount : dateCount,//FXIME this variable is completely meaningless for the client?
 	    		alldates : _dates.length,
 	    		type : _kwTypes[kw]
 	    	});
@@ -463,11 +481,23 @@ function searchkw(startDate, endDate, sort, limit, wordTypeFilters, cb) {
 
     //sort based on freq and prediction
     temp.sort(function(a, b){
-    	if(sort == 'f') {
-    		return b.freq - a.freq;
-    	} else {
-    		return b.score - a.score;
-    	}
+    	if(order == 'desc') {
+	    	if(sort == 'f') {
+	    		return b.freq - a.freq;
+	    	} else if (sort == 's') {
+	    		return b.score - a.score;
+	    	} else if (sort == 's2') {
+	    		return b.score2 - a.score2;
+	    	}
+	    } else {
+	    	if(sort == 'f') {
+	    		return a.freq - b.freq;
+	    	} else if (sort == 's') {
+	    		return a.score - b.score;
+	    	} else if (sort == 's2') {
+	    		return a.score2 - b.score2;
+	    	}
+	    }
     });
 
     //call back
