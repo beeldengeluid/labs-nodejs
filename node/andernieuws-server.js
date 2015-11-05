@@ -399,7 +399,7 @@ function search(s, startDate, endDate, wordTypeFilters, segmentTimes, directHits
 				}
 			} else {
 				//something went wrong. Call back the client.
-				cb({message : 'Error: the search engine returned with an error'});
+				cb({message : 'Error: the search engine returned with an error: probably you specified an invalid date range'});
 			}
 
 

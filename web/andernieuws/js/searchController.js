@@ -21,11 +21,47 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 	$scope.sortOrder = 'desc';
 
 	$scope.init = function() {
-		$('#anchor_tabs a').click(function (e) {
-			console.debug('yes??')
-			e.preventDefault();
-			$(this).tab('show');
+		//for quick testing
+		$scope.startDate = '01-03-2011';
+		$scope.endDate = '31-03-2011';
+
+		$('#start_dp').datepicker({
+			format: "dd-mm-yyyy",
+			startDate: "01-01-2010",
+			autoclose: true
+		}).on('hide', function(e){
+			$scope.startDate = $('#start_date').val();
 		});
+		$('#end_dp').datepicker({
+			format: "dd-mm-yyyy",
+			startDate: "01-01-2010",
+			setDate: moment($scope.endDate, 'DD-MM-YYYY'),
+			autoclose: true,
+		}).on('hide', function(e){
+			$scope.endDate = $('#end_date').val();
+		});
+		$('#start_dp_kw').datepicker({
+			format: "dd-mm-yyyy",
+			startDate: "01-01-2010",
+			autoclose: true
+		}).on('hide', function(e){
+			$scope.startDate = $('#start_date_kw').val();
+		});
+		$('#end_dp_kw').datepicker({
+			format: "dd-mm-yyyy",
+			startDate: "01-01-2010",
+			setDate: moment($scope.endDate, 'DD-MM-YYYY'),
+			autoclose: true,
+		}).on('hide', function(e){
+			$scope.endDate = $('#end_date_kw').val();
+		});
+
+		var sd = moment($scope.startDate, 'DD-MM-YYYY').toDate();
+		var ed = moment($scope.endDate, 'DD-MM-YYYY').toDate();
+		$('#start_dp').datepicker('setDate', sd);
+		$('#end_dp').datepicker('setDate', ed);
+		$('#start_dp_kw').datepicker('setDate', sd);
+		$('#end_dp_kw').datepicker('setDate', ed);
 	}
 
 	$scope.searchTopic = function(topic) {
@@ -107,6 +143,19 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 
 		order = $('#kw_order').is(':checked') ? 'desc' : 'asc';
 		$scope.sortOrder = order;
+
+		if(sort == 's') {
+			$('#sort_score').removeClass('btn-default');
+			$('#sort_score').addClass('btn-primary');
+			$('#sort_freq').removeClass('btn-primary');
+			$('#sort_freq').addClass('btn-default');
+		} else {
+			$('#sort_score').removeClass('btn-primary');
+			$('#sort_score').addClass('btn-default');
+			$('#sort_freq').removeClass('btn-default');
+			$('#sort_freq').addClass('btn-primary');
+		}
+
 		var limit = $scope.kwlimit ? $scope.kwlimit : 50;
 		var includeNouns = $('#include_nouns').is(':checked') ? 'y' : 'n';
 		var includeVerbs = $('#include_verbs').is(':checked') ? 'y' : 'n';
@@ -263,8 +312,7 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 		}
 	};
 
-	//for quick testing
-	$scope.startDate = '01-03-2011';
-	$scope.endDate = '31-03-2011';
+	$scope.init();
+
 
 }]);

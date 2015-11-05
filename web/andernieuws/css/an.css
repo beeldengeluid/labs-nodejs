@@ -2,6 +2,10 @@
 	margin-top:10px;
 }
 
+.interactive {
+	cursor : pointer;
+}
+
 .loading {
 	display:none;
 }

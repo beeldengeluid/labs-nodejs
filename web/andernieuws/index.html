@@ -27,7 +27,7 @@
 
 	<link rel="stylesheet" href="./andernieuws/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./andernieuws/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-
+	<link rel="stylesheet" href="./andernieuws/vendor/bootstrap-datepicker-1.5.0-dist/css/bootstrap-datepicker.min.css">
 	<link rel="stylesheet" href="./andernieuws/css/an.css">
 
 
@@ -71,7 +71,22 @@
 							Keyword search
 						</a>
 					</li>
+					<li role="presentation">
+
+						<div class="btn-group" role="group" aria-label="...">
+							<button class="btn btn-danger" ng-click="toggleAudio()" ng-show="audioLoaded">
+								Speel audio
+						    	<span ng-show="audioPlaying" class="glyphicon glyphicon-pause"></span>
+						    	<span ng-show="!audioPlaying" class="glyphicon glyphicon-play"></span>
+							</button>
+							<button class="btn btn-default" id="loading" ng-show="loading == true">
+						    	<img src="./andernieuws/images/loading.gif" alt="Loading new feed items">
+							</button>
+						</div>
+					</li>
 				</ul>
+
+
 
 				<div class="tab-content">
 
@@ -92,12 +107,20 @@
 											<input id="feed" ng-model="s" class="form-control" type="text" value="" size="60" placeholder="Bijvoorbeeld: Roken, Wilders, Duitsland, Defensie">
 										</div>
 										<div class="form-group">
-											<input id="start_date" ng-model="startDate" class="form-control" type="text" value="" size="20"
-											placeholder="dd-mm-yyyy">
+											<div id="start_dp" class="input-group date">
+  												<input id="start_date" type="text" class="form-control">
+  												<span class="input-group-addon">
+  													<i class="glyphicon glyphicon-th interactive"></i>
+  												</span>
+											</div>
 										</div>
 										<div class="form-group">
-											<input id="end_date" ng-model="endDate" class="form-control" type="text" value="" size="20"
-											placeholder="dd-mm-yyyy">
+											<div id="end_dp" class="input-group date">
+  												<input id="end_date" type="text" class="form-control">
+  												<span class="input-group-addon">
+  													<i class="glyphicon glyphicon-th interactive"></i>
+  												</span>
+											</div>
 										</div>
 										<div class="form-group">
 											<input id="interval" ng-model="interval" class="form-control" type="text" value="" size="7"
@@ -141,7 +164,7 @@
 
 									<!-- RESULT LIST -->
 
-									<h3>Gevonden onderwerpen: {{numTopics}} | Aantal voorkomens van zoekterm: {{searchFreq}}</h3>
+									<h3 ng-show="topicData">Gevonden onderwerpen: {{numTopics}} | Aantal voorkomens van zoekterm: {{searchFreq}}</h3>
 									<ul id="results" class="label-list">
 
 
@@ -179,12 +202,20 @@
 											<label for="feed">Periode</label>
 										</div>
 										<div class="form-group">
-											<input id="start_date" ng-model="startDate" class="form-control" type="text" value="" size="20"
-											placeholder="dd-mm-yyyy">
+											<div id="start_dp_kw" class="input-group date">
+  												<input id="start_date_kw" type="text" class="form-control">
+  												<span class="input-group-addon">
+  													<i class="glyphicon glyphicon-th interactive"></i>
+  												</span>
+											</div>
 										</div>
 										<div class="form-group">
-											<input id="end_date" ng-model="endDate" class="form-control" type="text" value="" size="20"
-											placeholder="dd-mm-yyyy">
+											<div id="end_dp_kw" class="input-group date">
+  												<input id="end_date_kw" type="text" class="form-control">
+  												<span class="input-group-addon">
+  													<i class="glyphicon glyphicon-th interactive"></i>
+  												</span>
+											</div>
 										</div>
 										<div class="form-group">
 											<label for="feed">Aantal</label>
@@ -241,16 +272,15 @@
 							<div class="row" ng-show="kwGroups">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										Keywords from this period
+										Sorteer de resultaten op
 										<div class="btn-group" role="group" aria-label="...">
-											<button type="button" ng-click="searchKeywords('s')" class="btn btn-default">
-												Score
+											<button id="sort_score" type="button" ng-click="searchKeywords('s')"
+												class="btn btn-primary" title="Sorteer de termen op bijzonderheid">
+												Bijzonderheid
 											</button>
-											<button type="button" ng-click="searchKeywords('s2')" class="btn btn-default">
-												Score2
-											</button>
-											<button type="button" ng-click="searchKeywords('f')" class="btn btn-default">
-												Frequency
+											<button id="sort_freq" type="button" ng-click="searchKeywords('f')"
+												class="btn btn-default" title="Sorteer de termen op de mate van voorkomendheid">
+												Veelvoorkomendheid
 											</button>
 										</div>
 									</div>
@@ -294,17 +324,6 @@
 				Your browser does not support the audio element.
 			</audio>
 
-			<button ng-click="toggleAudio()" ng-show="audioLoaded">
-			    <span ng-show="audioPlaying" class="glyphicon glyphicon-pause"></span>
-			    <span ng-show="!audioPlaying" class="glyphicon glyphicon-play"></span>
-			</button>
-			<!-- LOADING GRAPHIC -->
-
-			<div id="loading" ng-show="loading == true">
-				<img src="./andernieuws/images/loading.gif" alt="Loading new feed items">
-			</div>
-
-
 		</section>
 
 	</div>
@@ -313,10 +332,13 @@
 
 <!-- GET THE BOOTSTRAP JS AT THE END -->
 
+<script src="./andernieuws/bower_components/moment/min/moment.min.js"></script>
+<script src="./andernieuws/js/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<script src="./andernieuws/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./andernieuws/vendor/bootstrap-datepicker-1.5.0-dist/js/bootstrap-datepicker.min.js"></script>
 <script src="./andernieuws/js/app.js"></script>
 <script src="./andernieuws/js/audioplayer.js"></script>
 <script src="./andernieuws/js/searchController.js"></script>
-<script src="./andernieuws/js/ui-bootstrap-tpls-0.10.0.min.js"></script>
-<script src="./andernieuws/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
 
 </html>
