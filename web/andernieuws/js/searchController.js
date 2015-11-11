@@ -29,8 +29,8 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			format: "dd-mm-yyyy",
 			startDate: "01-01-2010",
 			autoclose: true
-		}).on('hide', function(e){
-			$scope.startDate = $('#start_date').val();
+		}).on('hide', function(e) {
+			$scope.handleDatepickerHide(true);
 		});
 		$('#end_dp').datepicker({
 			format: "dd-mm-yyyy",
@@ -38,14 +38,14 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			setDate: moment($scope.endDate, 'DD-MM-YYYY'),
 			autoclose: true,
 		}).on('hide', function(e){
-			$scope.endDate = $('#end_date').val();
+			$scope.handleDatepickerHide(true);
 		});
 		$('#start_dp_kw').datepicker({
 			format: "dd-mm-yyyy",
 			startDate: "01-01-2010",
 			autoclose: true
 		}).on('hide', function(e){
-			$scope.startDate = $('#start_date_kw').val();
+			$scope.handleDatepickerHide(false);
 		});
 		$('#end_dp_kw').datepicker({
 			format: "dd-mm-yyyy",
@@ -53,9 +53,34 @@ angular.module('andernieuws').controller('searchCtrl', ['$scope', 'audioPlayer',
 			setDate: moment($scope.endDate, 'DD-MM-YYYY'),
 			autoclose: true,
 		}).on('hide', function(e){
-			$scope.endDate = $('#end_date_kw').val();
+			$scope.handleDatepickerHide(false);
 		});
 
+		$scope.updateDatepickers();
+	}
+
+	$scope.handleDatepickerHide = function(firstTab) {
+		var startPicker = firstTab ? '#start_date' : '#start_date_kw';
+		var endPicker = firstTab ? '#end_date' : '#end_date_kw';
+		if($scope.checkDate($(startPicker).val(), $(endPicker).val())) {
+			$scope.startDate = $(startPicker).val();
+			$scope.endDate = $(endPicker).val();
+		} else {
+			alert('De einddatum '+$(endPicker).val()+'ligt voor de startdatum ' + $(startPicker).val());
+		}
+		$scope.updateDatepickers();
+	}
+
+	$scope.checkDate = function(start, end) {
+		var sd = moment(start, 'DD-MM-YYYY');
+		var ed = moment(end, 'DD-MM-YYYY');
+		if(sd.isAfter(ed) || ed.isBefore(sd)){
+			return false;
+		}
+		return true;
+	}
+
+	$scope.updateDatepickers = function() {
 		var sd = moment($scope.startDate, 'DD-MM-YYYY').toDate();
 		var ed = moment($scope.endDate, 'DD-MM-YYYY').toDate();
 		$('#start_dp').datepicker('setDate', sd);
